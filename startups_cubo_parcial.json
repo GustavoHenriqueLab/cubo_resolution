@@ -1,0 +1,729 @@
+[
+  {
+    "nome": "AutoU",
+    "descricao": "A AutoU é uma plataforma de Inteligência Artificial aplicada ao mundo corporativo, criando soluções digitais para grandes empresas. Atendemos grupos globais como L’Oréal, Nestlé, Jaguar, Stellantis e Saint-Gobain, gerando mais de R$50MM em resultados para 150.000+ usu...Ler mais",
+    "segmento": "Produtividade",
+    "fundadores": "Lucas Fernandes Lima; Eduardo Braga Julianelli",
+    "site": "http://autou.io",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/56bbbbf1-19f0-4791-af93-fc2bb060b331",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Biti9",
+    "descricao": "A Biti9 é uma consultoria e integradora de tecnologia especializada em Hiperautomação (RPA + IA) e Transformação Digital para médias e grandes empresas. O foco central é eliminar ineficiências operacionais, convertendo processos manuais e repetitivos em fluxos de trab...Ler mais",
+    "segmento": "Produtividade",
+    "fundadores": "Martin Luther, Adalberto Alonso",
+    "site": "http://www.biti9.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/3054b527-7536-44da-a817-6073abb903f3",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Deep Learning",
+      "Inteligência Artificial",
+      "Machine Learning",
+      "Processamento de Linguagem Natural (PLN)",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Clara Pagamentos",
+    "descricao": "A Clara é uma plataforma de gestão de gastos corporativos que centraliza cartões, pagamentos, reembolsos e conciliação em tempo real. Com automação, controle por regras e integração com ERPs, ajuda empresas a ganhar eficiência, visibilidade financeira e governança.",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "http://clara.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/5ffaf5ee-30bc-4207-a572-827c1c99348a",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Leggal",
+    "descricao": "Problemas jurídicos são a 3ª maior causa de estresse entre colaboradores, afetando performance e aumentando o risco de burnout. A Leggal nasce para preencher essa lacuna: somos o primeiro benefício de Cuidado Jurídico do Brasil, oferecendo às empresas um diferencial r...Ler mais",
+    "segmento": "Recursos Humanos",
+    "fundadores": "Diego Battistella e Taiane Fraga Lima",
+    "site": "https://www.leggal.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2b67fbaf-b851-4570-a4b4-5ea4ed2832c8",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Big Data e Data Analytics"
+    ]
+  },
+  {
+    "nome": "Marvin",
+    "descricao": "Impulsionando o futuro do comércio global Infraestrutura de cadeia de suprimentos nativa de IA, criada para reduzir riscos, aumentar a confiança e desbloquear o acesso ao mercado em um cenário de comércio global em rápida transformação.",
+    "segmento": "Agricultura e Pecuária",
+    "fundadores": "",
+    "site": "https://www.marvinblue.earth",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/721cc554-73c9-47f3-a23f-14681a92e96c",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software",
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Deep Learning",
+      "Machine Learning",
+      "Processamento de Linguagem Natural (PLN)"
+    ]
+  },
+  {
+    "nome": "Talent Academy",
+    "descricao": "A Talent Academy é uma HR Tech focada em desenvolver pessoas e fortalecer a cultura organizacional. Combina tecnologia, people analytics e uma rede de talent experts para apoiar empresas nos principais desafios relacionados a desenvolvimento de times, performance e cu...Ler mais",
+    "segmento": "Recursos Humanos",
+    "fundadores": "",
+    "site": "https://talentacademy.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/1d0f4f96-2911-4f81-bf05-465effccdcd7",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Voltta",
+    "descricao": "A VOLTTA é uma EnergyTech brasileira que integra tecnologia, operação e experiência digital para comercializar energia e gerir infraestrutura de recarga de veículos elétricos, operando rede de carregadores e soluções SaaS para parceiros e clientes.",
+    "segmento": "Energia",
+    "fundadores": "",
+    "site": "https://voltta.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e434a627-9244-46b9-b87c-5595b76f115e",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software",
+      "Big Data e Data Analytics"
+    ]
+  },
+  {
+    "nome": "Woba",
+    "descricao": "Woba é a forma mais inteligente de contratar e administrar escritórios. A solução e tecnologia Woba permite que grandes empresas controlem os seus espaços de trabalho em uma única plataforma, sem custos escondidos. Muito mais eficiência, flexibilidade e centralização.",
+    "segmento": "Construção Civil",
+    "fundadores": "",
+    "site": "http://www.woba.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0d774271-8020-425d-af73-fe2504dc4446",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Inteligência Artificial"
+    ]
+  },
+  {
+    "nome": "4KST",
+    "descricao": "A 4kst é uma DeepTech da PUCPR pioneira em Adaptive AI. Com tecnologia proprietária de ML, desenvolve modelos preditivos que se atualizam em tempo real, eliminando a degradação e os re-treinamentos do ML tradicional. Bicampeã da Febraban Tech, une ciência e performanc...Ler mais",
+    "segmento": "Produtividade",
+    "fundadores": "Riccardo Lanzuolo; Fabricio Enembreck; Lucas Loezer ; Jean Paul Barddal",
+    "site": "http://www.4kst.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/11728ae2-46e7-4dd9-b0d7-a93dd7b56a39",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Deep Learning",
+      "Inteligência Artificial",
+      "Machine Learning",
+      "Software"
+    ]
+  },
+  {
+    "nome": "4MDG",
+    "descricao": "4MDG é uma empresa de MDM e Governança de Dados que combina SaaS e serviços. Atende 150+ grandes empresas, 80 mil usuários e 250+ projetos no Brasil e LATAM, reduzindo em até 30% os custos operacionais com dados mestres.",
+    "segmento": "Produtividade",
+    "fundadores": "Paulo Cordeiro",
+    "site": "http://www.4mdg.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e43683f7-5a0f-498a-872d-018d3583390a",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "704Apps do Brasil",
+    "descricao": "A 704Apps desenvolve plataformas white label de mobilidade urbana, logística e entregas, democratizando o acesso à tecnologia para empreendedores, cooperativas e grupos locais, com soluções escaláveis, IA, automação e impacto social no Brasil e no mundo.",
+    "segmento": "Logística",
+    "fundadores": "",
+    "site": "https://www.704apps.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/182af5eb-3b93-40ae-945e-91b78a3f2180",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software",
+      "Outros tipos de tecnologia"
+    ]
+  },
+  {
+    "nome": "8D Hubify",
+    "descricao": "Agência de Revenue Operations - RevOps: Serviços e Soluções de Marketing, Vendas e CS, por meio da metodologia de RevOps, ou seja, nosso portfólio apresenta serviços ou soluções com foco em agregar na estratégia de gerar receita saudável para os nossos clientes.",
+    "segmento": "Marketing",
+    "fundadores": "",
+    "site": "http://www.hubify.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/eed3cef3-72b1-4478-bc24-e8ce318f8926",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Outros tipos de tecnologia"
+    ]
+  },
+  {
+    "nome": "A4 Solutions",
+    "descricao": "A A4 Solutions desenvolve Smart Safety para a indústria: hardware IoT, software e IA em uma plataforma única que previne acidentes em tempo real. +200 projetos e +15 mil trabalhadores protegidos. Segurança que gera resultado. a4solutions.com.br",
+    "segmento": "Indústria",
+    "fundadores": "Andre Rodrigues, Ana Flávia Rodrigues",
+    "site": "http://a4solutions.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/095c847d-1555-46bc-bd76-7f395df86a01",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Internet das Coisas (Iot)"
+    ]
+  },
+  {
+    "nome": "a55",
+    "descricao": "Fintech de Crédito e meios de pagamento focada em processamento de pagamentos e antecipação de recebiveis. https://a55.tech/pt",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "http://a55.tech",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d405a59b-0c25-4ad8-b48d-c90df5fcc45c",
+    "modelos_negocio": [],
+    "tecnologias": []
+  },
+  {
+    "nome": "Abbiamo",
+    "descricao": "Abbiamo é um Orquestrador Logístico que habilita as varejistas a realizarem entregas locais expressas e omnicanais. Com a Abbiamo, o prazo de entrega para o consumidor deixa de ser contado em dias úteis e passa a ser contado em horas.",
+    "segmento": "Logística",
+    "fundadores": "",
+    "site": "https://www.abbiamolog.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/04fe5247-25cb-4178-a070-3519ddb5cee9",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Internet das Coisas (Iot)",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Abstra",
+    "descricao": "Abstra simplifica a automação de processos empresariais com Python e IA, oferecendo um editor de fluxo de trabalho completo e deploy com um clique. Ideal para negócios que buscam eficiência, integração flexível e segurança, aumentando a produtividade e reduzindo erros...Ler mais",
+    "segmento": "Produtividade",
+    "fundadores": "Bruno Vieira Costa",
+    "site": "https://www.abstra.io",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/732153db-aae7-424e-a1c9-71b62c626016",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Computação em nuvem",
+      "Outros tipos de tecnologia",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Abundance Brasil",
+    "descricao": "Conexão de compra e venda de terras e ativos ambientais, facilitado por inteligência Geospacial e AI",
+    "segmento": "ESG",
+    "fundadores": "",
+    "site": "http://abundancebrasil.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/c98bc4bb-c012-4f91-b640-f530159ce138",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Realidade Virtual",
+      "Blockchain"
+    ]
+  },
+  {
+    "nome": "Academia do Universitário",
+    "descricao": "O sistema operacional de estágio das maiores empresas do Brasil. Mais de 50 multinacionais usam a plataforma da AU para atrair, selecionar, gerir os contratos e desenvolver a nova geração. Tudo em um único sistema.",
+    "segmento": "Recursos Humanos",
+    "fundadores": "",
+    "site": "http://academiadouniversitario.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d68f4b63-4d7d-4ecf-8dbf-c52e1a6af4e4",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software",
+      "Inteligência Artificial",
+      "Big Data e Data Analytics"
+    ]
+  },
+  {
+    "nome": "Accountfy",
+    "descricao": "Plataforma de gestão financeira que integra as áreas de Controladoria, Planejamento Financeiro e Tesouraria.",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "http://accountfy.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/318a4e48-10fa-4c0b-a675-33574513517c",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software",
+      "Big Data e Data Analytics",
+      "Computação em nuvem"
+    ]
+  },
+  {
+    "nome": "Acquaplan",
+    "descricao": "O Grupo Acquaplan oferece soluções ambientais integradas com mais de 20 anos de expertise. Unindo consultoria, oceanografia e modelagem de risco, transformamos desafios em oportunidades sustentáveis para grandes players. Vamos navegar com segurança no cenário ambienta...Ler mais",
+    "segmento": "Marítimo e Portuário",
+    "fundadores": "",
+    "site": "http://simport.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/5545d2f5-0395-46a9-92ff-9e613e2e668d",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Hardware",
+      "Machine Learning",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Adea Grow Tecnologia e Intermediacao S.a.",
+    "descricao": "A Sette tem o propósito de auxiliar credores e o setor do agronegócio em suas operações de ponta a ponta.",
+    "segmento": "Agricultura e Pecuária",
+    "fundadores": "",
+    "site": "http://sette.ag",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/57220b09-bda8-4d25-91fe-7342a63e9c89",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Deep Learning",
+      "Inteligência Artificial",
+      "Blockchain"
+    ]
+  },
+  {
+    "nome": "Adiante Recebíveis",
+    "descricao": "",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "https://adiantesa.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2a1058dd-1772-44d9-b6ef-9df87905a82d",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Machine Learning"
+    ]
+  },
+  {
+    "nome": "AdMan",
+    "descricao": "AdMan é uma plataforma SaaS de gestão e automação de performance para vendedores e agências que operam nos principais marketplaces da América Latina, como Mercado Livre, Amazon, Shopee.",
+    "segmento": "Marketing",
+    "fundadores": "",
+    "site": "http://ad-man.io",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/704e2c96-c9e7-451e-97c5-160fc30d97bb",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Agendart",
+    "descricao": "Somos um sistema desenvolvido para solucionar problemas de gestão no setor da saúde. Integramos em uma única plataforma diversas funcionalidades que auxiliam a administração clínica - Gestão financeira, contabilidade, agendamento, prontuário eletrônico, teleconsulta, ...Ler mais",
+    "segmento": "Saúde",
+    "fundadores": "",
+    "site": "http://agendart.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/66555f7e-b2cb-4e5a-b869-97656a082b3a",
+    "modelos_negocio": [],
+    "tecnologias": []
+  },
+  {
+    "nome": "N/I",
+    "descricao": "Agidesk é uma plataforma de gestão de chamados e processos que centraliza solicitações, automatiza fluxos e integra áreas de negócio, garantindo mais eficiência, controle, rastreabilidade e melhor experiência para usuários e equipes.",
+    "segmento": "Agricultura e Pecuária",
+    "fundadores": "",
+    "site": "",
+    "url_perfil": "https://app.cubo.itau/dashboard/search?resultSet=startup&page=3",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Modelo de negocio"
+    ]
+  },
+  {
+    "nome": "Agile Trends",
+    "descricao": "O Agile Trends contecta pessoas e empresas interessadas em inovação e agilidade através de eventos presenciais e online, gerando aprendizados e negócios.",
+    "segmento": "Educação",
+    "fundadores": "",
+    "site": "http://www.agiletrendsbr.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d2e7e0d8-a461-4277-8ce6-43edbd2cb5d9",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software"
+    ]
+  },
+  {
+    "nome": "Agroboard",
+    "descricao": "Somos uma empresa com uma plataforma SaaS, que oferece um ecossistema completo para a gestão em Commodities, diminuindo riscos e aumentando a precisão e agilidade das tomadas de decisões adequadas para o crescimento do negócio.",
+    "segmento": "Agricultura e Pecuária",
+    "fundadores": "",
+    "site": "http://agroboard.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/c057731c-6652-4247-aaee-da890d77c244",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Computação em nuvem",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Agrotools",
+    "descricao": "A Agrotools é hoje a empresa AgTech mais relevante da América Latina, atendendo todas as cadeias empresariais do agronegócio. A nossa tecnologia, aliada a um dos mais completos bancos de dados do agronegócio, nos dá a capacidade de gerar insights que conectam o mundo ...Ler mais",
+    "segmento": "Agricultura e Pecuária",
+    "fundadores": "",
+    "site": "http://www.agrotools.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/08709eb8-8063-476e-8a1b-316866d0ce10",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Blockchain",
+      "Computação em nuvem",
+      "Machine Learning",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Ahorra Facil",
+    "descricao": "Ahorra Fácil is a commercial intelligence platform that connects CPG brands and retailers directly with consumers in real-time. By leveraging AI to analyze receipt data, we enable personalized campaigns that significantly increase client revenue.",
+    "segmento": "Marketing",
+    "fundadores": "Josemaría Motta, Luis Estrada, Guillermo Jude",
+    "site": "http://www.ahorrafacil.com.uy",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/b3600143-037e-4c32-8813-a401b5233794",
+    "modelos_negocio": [
+      "B2B2C (business to business to consumer)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "AICube",
+    "descricao": "A AICube revoluciona a automação com Qube, um agente de IA autônomo que opera sistemas como um humano, sem APIs ou código. Reduz custos, elimina tarefas manuais e otimiza processos em Finanças, RH, Compras e Logística, acelerando a transformação digital e impulsionand...Ler mais",
+    "segmento": "Produtividade",
+    "fundadores": "",
+    "site": "http://www.qilbee.io",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/a073319f-ed55-4c4a-91d3-675f626f637c",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Computação em nuvem",
+      "Inteligência Artificial"
+    ]
+  },
+  {
+    "nome": "Ainwater",
+    "descricao": "Ainwater offers an AI-based SaaS to optimize wastewater treatment and water production plants. Our solution adapts to facilities without the need for retrofit, providing a preventive approach that improves the quality of treated water, reduces operational costs, and e...Ler mais",
+    "segmento": "ESG",
+    "fundadores": "Camilo Huneeus, Martín Concha e Marcos Pérez",
+    "site": "http://ainwater.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/48af1701-de54-416e-8a1c-990d21e56757",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Machine Learning",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Air Robotics",
+    "descricao": "A Air Robotics transforma drones em ferramentas estratégicas de segurança, monitoramento e inspeção, por meio de tecnologia própria que automatiza voos, aplica IA para detecção de riscos, transmite dados em tempo real e gera relatórios para a gestão de grandes áreas e...Ler mais",
+    "segmento": "Indústria",
+    "fundadores": "Márcio Pinheiro; Murilo Pereira",
+    "site": "https://www.airrobotics.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/eeb7dfdf-a0d1-4d39-8dc0-b9d7f9a96ab1",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software",
+      "Drones",
+      "Robótica",
+      "Hardware"
+    ]
+  },
+  {
+    "nome": "Alephee",
+    "descricao": "A Alephee conecta marcas, distribuidores e revendedores do setor automotivo na América Latina. A plataforma otimiza processos por meio de catálogo digital, IA, escala vendas, gera eficiência operacional e fornece inteligência para acelerar o crescimento nos modelos B2...Ler mais",
+    "segmento": "Software",
+    "fundadores": "Gaston Zelerteins; Jonathan Saiegh; Javier Neuman",
+    "site": "https://alephee.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/431030a9-7bcd-48d1-948c-1c15503248c7",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Software",
+      "Big Data e Data Analytics",
+      "Computação em nuvem"
+    ]
+  },
+  {
+    "nome": "Aliado",
+    "descricao": "Aliado é uma RetailTech para aumentar conversão no varejo físico. A plataforma Aliado escuta atendimentos em loja, analisa pontos de melhoria, treina vendedores e aciona gerentes em tempo real. E mostra aos executivos onde há demanda reprimida e as causas de não-conv...Ler mais",
+    "segmento": "Varejo",
+    "fundadores": "André Franco, Caique Oliveira",
+    "site": "http://www.alia.do",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/1bd9b8a0-ab96-42ad-90bd-c441454307c9",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Deep Learning",
+      "Inteligência Artificial",
+      "Machine Learning"
+    ]
+  },
+  {
+    "nome": "Aliger",
+    "descricao": "A Aliger é uma empresa brasileira de engenharia, classificada como deep tech, focada em pesquisa, desenvolvimento e inovação com ferramentas próprias e customizadas para resolver problemas que ainda não existem soluções viáveis ou acessíveis",
+    "segmento": "Indústria",
+    "fundadores": "",
+    "site": "http://www.aliger.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/13ee85e4-922a-4e46-a13a-3eec5c925543",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Deep Learning",
+      "Hardware",
+      "Inteligência Artificial",
+      "Internet das Coisas (Iot)"
+    ]
+  },
+  {
+    "nome": "AllStrategy",
+    "descricao": "A AllStrategy é uma startup com mais de 20 anos produzindo softwares para gestão financeira, mais especificamente, gestão orçamentária e gestão de fluxo de caixa. Com mais de 1000 clientes corporativos usando seus softwares, é líder no mercado Brasileiro de software p...Ler mais",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "http://www.allstrategy.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0947d1fa-fe87-4eab-8286-5984bc5cc958",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software",
+      "Computação em nuvem"
+    ]
+  },
+  {
+    "nome": "ALLUGG LOCAÇÕES LTDA",
+    "descricao": "",
+    "segmento": "Produtividade",
+    "fundadores": "Felipe Carmuega Rabaçal",
+    "site": "http://www.allugg.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0edecc50-51ce-4fc8-96be-fd1bb73bf2a4",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Aluga Mais App",
+    "descricao": "Solução digital para imobiliárias que atuam com locação e possuem o desejo de oferecer uma experiência descomplicada e segura aos seus clientes.",
+    "segmento": "Construção Civil",
+    "fundadores": "Danielle Miranda e Rodrigo Lubenow",
+    "site": "http://alugamaisapp.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/53e85781-5c9c-40e6-9670-d0f16858e659",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Software"
+    ]
+  },
+  {
+    "nome": "Alura",
+    "descricao": "A inovação fomenta o crescimento das empresas - e as pessoas preparadas são responsáveis por essa transformação. Por isso, impulsionamos organizações de diferentes tamanhos e setores para vencerem desafios e se tornarem mais competitivas. Descubra como impulsionar os ...Ler mais",
+    "segmento": "Educação",
+    "fundadores": "",
+    "site": "http://www.alura.com.br/empresas",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/79fe1eaf-725b-43df-82cd-17532ffa5516",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": []
+  },
+  {
+    "nome": "AmFi Finance",
+    "descricao": "A AmFi é uma plataforma financeira on-chain que torna fácil e rápido para as fintechs estruturar, distribuir e operar seus próprios produtos financeiros. Nesta mesma plataforma, conectamos fintechs a investidores locais e globais e implementamos as melhores práticas d...Ler mais",
+    "segmento": "Financeiro",
+    "fundadores": "",
+    "site": "http://amfi.finance",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/11aee4dc-6b1a-431f-91a9-356c074aa193",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Blockchain"
+    ]
+  },
+  {
+    "nome": "Amplifique.me",
+    "descricao": "A Amplifique.me é um Plataforma de Gestão da Experiência do Cliente multimétricas (NPS, CSAT, CES, Surveys e +). Modelo de negócio: SaaS B2B (venda de licença de software recorrente mensalmente).",
+    "segmento": "Marketing",
+    "fundadores": "",
+    "site": "http://www.amplifique.me",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/81421425-4d7f-4534-8104-d4fe64e190b1",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software",
+      "Big Data e Data Analytics",
+      "Computação em nuvem"
+    ]
+  },
+  {
+    "nome": "Anzi Finance",
+    "descricao": "Anzi provides credit risk mitigation infrastructure, operating guarantees on its own or third-party balance and first-loss pools via multisig wallets. It supports real-world assets as counter-collateral. Blockchain adds traceability, automatic reconciliations, and liv...Ler mais",
+    "segmento": "Financeiro",
+    "fundadores": "Luis Castañeda; David Ramírez; Andrés Valencia; Matias Marmissolle",
+    "site": "https://www.anzi.finance",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/4a9b21b7-f070-402c-b11b-3842d7b540d7",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Blockchain"
+    ]
+  },
+  {
+    "nome": "Aprova",
+    "descricao": "Aprova é uma plataforma de transformação digital para governos que automatiza o trâmite de processos, reduz prazos e papelada, e conecta cidadãos e servidores com transparência e eficiência, promovendo serviços públicos mais rápidos e acessíveis.",
+    "segmento": "Governo",
+    "fundadores": "Marco Antonio Zanatta",
+    "site": "https://aprova.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/3ae2ec02-724a-42c1-aa6f-1b5d9415f6e1",
+    "modelos_negocio": [
+      "B2G (business to government)"
+    ],
+    "tecnologias": [
+      "Processamento de Linguagem Natural (PLN)",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Aravita",
+    "descricao": "Manter a rentabilidade na gestão de produtos frescos é um enorme desafio para supermercados. A Aravita usa inteligência artificial para direcionar decisões e ações, começando pela recomendação do pedido perfeito, que traz ganhos na redução de desperdícios e maior disp...Ler mais",
+    "segmento": "ESG",
+    "fundadores": "",
+    "site": "http://www.aravita.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0201e848-0295-4c3e-a3f8-d87c4aea4c12",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Machine Learning",
+      "Inteligência Artificial",
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Deep Learning",
+      "Internet das Coisas (Iot)",
+      "Processamento de Linguagem Natural (PLN)",
+      "Software"
+    ]
+  },
+  {
+    "nome": "ARDAN PHARMA",
+    "descricao": "Ardan Pharma is developing a First-in-Class targeted immunotherapy through drug candidates that induce pharmacologic inhibition of TMEM176A/B, an emerging oncology target, potential biomarker and resistance factor to current immunotherapies.",
+    "segmento": "Saúde",
+    "fundadores": "",
+    "site": "http://ardan-pharma.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/22efe2b8-3750-433c-96a2-06e3abb8e467",
+    "modelos_negocio": [],
+    "tecnologias": []
+  },
+  {
+    "nome": "Arqgen",
+    "descricao": "Concepção de projetos de arquitetura via Design Generativo e Inteligência Artificial",
+    "segmento": "Construção Civil",
+    "fundadores": "",
+    "site": "http://arqgen.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f06b2744-fcc8-4c03-8dbf-a3a3c2f68e9f",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Computação em nuvem",
+      "Inteligência Artificial",
+      "Machine Learning",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Arquiteto de Bolso (upik)",
+    "descricao": "Democratizamos Arquitetura e Design Interiores 160 mil ambientes, 14 prêmios, 12 países e soluções Upik: Arquiteto de Bolso: Transforme seu espaço em 2h, online, R$ 99 ou grátis. Match: ambientes 3D com IA em 1 minuto e lista de compras. Ofertas de Bolso: Comparador d...Ler mais",
+    "segmento": "Construção Civil",
+    "fundadores": "",
+    "site": "https://arquitetodebolso.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f076359e-2553-4936-9761-6308717f2af6",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Big Data e Data Analytics",
+      "Computação em nuvem",
+      "Inteligência Artificial",
+      "Machine Learning",
+      "Realidade aumentada",
+      "Realidade Virtual",
+      "Software"
+    ]
+  },
+  {
+    "nome": "ASAAS",
+    "descricao": "O Asaas é a infraestrutura financeira completa para startups e scale-ups. Muito além de conta digital gratuita, oferecemos uma API robusta e developer-friendly para automatizar todo o seu backoffice: gestão de assinaturas (SaaS), réguas de cobrança, split de pagamento...Ler mais",
+    "segmento": "Financeiro",
+    "fundadores": "Diego Contezini; Piero Contezini",
+    "site": "https://www.asaas.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/726be9ad-2ed1-439e-97da-2ac99014853c",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software"
+    ]
+  },
+  {
+    "nome": "Atlante Sistemas",
+    "descricao": "A Atlante é uma empresa de tecnologia que desenvolve uma plataforma inteligente para logística e supply chain, usando dados, automação e IA para integrar WMS, TMS, OMS e ativos, conectando toda a operação em um único ecossistema digital.",
+    "segmento": "Logística",
+    "fundadores": "Leonardo Nunes",
+    "site": "https://www.atlanteti.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/bbfb5988-6539-4054-af56-d3f32e0996a4",
+    "modelos_negocio": [
+      "B2B (business to business)"
+    ],
+    "tecnologias": [
+      "Inteligência Artificial",
+      "Software",
+      "Outros tipos de tecnologia"
+    ]
+  },
+  {
+    "nome": "Atlas Governance Tecnologia",
+    "descricao": "Startup SaaS B2B focada em Governance Tech, dona dos portais AtlasGOV (para conselhos e comitês, utilizado por 40% das empresas listadas na B2) e AtlasAGM (para digitalização de assembleias de emissões de ações e dívida negociadas). Presente em 12 países, com mais de ...Ler mais",
+    "segmento": "ESG",
+    "fundadores": "",
+    "site": "https://welcome.atlasgov.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/67532fe0-3b14-4c75-ac35-a2a6c93a5e27",
+    "modelos_negocio": [],
+    "tecnologias": [
+      "Computação em nuvem",
+      "Inteligência Artificial",
+      "Processamento de Linguagem Natural (PLN)",
+      "Software"
+    ]
+  }
+]
