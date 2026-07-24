@@ -1,149 +1,166 @@
-# Cubo Itaú — Startup Data Extractor
+# Cubo Itau — Startup Data Extractor
 
-Extrai dados das startups do ecossistema [Cubo Itaú](https://cubo.itau/)
-e os persiste em um banco PostgreSQL via [Supabase](https://supabase.com).
+Extrai dados das startups do ecossistema [Cubo Itau](https://cubo.itau/) e os exibe em um frontend Next.js com classificacao por departamento via IA.
 
 ## Arquitetura
 
 ```
 cubo_resolution/
-├── main.py                 # Ponto de entrada — orquestra o pipeline
-├── config.py               # Carrega variáveis do .env
-├── .env                    # Credenciais (não versionar)
-├── .env.example            # Template documentado
-├── requirements.txt        # Dependências Python
-├── cubo/
-│   ├── __init__.py
-│   ├── models.py           # Dataclasses: Startup, ScrapingReport
-│   ├── db.py               # Camada Supabase — CRUD e upsert
-│   └── scraper.py          # Selenium — login, coleta de links, extração
-└── sql/
-    └── schema.sql          # DDL do banco (executar no SQL Editor)
+├── README.md
+├── .gitignore
+│
+├── backend/                          # Extracao e classificacao (Python)
+│   ├── .env
+│   ├── .env.example
+│   ├── pyproject.toml
+│   ├── requirements.txt
+│   ├── data/
+│   │   ├── raw/                      (startups_cubo.json, _parcial.json, paginas_rastreadas.json)
+│   │   └── processed/               (departamentos_startups.json)
+│   ├── scripts/
+│   │   ├── run_scraper.py            # Selenium — extrai startups do Cubo
+│   │   └── run_classifier.py         # Gemini — classifica por departamento
+│   ├── src/cubo/
+│   │   ├── __init__.py
+│   │   ├── config.py                 # Carrega .env
+│   │   ├── models.py                 # Dataclasses
+│   │   ├── scraper.py                # Selenium WebDriver
+│   │   └── gemini.py                 # Google Gemini client
+│   └── tests/
+│       └── __init__.py
+│
+└── frontend/                         # Visualizacao (Next.js 15 + TypeScript)
+    ├── .env.example
+    ├── package.json
+    ├── next.config.ts
+    ├── tsconfig.json
+    ├── public/
+    └── src/
+        ├── app/
+        │   ├── layout.tsx            # Root layout
+        │   ├── page.tsx              # Home: grid de departamentos
+        │   ├── loading.tsx
+        │   ├── not-found.tsx
+        │   ├── error.tsx
+        │   ├── departamentos/
+        │   │   └── [slug]/
+        │   │       └── page.tsx      # Detalhe do departamento + startups
+        │   └── startups/
+        │       └── page.tsx          # Busca global com filtros
+        ├── components/
+        │   ├── departamento-card.tsx
+        │   ├── startup-table.tsx
+        │   ├── startup-card.tsx
+        │   ├── confianca-badge.tsx
+        │   ├── search-input.tsx
+        │   └── filter-bar.tsx
+        ├── lib/
+        │   ├── types.ts              # Tipos TypeScript
+        │   ├── constants.ts          # Departamentos, slugs, descricoes
+        │   └── data.ts               # Carregamento e queries do JSON
+        └── data/
+            ├── startups_cubo.json
+            └── departamentos_startups.json
 ```
 
-## Pré-requisitos
+## Backend — Setup
+
+### Pre-requisitos
 
 - **Python 3.10+**
 - **Google Chrome** instalado
-- **Projeto no [Supabase](https://supabase.com)** com as tabelas criadas
-- **Credenciais do Cubo Itaú** (e-mail e senha de `app.cubo.itau`)
+- **Credenciais do Cubo Itau** (e-mail e senha de `app.cubo.itau`)
 
-## Setup
-
-### 1. Clone e instale as dependências
+### 1. Instalar dependencias
 
 ```bash
+cd backend
 pip install -r requirements.txt
 ```
 
-### 2. Configure o arquivo `.env`
+### 2. Configurar `.env`
 
-Copie o template e preencha com seus dados:
+Copie o template e preencha:
 
 ```
-SUPABASE_URL=https://<seu-projeto>.supabase.co
-SUPABASE_ANON_KEY=eyJ...
-SUPABASE_SERVICE_ROLE_KEY=eyJ...
 CUBO_EMAIL=seu@email.com
 CUBO_PASSWORD=sua-senha
+GEMINI_API_KEY=sua-chave-gemini
 ```
 
-| Variável | Descrição | Onde encontrar |
+| Variavel | Descricao | Onde encontrar |
 |---|---|---|
-| `SUPABASE_URL` | URL do projeto Supabase | Dashboard → Settings → API → Project URL |
-| `SUPABASE_ANON_KEY` | Chave anônima (pública) | Dashboard → Settings → API → anon/public |
-| `SUPABASE_SERVICE_ROLE_KEY` | Chave admin (ignora RLS) | Dashboard → Settings → API → service_role |
 | `CUBO_EMAIL` | E-mail de login no Cubo | — |
 | `CUBO_PASSWORD` | Senha do Cubo | — |
-| `HEADLESS` | `true` para rodar sem interface | Opcional (padrão: `false`) |
+| `GEMINI_API_KEY` | Chave da API Google Gemini | Google AI Studio |
+| `HEADLESS` | `true` para rodar sem interface | Opcional (padrao: `false`) |
 
-### 3. Crie as tabelas no Supabase
+### 3. Executar
 
-Abra o **SQL Editor** no Supabase Dashboard e execute o conteúdo de
-[`sql/schema.sql`](sql/schema.sql).
-
-### 4. Execute
+**Scraper** (extrai startups do Cubo Itau):
 
 ```bash
-python main.py
+python scripts/run_scraper.py
 ```
 
-## Fluxo de execução
+**Classificador** (associa startups aos departamentos via Gemini):
 
-```
-┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│ 1. Config   │────▶│ 2. Login (opc.)  │────▶│ 3. Vitrine      │
-│ .env → cfg  │     │ app.cubo.itau    │     │ /startups-      │
-│             │     │ email + senha    │     │ portfolio       │
-└─────────────┘     └──────────────────┘     └────────┬────────┘
-                                                      │
-                                              Scroll + Load More
-                                                      │
-                                                      ▼
-┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│ 6. Relatório│◀────│ 5. Supabase      │◀────│ 4. Perfis       │
-│ stdout      │     │ upsert + N:N     │     │ 1 por 1 com     │
-│             │     │                  │     │ delay de 1.5s   │
-└─────────────┘     └──────────────────┘     └─────────────────┘
+```bash
+python scripts/run_classifier.py
 ```
 
-## Modelo de dados
+### 4. Atualizar dados do frontend
 
-```
-startups ──┬── startup_tecnologias ──┬── tecnologias
-           │                         │
-           └── startup_modelos_neg ──┴── modelos_negocio
-```
+Apos rodar o scraper e o classificador, copie os JSONs gerados para o frontend:
 
-### Consultas de exemplo
-
-**Startups por tecnologia:**
-
-```sql
-SELECT t.nome AS tecnologia, s.nome AS startup
-FROM startups s
-JOIN startup_tecnologias st ON st.startup_id = s.id
-JOIN tecnologias t ON t.id = st.tecnologia_id
-WHERE t.nome = 'Inteligência Artificial'
-ORDER BY s.nome;
+```bash
+copy backend\data\raw\startups_cubo.json frontend\src\data\startups_cubo.json
+copy backend\data\processed\departamentos_startups.json frontend\src\data\departamentos_startups.json
 ```
 
-**Startups por modelo de negócio:**
+## Frontend — Setup
 
-```sql
-SELECT mn.nome AS modelo, s.nome AS startup
-FROM startups s
-JOIN startup_modelos_negocio sm ON sm.startup_id = s.id
-JOIN modelos_negocio mn ON mn.id = sm.modelo_negocio_id
-ORDER BY mn.nome, s.nome;
+### Pre-requisitos
+
+- **Node.js 18+**
+
+### 1. Instalar dependencias
+
+```bash
+cd frontend
+npm install
 ```
 
-**Segmentos mais frequentes:**
+### 2. Rodar em desenvolvimento
 
-```sql
-SELECT segmento, COUNT(*) AS total
-FROM startups
-WHERE segmento IS NOT NULL
-GROUP BY segmento
-ORDER BY total DESC;
+```bash
+npm run dev
 ```
 
-## Seletores
+Acesse `http://localhost:3000`.
 
-Os seletores CSS/XPath estão definidos como constantes em
-[`cubo/scraper.py`](cubo/scraper.py). Se a estrutura do site mudar,
-ajuste-os ali.
+### 3. Build de producao
 
-Os seletores da página de perfil usam XPath com busca por rótulo
-(`_texto_apos_rotulo`, `_tags_apos_rotulo`), que é tolerante a
-mudanças de classes CSS, mas pode precisar de tradução conforme o
-idioma da página.
+```bash
+npm run build
+npm start
+```
 
-## Troubleshooting
+## Paginas do Frontend
 
-| Problema | Causa provável | Solução |
-|---|---|---|
-| `Nenhum link de startup encontrado` | Seletores desatualizados | Inspecione o HTML e atualize os seletores em `scraper.py` |
-| `Timeout ao carregar` | Conexão lenta ou bloqueio | Aumente `SELENIUM_TIMEOUT` no `.env` |
-| Campos vazios na extração | Rótulos em inglês (`Founders` vs `Fundadores`) | O código já testa ambas as versões |
-| `Login pode ter falhado` | Credenciais incorretas ou CAPTCHA | Verifique e-mail/senha; pode ser necessário login manual |
+| Rota | Descricao |
+|---|---|
+| `/` | Grid de 12 departamentos com contagem de startups |
+| `/departamentos/[slug]` | Startups do departamento, separadas por confianca (alta/media) |
+| `/startups` | Busca global com filtros por nome, segmento, tecnologia e departamento |
+
+## Fluxo de dados
+
+```
+┌──────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│ 1. Scraper   │────▶│ 2. Classificador │────▶│ 3. Frontend     │
+│ Selenium     │     │ Gemini AI        │     │ Next.js         │
+│ startups_    │     │ departamentos_   │     │ Server          │
+│ cubo.json    │     │ startups.json    │     │ Components      │
+└──────────────┘     └──────────────────┘     └─────────────────┘
+```

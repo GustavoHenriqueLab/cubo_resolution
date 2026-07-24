@@ -4,16 +4,18 @@ Responsável por:
 - Realizar login na plataforma Cubo Itaú.
 - Navegar pela busca de startups no dashboard e extrair dados dos cards.
 - Visitar perfis individuais para extrair founders, site e tecnologias.
+- Tratar cards sem perfil (apenas nome) extraindo o que estiver visível.
 """
 
 from __future__ import annotations
 
 import logging
-import re
 import time
-from urllib.parse import urljoin
 
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import (
+    InvalidSessionIdException,
+    TimeoutException,
+)
 from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
@@ -271,9 +273,22 @@ def _extrair_dados_card(card: WebElement) -> dict:
     }
 
 
+def _startup_do_card(dados_card: dict) -> Startup:
+    """Constrói uma Startup apenas com os dados visíveis no card."""
+    return Startup(
+        nome=dados_card["nome"],
+        url_perfil="",
+        descricao=dados_card.get("descricao", ""),
+        segmento=dados_card.get("segmento", ""),
+        modelos_negocio=[dados_card["modelo_negocio"]] if dados_card.get("modelo_negocio") else [],
+    )
+
+
 def coletar_e_extrair_startups(
     driver: Chrome,
     timeout: int = 15,
+    paginas_pular: set[int] | None = None,
+    nomes_salvos: set[str] | None = None,
 ):
     """Percorre as páginas da busca e extrai dados de cada startup.
 
@@ -283,14 +298,24 @@ def coletar_e_extrair_startups(
     Args:
         driver: WebDriver autenticado.
         timeout: Tempo de espera por elemento.
+        paginas_pular: Conjunto de números de páginas já completas
+            que devem ser ignoradas sem carregar no Selenium.
+        nomes_salvos: Nomes de startups já persistidas, para pular
+            cards sem precisar clicar.
 
     Yields:
-        Instâncias de :class:`Startup` à medida que são extraídas.
+        Tuplas ``(número_da_página, Startup)`` à medida que são extraídas.
     """
+    pular = paginas_pular or set()
+    ja_salvos = nomes_salvos or set()
     total_paginas = 52
     todos_extraidos: set[str] = set()
 
     for pagina in range(1, total_paginas + 1):
+        if pagina in pular:
+            logger.info("--- Página %d/%d [PULADA: já completa] ---", pagina, total_paginas)
+            continue
+
         url = f"{URL_SEARCH}&page={pagina}"
         logger.info("--- Página %d/%d ---", pagina, total_paginas)
         driver.get(url)
@@ -305,18 +330,62 @@ def coletar_e_extrair_startups(
             cards = driver.find_elements(
                 By.CSS_SELECTOR, "div[role='button'][aria-label]"
             )
-            return [c for c in cards if "Segmento" in c.text]
+            return cards
 
         startup_cards = _achar_cards()
-        logger.info("  %d startups na página %d", len(startup_cards), pagina)
+
+        # Pre-checa se todos os cards desta página já foram salvos
+        nomes_na_pagina: set[str] = set()
+        for card in startup_cards:
+            try:
+                label = card.get_attribute("aria-label") or "N/I"
+                nomes_na_pagina.add(label)
+            except Exception:
+                pass
+
+        novos_na_pagina = nomes_na_pagina - ja_salvos - todos_extraidos
+        if not novos_na_pagina and nomes_na_pagina:
+            logger.info(
+                "  %d startups na página %d [PULADA: todas já salvas]",
+                len(startup_cards),
+                pagina,
+            )
+            continue
+
+        logger.info("  %d startups na página %d (%d novas)", len(startup_cards), pagina, len(novos_na_pagina))
 
         indice = 0
         while indice < len(startup_cards):
             card = startup_cards[indice]
-            dados_card = _extrair_dados_card(card)
-            nome = dados_card["nome"]
 
-            if nome in todos_extraidos:
+            try:
+                dados_card = _extrair_dados_card(card)
+                nome = dados_card["nome"]
+            except InvalidSessionIdException:
+                logger.error("Sessão do navegador perdida. Interrompendo coleta.")
+                return
+            except Exception:
+                logger.exception("Erro ao ler card — pulando.")
+                indice += 1
+                continue
+
+            if nome in todos_extraidos or nome in ja_salvos:
+                indice += 1
+                continue
+
+            tem_segmento = "Segmento" in card.text
+
+            if not tem_segmento:
+                startup = _startup_do_card(dados_card)
+                logger.info(
+                    "  [%d/%d p%d] %s -> (apenas nome)",
+                    len(todos_extraidos) + 1,
+                    total_paginas * 10,
+                    pagina,
+                    startup.nome,
+                )
+                todos_extraidos.add(nome)
+                yield pagina, startup
                 indice += 1
                 continue
 
@@ -344,7 +413,7 @@ def coletar_e_extrair_startups(
                 ]
 
                 logger.info(
-                    "  [%d/%d p%d] %s → Founders: %s | Tech: %s",
+                    "  [%d/%d p%d] %s -> Founders: %s | Tech: %s",
                     len(todos_extraidos) + 1,
                     total_paginas * 10,
                     pagina,
@@ -354,7 +423,7 @@ def coletar_e_extrair_startups(
                 )
 
                 todos_extraidos.add(nome)
-                yield startup
+                yield pagina, startup
 
                 # Navega de volta para a página de busca via URL
                 driver.get(url)
@@ -368,7 +437,10 @@ def coletar_e_extrair_startups(
                 startup_cards = _achar_cards()
 
             except TimeoutException:
-                logger.error("  Timeout: %s", nome)
+                logger.error("  Timeout no perfil: %s — salvando dados do card", nome)
+                startup = _startup_do_card(dados_card)
+                todos_extraidos.add(nome)
+                yield pagina, startup
                 try:
                     driver.get(url)
                     time.sleep(4)
@@ -376,8 +448,18 @@ def coletar_e_extrair_startups(
                 except Exception:
                     pass
 
+            except InvalidSessionIdException:
+                logger.error("  Sessão perdida processando: %s — salvando dados do card", nome)
+                startup = _startup_do_card(dados_card)
+                todos_extraidos.add(nome)
+                yield pagina, startup
+                return
+
             except Exception:
-                logger.exception("  Erro ao processar: %s", nome)
+                logger.exception("  Erro ao processar: %s — salvando dados do card", nome)
+                startup = _startup_do_card(dados_card)
+                todos_extraidos.add(nome)
+                yield pagina, startup
                 try:
                     driver.get(url)
                     time.sleep(4)

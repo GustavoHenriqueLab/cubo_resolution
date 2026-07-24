@@ -13,19 +13,20 @@ import json
 import logging
 import sys
 import time
-from dataclasses import asdict
 from pathlib import Path
 
-from selenium.common.exceptions import TimeoutException
+# Adiciona src/ ao path para importar o pacote cubo
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from config import load_config
+from cubo.config import load_config
 from cubo import scraper
 from cubo.models import ScrapingReport, Startup
 
 logger = logging.getLogger("cubo")
 
-ARQUIVO_SAIDA = Path(__file__).resolve().parent / "startups_cubo.json"
-ARQUIVO_PARCIAL = Path(__file__).resolve().parent / "startups_cubo_parcial.json"
+ARQUIVO_SAIDA = Path(__file__).resolve().parent.parent / "data" / "raw" / "startups_cubo.json"
+ARQUIVO_PARCIAL = Path(__file__).resolve().parent.parent / "data" / "raw" / "startups_cubo_parcial.json"
+ARQUIVO_PAGINAS = Path(__file__).resolve().parent.parent / "data" / "raw" / "paginas_rastreadas.json"
 
 
 def _configurar_logging() -> None:
@@ -38,9 +39,10 @@ def _configurar_logging() -> None:
     )
 
 
-def _startup_para_dict(startup: Startup) -> dict:
+def _startup_para_dict(startup: Startup, id_: int) -> dict:
     """Converte uma Startup para um dicionário serializável em JSON."""
     return {
+        "id": id_,
         "nome": startup.nome,
         "descricao": startup.descricao,
         "segmento": startup.segmento,
@@ -62,14 +64,56 @@ def _salvar_parcial(startups: list[dict]) -> None:
 
 
 def _carregar_parcial() -> list[dict]:
-    """Carrega resultados parciais salvos anteriormente."""
-    if ARQUIVO_PARCIAL.exists():
+    """Carrega resultados parciais salvos anteriormente.
+
+    Usa o arquivo com mais dados entre ``_parcial`` e o final,
+    garantindo que nenhum dado seja perdido em caso de crash.
+    """
+    melhor: list[dict] = []
+    for arquivo in (ARQUIVO_PARCIAL, ARQUIVO_SAIDA):
+        if arquivo.exists():
+            try:
+                with open(arquivo, encoding="utf-8") as f:
+                    dados = json.load(f)
+                if len(dados) > len(melhor):
+                    melhor = dados
+            except Exception:
+                pass
+    return melhor
+
+
+def _carregar_paginas() -> dict[int, list[str]]:
+    """Carrega o tracking de páginas já processadas.
+
+    Returns:
+        Dicionário ``{número_página: [lista_de_nomes]}`` com nomes
+        únicos por página.
+    """
+    if ARQUIVO_PAGINAS.exists():
         try:
-            with open(ARQUIVO_PARCIAL, encoding="utf-8") as f:
-                return json.load(f)
+            with open(ARQUIVO_PAGINAS, encoding="utf-8") as f:
+                raw = json.load(f)
+            return {
+                int(k): list(dict.fromkeys(v)) for k, v in raw.items()
+            }
         except Exception:
             pass
-    return []
+    return {}
+
+
+def _salvar_paginas(rastreio: dict[int, list[str]]) -> None:
+    """Persiste o tracking de páginas no disco, garantindo nomes únicos."""
+    try:
+        dedup = {p: list(dict.fromkeys(nomes)) for p, nomes in rastreio.items()}
+        with open(ARQUIVO_PAGINAS, "w", encoding="utf-8") as f:
+            json.dump(
+                {str(k): v for k, v in dedup.items()},
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+    except Exception:
+        logger.warning("Não foi possível salvar arquivo de páginas.")
 
 
 def executar() -> ScrapingReport:
@@ -81,13 +125,27 @@ def executar() -> ScrapingReport:
         logger.error("CUBO_EMAIL e CUBO_PASSWORD não configurados no .env")
         return report
 
-    # Carrega progresso anterior (se houver)
     startups_salvas = _carregar_parcial()
     nomes_salvos: set[str] = {s["nome"] for s in startups_salvas}
+
+    for i, s in enumerate(startups_salvas, start=1):
+        if "id" not in s:
+            s["id"] = i
+
+    proximo_id = len(startups_salvas) + 1
+
+    rastreio = _carregar_paginas()
+    paginas_pular: set[int] = {
+        p for p, nomes in rastreio.items() if len(nomes) >= 10
+    }
+
     logger.info(
-        "Progresso anterior: %d startups já coletadas.",
+        "Progresso anterior: %d startups em %d páginas rastreadas.",
         len(startups_salvas),
+        len(rastreio),
     )
+    if paginas_pular:
+        logger.info("Páginas já completas (>=10): %s", sorted(paginas_pular))
 
     driver = scraper.criar_driver(headless=config.headless)
 
@@ -103,24 +161,33 @@ def executar() -> ScrapingReport:
             logger.error("Login falhou.")
             return report
 
-        for startup in scraper.coletar_e_extrair_startups(
+        for pagina, startup in scraper.coletar_e_extrair_startups(
             driver,
             timeout=config.selenium_timeout,
+            paginas_pular=paginas_pular,
+            nomes_salvos=nomes_salvos,
         ):
             if startup.nome in nomes_salvos:
                 report.total_encontrados += 1
                 continue
 
             try:
-                startups_salvas.append(_startup_para_dict(startup))
+                startups_salvas.append(
+                    _startup_para_dict(startup, proximo_id)
+                )
                 nomes_salvos.add(startup.nome)
+                proximo_id += 1
                 report.total_extraidos += 1
 
-                # Salva parcial a cada 10 startups
+                rastreio.setdefault(pagina, [])
+                if startup.nome not in rastreio[pagina]:
+                    rastreio[pagina].append(startup.nome)
+
                 if report.total_extraidos % 10 == 0:
                     _salvar_parcial(startups_salvas)
+                    _salvar_paginas(rastreio)
                     logger.info(
-                        "▸ Parcial salvo: %d startups.",
+                        ">> Parciais salvos: %d startups.",
                         len(startups_salvas),
                     )
 
@@ -131,15 +198,21 @@ def executar() -> ScrapingReport:
 
             time.sleep(config.request_delay)
 
+    except KeyboardInterrupt:
+        logger.warning("Interrompido pelo usuário. Salvando dados parciais...")
     finally:
-        driver.quit()
+        _salvar_parcial(startups_salvas)
+        _salvar_paginas(rastreio)
+        try:
+            driver.quit()
+        except Exception:
+            pass
 
-    # Salva arquivo final
-    _salvar_parcial(startups_salvas)
     with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as f:
         json.dump(startups_salvas, f, ensure_ascii=False, indent=2)
 
     logger.info("Arquivo final salvo: %s", ARQUIVO_SAIDA)
+    logger.info("Tracking de páginas salvo: %s", ARQUIVO_PAGINAS)
 
     return report
 
@@ -151,6 +224,7 @@ def main() -> None:
     logger.info("=" * 60)
     logger.info("Cubo Itaú — Startup Data Extractor")
     logger.info("Saída: %s", ARQUIVO_SAIDA)
+    logger.info("Tracking: %s", ARQUIVO_PAGINAS)
     logger.info("=" * 60)
 
     try:

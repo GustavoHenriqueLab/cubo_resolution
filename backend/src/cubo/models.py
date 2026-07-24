@@ -1,7 +1,7 @@
 """Modelos de domínio da aplicação.
 
 Define os dataclasses que representam as entidades extraídas do
-site do Cubo Itaú e que serão persistidas no Supabase.
+site do Cubo Itaú.
 """
 
 from __future__ import annotations

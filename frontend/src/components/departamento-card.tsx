@@ -1,0 +1,140 @@
+import Link from "next/link";
+import { ConfiancaBadge } from "@/components/confianca-badge";
+import type { DepartamentoInfo } from "@/lib/types";
+
+const TINTS: Record<string, { tint: string; blob: string; iconGrad: string; iconShadow: string }> = {
+  atendimento: {
+    tint: "rgba(191,219,254,.65)",
+    blob: "radial-gradient(closest-side, rgba(59,130,246,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#60a5fa,#2563eb)",
+    iconShadow: "rgba(59,130,246,.45)",
+  },
+  comercial: {
+    tint: "rgba(167,243,208,.55)",
+    blob: "radial-gradient(closest-side, rgba(16,185,129,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#34d399,#059669)",
+    iconShadow: "rgba(16,185,129,.45)",
+  },
+  qualidade: {
+    tint: "rgba(254,215,170,.65)",
+    blob: "radial-gradient(closest-side, rgba(249,115,22,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#fb923c,#ea580c)",
+    iconShadow: "rgba(249,115,22,.45)",
+  },
+  transporte: {
+    tint: "rgba(221,214,254,.55)",
+    blob: "radial-gradient(closest-side, rgba(139,92,246,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#a78bfa,#7c3aed)",
+    iconShadow: "rgba(139,92,246,.45)",
+  },
+  "biologia-molecular": {
+    tint: "rgba(254,202,202,.55)",
+    blob: "radial-gradient(closest-side, rgba(239,68,68,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#f87171,#dc2626)",
+    iconShadow: "rgba(239,68,68,.45)",
+  },
+  faturamento: {
+    tint: "rgba(165,243,252,.55)",
+    blob: "radial-gradient(closest-side, rgba(6,182,212,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#22d3ee,#0891b2)",
+    iconShadow: "rgba(6,182,212,.45)",
+  },
+  rh: {
+    tint: "rgba(254,240,138,.55)",
+    blob: "radial-gradient(closest-side, rgba(245,158,11,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#fbbf24,#d97706)",
+    iconShadow: "rgba(245,158,11,.45)",
+  },
+  "area-tecnica": {
+    tint: "rgba(251,207,232,.55)",
+    blob: "radial-gradient(closest-side, rgba(236,72,153,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#f472b6,#db2777)",
+    iconShadow: "rgba(236,72,153,.45)",
+  },
+  estoque: {
+    tint: "rgba(217,249,157,.55)",
+    blob: "radial-gradient(closest-side, rgba(132,204,22,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#a3e635,#65a30d)",
+    iconShadow: "rgba(132,204,22,.45)",
+  },
+  financeiro: {
+    tint: "rgba(153,246,228,.55)",
+    blob: "radial-gradient(closest-side, rgba(20,184,166,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#2dd4bf,#0d9488)",
+    iconShadow: "rgba(20,184,166,.45)",
+  },
+  ti: {
+    tint: "rgba(199,210,254,.55)",
+    blob: "radial-gradient(closest-side, rgba(99,102,241,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#818cf8,#4f46e5)",
+    iconShadow: "rgba(99,102,241,.45)",
+  },
+  "equipe-medica": {
+    tint: "rgba(254,215,215,.55)",
+    blob: "radial-gradient(closest-side, rgba(244,63,94,.22), transparent)",
+    iconGrad: "linear-gradient(135deg,#fb7185,#e11d48)",
+    iconShadow: "rgba(225,29,72,.45)",
+  },
+};
+
+interface Props {
+  departamento: DepartamentoInfo;
+  index: number;
+}
+
+export function DepartamentoCard({ departamento, index }: Props) {
+  const t = TINTS[departamento.slug] ?? TINTS.atendimento;
+
+  const percAlta =
+    departamento.totalStartups > 0
+      ? Math.round((departamento.altaConfianca / departamento.totalStartups) * 100)
+      : 0;
+
+  return (
+    <Link href={`/departamentos/${departamento.slug}`} className="block">
+      <article
+        className="animate-fade-in-up group relative cursor-pointer overflow-hidden rounded-[20px] border border-white/85 p-5 opacity-0 transition-all duration-200"
+        style={{
+          background: `linear-gradient(135deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.55) 60%, ${t.tint} 100%)`,
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(15,23,42,.04), 0 1px 0 rgba(15,23,42,.04), 0 12px 32px -16px rgba(15,23,42,.18), 0 4px 10px -6px rgba(15,23,42,.10)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          animationFillMode: "forwards",
+        }}
+      >
+        <div
+          className="pointer-events-none absolute -bottom-10 -right-8 h-[140px] w-[140px] rounded-full blur-lg"
+          style={{ background: t.blob }}
+        />
+
+        {/* Icon tile */}
+        <div
+          className="relative z-10 flex h-[42px] w-[42px] items-center justify-center rounded-xl text-white"
+          style={{
+            background: t.iconGrad,
+            boxShadow: `0 8px 18px -6px ${t.iconShadow}, inset 0 1px 0 rgba(255,255,255,.35)`,
+          }}
+        >
+          <span className="text-lg font-bold">{departamento.totalStartups}</span>
+        </div>
+
+        {/* Value */}
+        <div className="relative z-10 mt-4 font-display text-[42px] font-extrabold leading-none tracking-[-0.02em] text-gray-900 tabular-nums">
+          {departamento.totalStartups}
+        </div>
+
+        {/* Label */}
+        <div className="relative z-10 mt-2 text-[11px] font-bold uppercase tracking-[.10em] text-slate-500">
+          {departamento.nome}
+        </div>
+
+        {/* Confidence breakdown */}
+        <div className="relative z-10 mt-3 flex items-center gap-2 text-xs text-slate-500">
+          <ConfiancaBadge confianca="alta" />
+          <span>{percAlta}%</span>
+        </div>
+      </article>
+    </Link>
+  );
+}

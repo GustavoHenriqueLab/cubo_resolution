@@ -1,0 +1,24 @@
+# Arquivos sensíveis com credenciais
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dados gerados (opcional — descomente se não quiser versionar)
+# data/raw/*.json
+# data/processed/*.json
