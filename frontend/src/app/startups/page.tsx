@@ -47,12 +47,12 @@ export default function StartupsPage() {
         // Segmento: OR (startup so tem 1)
         if (segmentosFiltro.length > 0 && !segmentosFiltro.includes(s.segmento)) return false;
 
-        // Tecnologias: AND (deve ter TODAS as selecionadas)
-        if (tecnologiasFiltro.length > 0 && !tecnologiasFiltro.every((t) => s.tecnologias.includes(t))) return false;
+        // Tecnologias: OR (pelo menos uma das selecionadas)
+        if (tecnologiasFiltro.length > 0 && !tecnologiasFiltro.some((t) => s.tecnologias.includes(t))) return false;
 
-        // Departamentos: AND (deve estar em TODOS os selecionados)
+        // Departamentos: OR (pelo menos um dos selecionados)
         if (departamentosFiltro.length > 0) {
-          if (!departamentosFiltro.every((slug) => deptosStartup.some((d) => nomeParaSlug(d) === slug))) return false;
+          if (!departamentosFiltro.some((slug) => deptosStartup.some((d) => nomeParaSlug(d) === slug))) return false;
         }
 
         // Confianca
