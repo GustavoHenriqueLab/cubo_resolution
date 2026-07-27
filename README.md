@@ -25,6 +25,45 @@ O Gemini avalia cada startup em 9 criterios (aderencia a saude, maturidade, conf
 
 ---
 
+## Rodando o Projeto (Quick Start)
+
+```bash
+# 1. Backend — instalar dependencias
+cd backend
+pip install -r requirements.txt
+
+# 2. Configurar credenciais
+cp .env.example .env
+# Preencha CUBO_EMAIL, CUBO_PASSWORD, GEMINI_API_KEY no .env
+
+# 3. Extrair startups (Selenium — ~10 min)
+python scripts/run_scraper.py
+
+# 4. Classificar (Gemini — ~3 min)
+python scripts/run_classifier.py
+
+# 5. Ranquear + analisar destaques (~3 min)
+python scripts/rankear_deptos.py
+python scripts/analisar_destaques.py
+
+# 6. Frontend — instalar dependencias
+cd ../frontend
+npm install
+
+# 7. Copiar JSONs + build
+cd ..
+.\update.ps1
+
+# 8. Subir servidor
+cd frontend
+npm start
+# Acesse http://localhost:3000
+```
+
+**Proximos meses**: repetir passos 3 → 5 → 7 → 8. O scraper so executa se passaram 30 dias da ultima extracao.
+
+---
+
 ## Estrutura do Projeto
 
 ```
