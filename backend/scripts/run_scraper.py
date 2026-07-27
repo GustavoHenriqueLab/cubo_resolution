@@ -13,6 +13,8 @@ import json
 import logging
 import sys
 import time
+from collections import Counter
+from datetime import date, timedelta
 from pathlib import Path
 
 # Adiciona src/ ao path para importar o pacote cubo
@@ -39,7 +41,7 @@ def _configurar_logging() -> None:
     )
 
 
-def _startup_para_dict(startup: Startup, id_: int) -> dict:
+def _startup_para_dict(startup: Startup, id_: int, data_adicionado: str = "") -> dict:
     """Converte uma Startup para um dicionário serializável em JSON."""
     return {
         "id": id_,
@@ -51,6 +53,7 @@ def _startup_para_dict(startup: Startup, id_: int) -> dict:
         "url_perfil": startup.url_perfil,
         "modelos_negocio": startup.modelos_negocio,
         "tecnologias": startup.tecnologias,
+        "data_adicionado": data_adicionado,
     }
 
 
@@ -116,10 +119,52 @@ def _salvar_paginas(rastreio: dict[int, list[str]]) -> None:
         logger.warning("Não foi possível salvar arquivo de páginas.")
 
 
+def _pode_executar() -> tuple[bool, str]:
+    """Verifica se ja passaram 30 dias desde a ultima extracao.
+
+    Returns:
+        Tupla (pode_executar, mensagem).
+    """
+    if not ARQUIVO_SAIDA.exists():
+        return True, "Primeira execucao — arquivo de startups ainda nao existe."
+
+    try:
+        with open(ARQUIVO_SAIDA, encoding="utf-8") as f:
+            startups = json.load(f)
+
+        if not startups:
+            return True, "Arquivo de startups vazio — primeira execucao."
+
+        datas = [s.get("data_adicionado", "") for s in startups if s.get("data_adicionado")]
+        if not datas:
+            return True, "Nenhuma data_adicionado encontrada — permitindo execucao."
+
+        ultima_data = max(datas)
+        ultima = date.fromisoformat(ultima_data)
+        dias = (date.today() - ultima).days
+
+        if dias < 30:
+            return False, (
+                f"Ultima extracao foi ha {dias} dias ({ultima_data}). "
+                f"Minimo de 30 dias necessario. Faltam {30 - dias} dias."
+            )
+
+        return True, f"Ultima extracao: {ultima_data} ({dias} dias atras). Execucao permitida."
+    except Exception as e:
+        return True, f"Erro ao verificar data: {e}. Permitindo execucao."
+
+
 def executar() -> ScrapingReport:
     """Executa o pipeline completo de extração e persistência em JSON."""
     config = load_config()
     report = ScrapingReport()
+    data_hoje = date.today().isoformat()
+
+    pode, msg = _pode_executar()
+    logger.info("Verificacao de periodo: %s", msg)
+    if not pode:
+        logger.warning("Execucao bloqueada: %s", msg)
+        return report
 
     if not config.cubo_email or not config.cubo_password:
         logger.error("CUBO_EMAIL e CUBO_PASSWORD não configurados no .env")
@@ -135,19 +180,15 @@ def executar() -> ScrapingReport:
     proximo_id = len(startups_salvas) + 1
 
     rastreio = _carregar_paginas()
-    paginas_pular: set[int] = {
-        p for p, nomes in rastreio.items() if len(nomes) >= 10
-    }
 
     logger.info(
         "Progresso anterior: %d startups em %d páginas rastreadas.",
         len(startups_salvas),
         len(rastreio),
     )
-    if paginas_pular:
-        logger.info("Páginas já completas (>=10): %s", sorted(paginas_pular))
 
     driver = scraper.criar_driver(headless=config.headless)
+    total_cubo = 0
 
     try:
         sucesso = scraper.fazer_login(
@@ -161,19 +202,20 @@ def executar() -> ScrapingReport:
             logger.error("Login falhou.")
             return report
 
-        for pagina, startup in scraper.coletar_e_extrair_startups(
+        for pagina, total_cubo_atual, startup in scraper.coletar_e_extrair_startups(
             driver,
             timeout=config.selenium_timeout,
-            paginas_pular=paginas_pular,
             nomes_salvos=nomes_salvos,
         ):
+            if not total_cubo and total_cubo_atual:
+                total_cubo = total_cubo_atual
             if startup.nome in nomes_salvos:
                 report.total_encontrados += 1
                 continue
 
             try:
                 startups_salvas.append(
-                    _startup_para_dict(startup, proximo_id)
+                    _startup_para_dict(startup, proximo_id, data_hoje)
                 )
                 nomes_salvos.add(startup.nome)
                 proximo_id += 1
@@ -213,6 +255,36 @@ def executar() -> ScrapingReport:
 
     logger.info("Arquivo final salvo: %s", ARQUIVO_SAIDA)
     logger.info("Tracking de páginas salvo: %s", ARQUIVO_PAGINAS)
+
+    # Verifica duplicatas
+    nomes_contados = Counter(s["nome"] for s in startups_salvas)
+    duplicatas = [n for n, c in nomes_contados.items() if c > 1]
+    if duplicatas:
+        logger.warning("DUPLICATAS ENCONTRADAS (%d): %s", len(duplicatas), duplicatas)
+        # Remove duplicatas mantendo a primeira ocorrencia
+        vistos: set[str] = set()
+        dedup = []
+        for s in startups_salvas:
+            if s["nome"] not in vistos:
+                vistos.add(s["nome"])
+                dedup.append(s)
+        startups_salvas[:] = dedup
+        logger.info("Duplicatas removidas. Total apos dedup: %d", len(startups_salvas))
+
+        # Re-salva o JSON limpo
+        with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as f:
+            json.dump(startups_salvas, f, ensure_ascii=False, indent=2)
+
+    # Compara com o total do Cubo
+    if total_cubo and len(startups_salvas) != total_cubo:
+        logger.warning(
+            "DISCREPANCIA: JSON tem %d startups, Cubo reporta %d (diferença: %+d)",
+            len(startups_salvas),
+            total_cubo,
+            len(startups_salvas) - total_cubo,
+        )
+    elif total_cubo:
+        logger.info("Total confere: %d startups = Cubo (%d)", len(startups_salvas), total_cubo)
 
     return report
 

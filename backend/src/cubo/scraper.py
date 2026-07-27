@@ -10,6 +10,7 @@ Responsável por:
 from __future__ import annotations
 
 import logging
+import re
 import time
 
 from selenium.common.exceptions import (
@@ -284,10 +285,29 @@ def _startup_do_card(dados_card: dict) -> Startup:
     )
 
 
+def _ler_total_startups(driver: Chrome) -> int:
+    """Le o numero total de startups exibido no header da pagina de busca.
+
+    Procura por padroes como "516 startups" ou "startups(516)".
+    """
+    try:
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        match = re.search(
+            r"(\d[\d.,]*)\s*startup|startups?\s*\((\d[\d.,]*)\)",
+            body_text,
+            re.IGNORECASE,
+        )
+        if match:
+            raw = (match.group(1) or match.group(2)).replace(",", "").replace(".", "")
+            return int(raw)
+    except Exception:
+        logger.warning("Nao foi possivel ler o total de startups do header.")
+    return 0
+
+
 def coletar_e_extrair_startups(
     driver: Chrome,
     timeout: int = 15,
-    paginas_pular: set[int] | None = None,
     nomes_salvos: set[str] | None = None,
 ):
     """Percorre as páginas da busca e extrai dados de cada startup.
@@ -298,28 +318,42 @@ def coletar_e_extrair_startups(
     Args:
         driver: WebDriver autenticado.
         timeout: Tempo de espera por elemento.
-        paginas_pular: Conjunto de números de páginas já completas
-            que devem ser ignoradas sem carregar no Selenium.
         nomes_salvos: Nomes de startups já persistidas, para pular
             cards sem precisar clicar.
 
     Yields:
-        Tuplas ``(número_da_página, Startup)`` à medida que são extraídas.
+        Tuplas ``(número_da_página, total_startups_cubo, Startup)``.
     """
-    pular = paginas_pular or set()
-    ja_salvos = nomes_salvos or set()
-    total_paginas = 52
+    ja_salvos = set(nomes_salvos) if nomes_salvos else set()
+    total_paginas_max = 100  # limite de seguranca, o loop para antes se necessario
     todos_extraidos: set[str] = set()
 
-    for pagina in range(1, total_paginas + 1):
-        if pagina in pular:
-            logger.info("--- Página %d/%d [PULADA: já completa] ---", pagina, total_paginas)
-            continue
+    # Le o total de startups do header do Cubo (apenas na pagina 1)
+    total_cubo = 0
+    url_pag1 = f"{URL_SEARCH}&page=1"
+    driver.get(url_pag1)
+    time.sleep(4)
+    total_cubo = _ler_total_startups(driver)
+    if total_cubo:
+        logger.info("Total de startups no Cubo: %d", total_cubo)
+    else:
+        logger.warning("Nao foi possivel ler o total de startups do Cubo.")
+
+    pagina = 1
+    while pagina <= total_paginas_max:
+        # Se ja sabemos o total do Cubo e ja coletamos tudo, para
+        if total_cubo and (len(ja_salvos) + len(todos_extraidos)) >= total_cubo:
+            logger.info(
+                "Total alcancado: %d salvas + %d novas = %d (Cubo: %d). Parando.",
+                len(ja_salvos), len(todos_extraidos),
+                len(ja_salvos) + len(todos_extraidos), total_cubo,
+            )
+            break
 
         url = f"{URL_SEARCH}&page={pagina}"
-        logger.info("--- Página %d/%d ---", pagina, total_paginas)
-        driver.get(url)
-        time.sleep(4)
+        if pagina > 1:
+            driver.get(url)
+            time.sleep(4)
         # Scroll para garantir que todos os cards carreguem
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(1)
@@ -333,6 +367,11 @@ def coletar_e_extrair_startups(
             return cards
 
         startup_cards = _achar_cards()
+
+        # Pagina vazia = fim da paginacao
+        if not startup_cards:
+            logger.info("Pagina %d sem cards — fim da paginacao.", pagina)
+            break
 
         # Pre-checa se todos os cards desta página já foram salvos
         nomes_na_pagina: set[str] = set()
@@ -350,6 +389,7 @@ def coletar_e_extrair_startups(
                 len(startup_cards),
                 pagina,
             )
+            pagina += 1
             continue
 
         logger.info("  %d startups na página %d (%d novas)", len(startup_cards), pagina, len(novos_na_pagina))
@@ -376,16 +416,71 @@ def coletar_e_extrair_startups(
             tem_segmento = "Segmento" in card.text
 
             if not tem_segmento:
-                startup = _startup_do_card(dados_card)
                 logger.info(
-                    "  [%d/%d p%d] %s -> (apenas nome)",
+                    "  [%d/%d p%d] %s -> card sem Segmento, tentando perfil...",
                     len(todos_extraidos) + 1,
-                    total_paginas * 10,
+                    total_cubo or 520,
                     pagina,
-                    startup.nome,
+                    nome,
                 )
-                todos_extraidos.add(nome)
-                yield pagina, startup
+                try:
+                    ActionChains(driver).move_to_element(card).click().perform()
+                    time.sleep(3)
+
+                    startup = extrair_perfil(driver, timeout)
+                    startup.url_perfil = driver.current_url
+
+                    if not startup.segmento and dados_card["segmento"]:
+                        startup.segmento = dados_card["segmento"]
+                    if not startup.descricao and dados_card["descricao"]:
+                        startup.descricao = dados_card["descricao"]
+
+                    startup.modelos_negocio = [
+                        m for m in startup.modelos_negocio
+                        if m not in ("Cases de sucesso", "ver case", "Pitch", "Segmento")
+                        and not m.startswith("http")
+                        and len(m) < 60
+                    ]
+
+                    logger.info(
+                        "  [%d/%d p%d] %s -> Founders: %s | Tech: %s",
+                        len(todos_extraidos) + 1,
+                        total_cubo or 520,
+                        pagina,
+                        startup.nome,
+                        startup.fundadores,
+                        startup.tecnologias,
+                    )
+
+                    todos_extraidos.add(nome)
+                    yield pagina, total_cubo, startup
+
+                    driver.get(url)
+                    time.sleep(4)
+                    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                    time.sleep(1)
+                    driver.execute_script("window.scrollTo(0, 0);")
+                    time.sleep(1)
+                    startup_cards = _achar_cards()
+
+                except Exception:
+                    logger.info(
+                        "  [%d/%d p%d] %s -> (apenas nome)",
+                        len(todos_extraidos) + 1,
+                        total_cubo or 520,
+                        pagina,
+                        nome,
+                    )
+                    startup = _startup_do_card(dados_card)
+                    todos_extraidos.add(nome)
+                    yield pagina, total_cubo, startup
+                    try:
+                        driver.get(url)
+                        time.sleep(4)
+                        startup_cards = _achar_cards()
+                    except Exception:
+                        pass
+
                 indice += 1
                 continue
 
@@ -415,7 +510,7 @@ def coletar_e_extrair_startups(
                 logger.info(
                     "  [%d/%d p%d] %s -> Founders: %s | Tech: %s",
                     len(todos_extraidos) + 1,
-                    total_paginas * 10,
+                    total_cubo or 520,
                     pagina,
                     startup.nome,
                     startup.fundadores,
@@ -423,7 +518,7 @@ def coletar_e_extrair_startups(
                 )
 
                 todos_extraidos.add(nome)
-                yield pagina, startup
+                yield pagina, total_cubo, startup
 
                 # Navega de volta para a página de busca via URL
                 driver.get(url)
@@ -440,7 +535,7 @@ def coletar_e_extrair_startups(
                 logger.error("  Timeout no perfil: %s — salvando dados do card", nome)
                 startup = _startup_do_card(dados_card)
                 todos_extraidos.add(nome)
-                yield pagina, startup
+                yield pagina, total_cubo, startup
                 try:
                     driver.get(url)
                     time.sleep(4)
@@ -452,14 +547,14 @@ def coletar_e_extrair_startups(
                 logger.error("  Sessão perdida processando: %s — salvando dados do card", nome)
                 startup = _startup_do_card(dados_card)
                 todos_extraidos.add(nome)
-                yield pagina, startup
+                yield pagina, total_cubo, startup
                 return
 
             except Exception:
                 logger.exception("  Erro ao processar: %s — salvando dados do card", nome)
                 startup = _startup_do_card(dados_card)
                 todos_extraidos.add(nome)
-                yield pagina, startup
+                yield pagina, total_cubo, startup
                 try:
                     driver.get(url)
                     time.sleep(4)
@@ -468,3 +563,5 @@ def coletar_e_extrair_startups(
                     pass
 
             indice += 1
+
+        pagina += 1

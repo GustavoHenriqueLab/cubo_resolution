@@ -89,6 +89,7 @@ def executar():
         # Envia em lotes de 30 (rankear é mais leve que análise completa)
         lotes = list(_dividir_em_lotes(startups, 30))
         todas_rankeadas = []
+        rank_offset = 0
 
         for lote_idx, lote in enumerate(lotes, 1):
             nomes = [s["nome"] for s in lote]
@@ -124,13 +125,13 @@ def executar():
                 print(f"  [!] Erro: {exc}")
                 continue
 
-            # Merge ranks
+            # Merge ranks com offset para manter ordem entre lotes
             ranks_recebidos = {}
             for s in resposta.get("startups", []):
                 nome = s.get("nome", "")
                 rank = s.get("rank")
                 if nome and rank is not None:
-                    ranks_recebidos[nome] = int(rank)
+                    ranks_recebidos[nome] = int(rank) + rank_offset
 
             # Aplica ranks
             for s in lote:
@@ -138,11 +139,12 @@ def executar():
                     s["rank"] = ranks_recebidos[s["nome"]]
 
             todas_rankeadas.extend(lote)
+            rank_offset += len(lote)
 
             if config.gemini_delay_between_batches > 0 and lote_idx < len(lotes):
                 time.sleep(config.gemini_delay_between_batches)
 
-        # Ordena por rank (menor = melhor)
+        # Ordena por rank (ja sequencial entre lotes)
         todas_rankeadas.sort(key=lambda x: x.get("rank", 9999))
         deptos[depto_nome] = todas_rankeadas
         _salvar(dados)

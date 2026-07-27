@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Visualizacao das startups do ecossistema Cubo Itau classificadas por departamento via IA.",
   icons: {
-    icon: "/assets/favicon.ico",
+    icon: "/favicon.ico",
   },
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <StartupDrawerProvider>
           <Sidebar />
-          <main className="min-h-screen bg-slate-50 transition-all duration-300 dark:bg-gray-900 lg:pl-64">
+          <main className="min-h-screen overflow-x-hidden bg-slate-50 transition-all duration-300 dark:bg-gray-900 lg:ml-64">
             {children}
           </main>
           <StartupDrawer />

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { DepartamentoInfo } from "@/lib/types";
 
@@ -10,6 +11,12 @@ interface Props {
 
 export function DepartamentoSelector({ departamentos, slugAtual }: Props) {
   const router = useRouter();
+
+  useEffect(() => {
+    departamentos.forEach((d) => {
+      router.prefetch(`/departamentos/${d.slug}`);
+    });
+  }, [departamentos, router]);
 
   return (
     <select

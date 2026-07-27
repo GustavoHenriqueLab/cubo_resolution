@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -61,7 +62,7 @@ export function Sidebar() {
   const sidebarContent = (
     <aside
       className={`fixed inset-y-0 left-0 z-50 flex flex-col border-r border-gray-100 bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-gray-700 dark:bg-gray-900/95 ${
-        collapsed ? "w-20" : "w-64"
+        collapsed ? "w-[4.5rem]" : "w-64"
       }`}
     >
       {/* Header */}
@@ -70,17 +71,23 @@ export function Sidebar() {
         style={{ background: "var(--grad-sidebar-hdr)" }}
       >
         {!collapsed && (
-          <img
-            src="/assets/logo-hor.svg"
+          <Image
+            src="/logo-hor.svg"
             alt="LAB."
+            width={256}
+            height={56}
             className="h-14 w-auto"
+            priority
           />
         )}
         {collapsed && (
-          <img
-            src="/assets/logo-mark.png"
+          <Image
+            src="/logo-mark.png"
             alt="LAB."
+            width={36}
+            height={36}
             className="mx-auto h-9 w-auto"
+            priority
           />
         )}
       </div>
@@ -88,8 +95,8 @@ export function Sidebar() {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-4">
         <p
-          className={`mb-2 px-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 ${
-            collapsed ? "text-center" : ""
+          className={`mb-2 truncate px-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 ${
+            collapsed ? "text-center text-[0px]" : ""
           }`}
         >
           {collapsed ? "" : "DEPARTAMENTOS"}
@@ -102,6 +109,7 @@ export function Sidebar() {
               <li key={item.id}>
                 <Link
                   href={item.href}
+                  prefetch={true}
                   className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                     collapsed ? "justify-center" : ""
                   } ${

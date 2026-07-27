@@ -16,7 +16,7 @@ interface Props {
   onSegmentosChange: (v: string[]) => void;
   onTecnologiasChange: (v: string[]) => void;
   onDepartamentosChange: (v: string[]) => void;
-  onConfiancaChange: (v: "" | "alta" | "media") => void;
+  onConfiancaChange: (v: "" | "alta" | "media" | "baixa") => void;
 }
 
 export function FilterBar({
@@ -66,9 +66,10 @@ export function FilterBar({
           options={[
             { value: "alta", label: "Alta" },
             { value: "media", label: "Media" },
+            { value: "baixa", label: "Baixa" },
           ]}
           value={confiancaAtiva}
-          onChange={(v) => onConfiancaChange(v as "" | "alta" | "media")}
+          onChange={(v) => onConfiancaChange(v as "" | "alta" | "media" | "baixa")}
           placeholder="Confianca"
         />
       </div>

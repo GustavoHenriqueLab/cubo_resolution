@@ -91,7 +91,7 @@ export function DepartamentoCard({ departamento, index }: Props) {
       : 0;
 
   return (
-    <Link href={`/departamentos/${departamento.slug}`} className="block">
+    <Link href={`/departamentos/${departamento.slug}`} prefetch={true} className="block">
       <article
         className="animate-fade-in-up group relative cursor-pointer overflow-hidden rounded-[20px] border border-white/85 p-5 opacity-0 transition-all duration-200"
         style={{
@@ -108,31 +108,36 @@ export function DepartamentoCard({ departamento, index }: Props) {
           style={{ background: t.blob }}
         />
 
-        {/* Icon tile */}
-        <div
-          className="relative z-10 flex h-[42px] w-[42px] items-center justify-center rounded-xl text-white"
-          style={{
-            background: t.iconGrad,
-            boxShadow: `0 8px 18px -6px ${t.iconShadow}, inset 0 1px 0 rgba(255,255,255,.35)`,
-          }}
-        >
-          <span className="text-lg font-bold">{departamento.totalStartups}</span>
+        {/* Top row: icon + total inline */}
+        <div className="relative z-10 flex items-center gap-3">
+          <div
+            className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-xl text-white"
+            style={{
+              background: t.iconGrad,
+              boxShadow: `0 8px 18px -6px ${t.iconShadow}, inset 0 1px 0 rgba(255,255,255,.35)`,
+            }}
+          >
+            <span className="text-lg font-bold">{departamento.totalStartups}</span>
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+            startups
+          </span>
         </div>
 
-        {/* Value */}
-        <div className="relative z-10 mt-4 font-display text-[42px] font-extrabold leading-none tracking-[-0.02em] text-gray-900 tabular-nums">
-          {departamento.totalStartups}
-        </div>
-
-        {/* Label */}
-        <div className="relative z-10 mt-2 text-[11px] font-bold uppercase tracking-[.10em] text-slate-500">
+        {/* Department name — destaque */}
+        <div className="relative z-10 mt-3 font-display text-lg font-bold text-gray-800 truncate dark:text-gray-100">
           {departamento.nome}
         </div>
 
-        {/* Confidence breakdown */}
-        <div className="relative z-10 mt-3 flex items-center gap-2 text-xs text-slate-500">
+        {/* Breakdown */}
+        <div className="relative z-10 mt-3 flex items-center gap-3">
           <ConfiancaBadge confianca="alta" />
-          <span>{percAlta}%</span>
+          <span className="text-sm font-semibold tabular-nums text-gray-700">{departamento.altaConfianca}</span>
+          <span className="text-[11px] text-slate-400">{percAlta}%</span>
+        </div>
+        <div className="relative z-10 mt-1.5 flex items-center gap-3">
+          <ConfiancaBadge confianca="media" />
+          <span className="text-sm font-semibold tabular-nums text-gray-700">{departamento.mediaConfianca}</span>
         </div>
       </article>
     </Link>

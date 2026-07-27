@@ -14,7 +14,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 2,
@@ -31,7 +32,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 3,
@@ -48,7 +50,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 4,
@@ -62,7 +65,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 5,
@@ -81,7 +85,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 6,
@@ -95,7 +100,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 7,
@@ -109,7 +115,8 @@
     "tecnologias": [
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 8,
@@ -124,7 +131,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 9,
@@ -144,7 +152,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 10,
@@ -159,7 +168,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 11,
@@ -173,7 +183,8 @@
     "tecnologias": [
       "Software",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 12,
@@ -188,7 +199,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 13,
@@ -202,7 +214,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 14,
@@ -213,7 +226,8 @@
     "site": "http://a55.tech",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d405a59b-0c25-4ad8-b48d-c90df5fcc45c",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 15,
@@ -228,7 +242,8 @@
       "Big Data e Data Analytics",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 16,
@@ -244,7 +259,8 @@
       "Computação em nuvem",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 17,
@@ -258,7 +274,8 @@
     "tecnologias": [
       "Realidade Virtual",
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 18,
@@ -273,7 +290,8 @@
       "Software",
       "Inteligência Artificial",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 19,
@@ -288,7 +306,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 20,
@@ -305,7 +324,8 @@
       "Hardware",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 21,
@@ -321,7 +341,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 22,
@@ -336,7 +357,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 23,
@@ -351,7 +373,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 24,
@@ -362,7 +385,8 @@
     "site": "http://agendart.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/66555f7e-b2cb-4e5a-b869-97656a082b3a",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 25,
@@ -377,7 +401,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 26,
@@ -390,7 +415,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 27,
@@ -405,7 +431,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 28,
@@ -422,7 +449,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 29,
@@ -439,7 +467,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 30,
@@ -453,7 +482,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 31,
@@ -470,7 +500,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 32,
@@ -489,7 +520,8 @@
       "Drones",
       "Robótica",
       "Hardware"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 33,
@@ -506,7 +538,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 34,
@@ -524,7 +557,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 35,
@@ -542,7 +576,8 @@
       "Hardware",
       "Inteligência Artificial",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 36,
@@ -557,7 +592,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 37,
@@ -573,7 +609,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 38,
@@ -586,7 +623,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 39,
@@ -599,7 +637,8 @@
     "modelos_negocio": [
       "B2B (business to business)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 40,
@@ -612,7 +651,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 41,
@@ -628,7 +668,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 42,
@@ -643,7 +684,8 @@
     ],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 43,
@@ -659,7 +701,8 @@
     "tecnologias": [
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 44,
@@ -679,7 +722,8 @@
       "Internet das Coisas (Iot)",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 45,
@@ -690,7 +734,8 @@
     "site": "http://ardan-pharma.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/22efe2b8-3750-433c-96a2-06e3abb8e467",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 46,
@@ -706,7 +751,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 47,
@@ -725,7 +771,8 @@
       "Realidade aumentada",
       "Realidade Virtual",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 48,
@@ -741,7 +788,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 49,
@@ -758,7 +806,8 @@
       "Inteligência Artificial",
       "Software",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 50,
@@ -774,7 +823,8 @@
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 51,
@@ -792,7 +842,8 @@
       "Realidade Virtual",
       "Materiais Avançados",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 52,
@@ -805,7 +856,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 53,
@@ -821,7 +873,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 54,
@@ -834,7 +887,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 55,
@@ -845,7 +899,8 @@
     "site": "http://b2blue.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/32eb13df-1a91-4fbc-ba2e-a464f78e395f",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 56,
@@ -858,7 +913,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 57,
@@ -871,7 +927,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 58,
@@ -888,7 +945,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 59,
@@ -903,7 +961,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 60,
@@ -921,7 +980,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 61,
@@ -934,7 +994,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 62,
@@ -949,7 +1010,8 @@
     ],
     "tecnologias": [
       "Modelo de negocio"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 63,
@@ -967,7 +1029,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 64,
@@ -982,7 +1045,8 @@
       "Inteligência Artificial",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 65,
@@ -995,7 +1059,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Biotecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 66,
@@ -1008,7 +1073,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 67,
@@ -1025,7 +1091,8 @@
       "Processamento de Linguagem Natural (PLN)",
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 68,
@@ -1042,7 +1109,8 @@
       "Machine Learning",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 69,
@@ -1058,7 +1126,8 @@
       "Software",
       "Inteligência Artificial",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 70,
@@ -1073,7 +1142,8 @@
       "Inteligência Artificial",
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 71,
@@ -1091,7 +1161,8 @@
       "Computação em nuvem",
       "Hardware",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 72,
@@ -1107,7 +1178,8 @@
       "Machine Learning",
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 73,
@@ -1127,7 +1199,8 @@
       "Machine Learning",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 74,
@@ -1142,7 +1215,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 75,
@@ -1157,7 +1231,8 @@
       "Inteligência Artificial",
       "Deep Learning",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 76,
@@ -1174,7 +1249,8 @@
       "Big Data e Data Analytics",
       "Processamento de Linguagem Natural (PLN)",
       "Computação quântica"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 77,
@@ -1192,7 +1268,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 78,
@@ -1205,7 +1282,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 79,
@@ -1220,7 +1298,8 @@
       "Deep Learning",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 80,
@@ -1231,7 +1310,8 @@
     "site": "https://www.bykonz.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/eff13943-04b7-40dc-974c-afcdf59befb6",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 81,
@@ -1248,7 +1328,8 @@
       "Software",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 82,
@@ -1261,7 +1342,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 83,
@@ -1276,7 +1358,8 @@
       "Big Data e Data Analytics",
       "Software",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 84,
@@ -1291,7 +1374,8 @@
       "Internet das Coisas (Iot)",
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 85,
@@ -1306,7 +1390,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 86,
@@ -1319,7 +1404,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 87,
@@ -1333,7 +1419,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 88,
@@ -1347,7 +1434,8 @@
     "tecnologias": [
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 89,
@@ -1362,7 +1450,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 90,
@@ -1378,7 +1467,8 @@
       "Deep Learning",
       "Internet das Coisas (Iot)",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 91,
@@ -1393,7 +1483,8 @@
       "Software",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 92,
@@ -1410,7 +1501,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 93,
@@ -1430,7 +1522,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 94,
@@ -1444,7 +1537,8 @@
     "tecnologias": [
       "Biotecnologia",
       "Materiais Avançados"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 95,
@@ -1459,7 +1553,8 @@
       "Inteligência Artificial",
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 96,
@@ -1472,7 +1567,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 97,
@@ -1486,7 +1582,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 98,
@@ -1499,7 +1596,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 99,
@@ -1515,7 +1613,8 @@
     "tecnologias": [
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 100,
@@ -1531,7 +1630,8 @@
       "Internet das Coisas (Iot)",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 101,
@@ -1544,7 +1644,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 102,
@@ -1560,7 +1661,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 103,
@@ -1576,7 +1678,8 @@
       "Machine Learning",
       "Software",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 104,
@@ -1591,7 +1694,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 105,
@@ -1608,7 +1712,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 106,
@@ -1622,7 +1727,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 107,
@@ -1637,7 +1743,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 108,
@@ -1653,7 +1760,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 109,
@@ -1670,7 +1778,8 @@
       "Materiais Avançados",
       "Robótica",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 110,
@@ -1685,7 +1794,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 111,
@@ -1700,7 +1810,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 112,
@@ -1711,7 +1822,8 @@
     "site": "http://curseduca.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/6498b79d-b432-49e3-9833-fcedf11e5e3a",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 113,
@@ -1729,7 +1841,8 @@
       "Computação em nuvem",
       "Deep Learning",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 114,
@@ -1743,7 +1856,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 115,
@@ -1762,7 +1876,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 116,
@@ -1777,7 +1892,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 117,
@@ -1794,7 +1910,8 @@
       "Inteligência Artificial",
       "Software",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 118,
@@ -1809,7 +1926,8 @@
       "Inteligência Artificial",
       "Computação em nuvem",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 119,
@@ -1823,7 +1941,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 120,
@@ -1836,7 +1955,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 121,
@@ -1854,7 +1974,8 @@
       "Fotônica e eletrônicos",
       "Inteligência Artificial",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 122,
@@ -1870,7 +1991,8 @@
       "Blockchain",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 123,
@@ -1881,7 +2003,8 @@
     "site": "https://usedeltaai.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2c64a35b-473a-46f8-a7c0-5c28f0f54fdc",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 124,
@@ -1896,7 +2019,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 125,
@@ -1909,7 +2033,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Deep Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 126,
@@ -1922,7 +2047,8 @@
     "modelos_negocio": [
       "B2B (business to business)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 127,
@@ -1933,7 +2059,8 @@
     "site": "http://dex.co",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/adf5a25a-5e8f-4542-9eb3-25a3db3cca93",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 128,
@@ -1950,7 +2077,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 129,
@@ -1968,7 +2096,8 @@
       "Computação em nuvem",
       "Hardware",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 130,
@@ -1986,7 +2115,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 131,
@@ -2002,7 +2132,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 132,
@@ -2017,7 +2148,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 133,
@@ -2037,7 +2169,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 134,
@@ -2054,7 +2187,8 @@
       "Big Data e Data Analytics",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 135,
@@ -2074,7 +2208,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 136,
@@ -2089,7 +2224,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 137,
@@ -2103,7 +2239,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 138,
@@ -2116,7 +2253,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 139,
@@ -2131,7 +2269,8 @@
       "Inteligência Artificial",
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 140,
@@ -2144,7 +2283,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 141,
@@ -2159,7 +2299,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 142,
@@ -2170,7 +2311,8 @@
     "site": "http://www.dponet.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/bd2a12c5-b464-47da-af18-6cbd26be2e20",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 143,
@@ -2188,7 +2330,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 144,
@@ -2210,7 +2353,8 @@
       "Machine Learning",
       "Robótica",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 145,
@@ -2227,7 +2371,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 146,
@@ -2240,7 +2385,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 147,
@@ -2254,7 +2400,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 148,
@@ -2271,7 +2418,8 @@
       "Software",
       "Machine Learning",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 149,
@@ -2289,7 +2437,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 150,
@@ -2304,7 +2453,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 151,
@@ -2322,7 +2472,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 152,
@@ -2335,7 +2486,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 153,
@@ -2351,7 +2503,8 @@
       "Hardware",
       "Internet das Coisas (Iot)",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 154,
@@ -2366,7 +2519,8 @@
       "Inteligência Artificial",
       "Software",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 155,
@@ -2379,7 +2533,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 156,
@@ -2394,7 +2549,8 @@
       "Big Data e Data Analytics",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 157,
@@ -2405,7 +2561,8 @@
     "site": "http://www.enteria.uy",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/c38fb4f1-c13c-4035-8b8b-06ca5004e115",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 158,
@@ -2416,7 +2573,8 @@
     "site": "http://eolo-pharma.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/722543ed-e2bd-45cd-b8bc-1bbf6f37c01b",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 159,
@@ -2433,7 +2591,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 160,
@@ -2451,7 +2610,8 @@
       "Blockchain",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 161,
@@ -2466,7 +2626,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 162,
@@ -2480,7 +2641,8 @@
     "tecnologias": [
       "Software",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 163,
@@ -2501,7 +2663,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 164,
@@ -2519,7 +2682,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 165,
@@ -2537,7 +2701,8 @@
       "Inteligência Artificial",
       "Realidade Virtual",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 166,
@@ -2551,7 +2716,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 167,
@@ -2567,7 +2733,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 168,
@@ -2584,7 +2751,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 169,
@@ -2601,7 +2769,8 @@
       "Internet das Coisas (Iot)",
       "Outros tipos de tecnologia",
       "Fotônica e eletrônicos"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 170,
@@ -2616,7 +2785,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 171,
@@ -2631,7 +2801,8 @@
       "Inteligência Artificial",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 172,
@@ -2649,7 +2820,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 173,
@@ -2663,7 +2835,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 174,
@@ -2676,7 +2849,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 175,
@@ -2693,7 +2867,8 @@
       "Inteligência Artificial",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 176,
@@ -2708,7 +2883,8 @@
       "Computação em nuvem",
       "Software",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 177,
@@ -2727,7 +2903,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 178,
@@ -2740,7 +2917,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 179,
@@ -2758,7 +2936,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 180,
@@ -2769,7 +2948,8 @@
     "site": "http://foccuz.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/b501112a-6847-4243-bde7-f0691a8da2a6",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 181,
@@ -2780,7 +2960,8 @@
     "site": "http://foliume.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e073f483-4476-4835-b8e8-5c8097f559b5",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 182,
@@ -2793,7 +2974,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 183,
@@ -2809,7 +2991,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 184,
@@ -2822,7 +3005,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 185,
@@ -2835,7 +3019,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 186,
@@ -2848,7 +3033,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 187,
@@ -2866,7 +3052,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 188,
@@ -2883,7 +3070,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 189,
@@ -2896,7 +3084,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Materiais Avançados"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 190,
@@ -2912,7 +3101,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 191,
@@ -2925,7 +3115,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 192,
@@ -2938,7 +3129,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 193,
@@ -2955,7 +3147,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 194,
@@ -2970,7 +3163,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 195,
@@ -2987,7 +3181,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 196,
@@ -3005,7 +3200,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 197,
@@ -3020,7 +3216,8 @@
     ],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 198,
@@ -3033,7 +3230,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 199,
@@ -3049,7 +3247,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 200,
@@ -3064,7 +3263,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 201,
@@ -3075,7 +3275,8 @@
     "site": "https://guardion.ai",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/22f26e99-fee0-484d-9e11-4bea8c1c4884",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 202,
@@ -3092,7 +3293,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 203,
@@ -3106,7 +3308,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 204,
@@ -3119,7 +3322,8 @@
     "modelos_negocio": [
       "B2B (business to business)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 205,
@@ -3138,7 +3342,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 206,
@@ -3153,7 +3358,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 207,
@@ -3170,7 +3376,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 208,
@@ -3187,7 +3394,8 @@
       "Big Data e Data Analytics",
       "Software",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 209,
@@ -3200,7 +3408,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 210,
@@ -3214,7 +3423,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 211,
@@ -3230,7 +3440,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 212,
@@ -3243,7 +3454,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 213,
@@ -3261,7 +3473,8 @@
       "Inteligência Artificial",
       "Realidade Virtual",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 214,
@@ -3274,7 +3487,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 215,
@@ -3287,7 +3501,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 216,
@@ -3302,7 +3517,8 @@
       "Inteligência Artificial",
       "Software",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 217,
@@ -3319,7 +3535,8 @@
       "Computação em nuvem",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 218,
@@ -3336,7 +3553,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 219,
@@ -3353,7 +3571,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 220,
@@ -3369,7 +3588,8 @@
       "Big Data e Data Analytics",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 221,
@@ -3385,7 +3605,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 222,
@@ -3406,7 +3627,8 @@
       "Internet das Coisas (Iot)",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 223,
@@ -3424,7 +3646,8 @@
       "Deep Learning",
       "Machine Learning",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 224,
@@ -3441,7 +3664,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 225,
@@ -3459,7 +3683,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 226,
@@ -3475,7 +3700,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 227,
@@ -3491,7 +3717,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Realidade aumentada"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 228,
@@ -3506,7 +3733,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 229,
@@ -3521,7 +3749,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 230,
@@ -3544,7 +3773,8 @@
       "Realidade aumentada",
       "Realidade Virtual",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 231,
@@ -3558,7 +3788,8 @@
     "tecnologias": [
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 232,
@@ -3577,7 +3808,8 @@
       "Machine Learning",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 233,
@@ -3595,7 +3827,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 234,
@@ -3612,7 +3845,8 @@
       "Internet das Coisas (Iot)",
       "Software",
       "Realidade aumentada"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 235,
@@ -3629,7 +3863,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 236,
@@ -3643,7 +3878,8 @@
     "tecnologias": [
       "Software",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 237,
@@ -3661,7 +3897,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 238,
@@ -3674,7 +3911,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 239,
@@ -3691,7 +3929,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Hardware"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 240,
@@ -3704,7 +3943,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 241,
@@ -3719,7 +3959,8 @@
       "Hardware",
       "Software",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 242,
@@ -3737,7 +3978,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 243,
@@ -3750,7 +3992,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 244,
@@ -3767,7 +4010,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 245,
@@ -3782,7 +4026,8 @@
     ],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 246,
@@ -3795,7 +4040,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 247,
@@ -3811,7 +4057,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 248,
@@ -3824,7 +4071,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 249,
@@ -3835,7 +4083,8 @@
     "site": "http://kinzbio.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d7750981-685d-46f5-94b7-67993f8a9b74",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 250,
@@ -3852,7 +4101,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 251,
@@ -3868,7 +4118,8 @@
       "Software",
       "Processamento de Linguagem Natural (PLN)",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 252,
@@ -3884,7 +4135,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 253,
@@ -3897,7 +4149,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 254,
@@ -3911,7 +4164,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 255,
@@ -3926,7 +4180,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 256,
@@ -3940,7 +4195,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 257,
@@ -3954,7 +4210,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 258,
@@ -3971,7 +4228,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 259,
@@ -3982,7 +4240,8 @@
     "site": "http://levelup.uy",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e5c84f6e-e07c-470a-a918-993f65101426",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 260,
@@ -3997,7 +4256,8 @@
       "Machine Learning",
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 261,
@@ -4012,7 +4272,8 @@
       "Software",
       "Computação em nuvem",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 262,
@@ -4028,7 +4289,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 263,
@@ -4045,7 +4307,8 @@
       "Big Data e Data Analytics",
       "Software",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 264,
@@ -4060,7 +4323,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 265,
@@ -4071,7 +4335,8 @@
     "site": "http://www.linte.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/9c3c8a9a-9f46-4240-8de9-698f1b568c44",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 266,
@@ -4082,7 +4347,8 @@
     "site": "http://www.askliquid.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/a56ba102-3b3d-4f55-b40c-09e483ba8766",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 267,
@@ -4100,7 +4366,8 @@
       "Robótica",
       "Hardware",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 268,
@@ -4115,7 +4382,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 269,
@@ -4128,7 +4396,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 270,
@@ -4144,7 +4413,8 @@
       "Inteligência Artificial",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 271,
@@ -4160,7 +4430,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 272,
@@ -4175,7 +4446,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 273,
@@ -4194,7 +4466,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 274,
@@ -4216,7 +4489,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 275,
@@ -4236,7 +4510,8 @@
       "Materiais Avançados",
       "Software",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 276,
@@ -4252,7 +4527,8 @@
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 277,
@@ -4269,7 +4545,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 278,
@@ -4286,7 +4563,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 279,
@@ -4299,7 +4577,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 280,
@@ -4310,7 +4589,8 @@
     "site": "http://madeinweb.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ed6b2d21-6f62-4ce8-93e7-78ae910d363a",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 281,
@@ -4327,7 +4607,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 282,
@@ -4343,7 +4624,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 283,
@@ -4357,7 +4639,8 @@
     "tecnologias": [
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 284,
@@ -4370,7 +4653,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 285,
@@ -4386,7 +4670,8 @@
       "Computação em nuvem",
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 286,
@@ -4407,7 +4692,8 @@
       "Deep Learning",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 287,
@@ -4423,7 +4709,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 288,
@@ -4438,7 +4725,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 289,
@@ -4458,7 +4746,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 290,
@@ -4478,7 +4767,8 @@
       "Internet das Coisas (Iot)",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 291,
@@ -4493,7 +4783,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 292,
@@ -4509,7 +4800,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 293,
@@ -4523,7 +4815,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 294,
@@ -4544,7 +4837,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 295,
@@ -4562,7 +4856,8 @@
       "Software",
       "Hardware",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 296,
@@ -4580,7 +4875,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 297,
@@ -4594,7 +4890,8 @@
     "tecnologias": [
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 298,
@@ -4611,7 +4908,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 299,
@@ -4624,7 +4922,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 300,
@@ -4639,7 +4938,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 301,
@@ -4661,7 +4961,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 302,
@@ -4674,7 +4975,8 @@
     "modelos_negocio": [
       "B2B2C (business to business to consumer)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 303,
@@ -4690,7 +4992,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 304,
@@ -4703,7 +5006,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 305,
@@ -4719,7 +5023,8 @@
       "Machine Learning",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 306,
@@ -4733,7 +5038,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 307,
@@ -4752,7 +5058,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 308,
@@ -4769,7 +5076,8 @@
       "Impressão 3D",
       "Materiais Avançados",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 309,
@@ -4786,7 +5094,8 @@
       "Processamento de Linguagem Natural (PLN)",
       "Realidade aumentada",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 310,
@@ -4799,7 +5108,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 311,
@@ -4814,7 +5124,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 312,
@@ -4833,7 +5144,8 @@
       "Deep Learning",
       "Machine Learning",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 313,
@@ -4848,7 +5160,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 314,
@@ -4864,7 +5177,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 315,
@@ -4882,7 +5196,8 @@
       "Inteligência Artificial",
       "Software",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 316,
@@ -4899,7 +5214,8 @@
       "Internet das Coisas (Iot)",
       "Hardware",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 317,
@@ -4919,7 +5235,8 @@
       "Internet das Coisas (Iot)",
       "Deep Learning",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 318,
@@ -4936,7 +5253,8 @@
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 319,
@@ -4950,7 +5268,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 320,
@@ -4968,7 +5287,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 321,
@@ -4984,7 +5304,8 @@
       "Deep Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 322,
@@ -5000,7 +5321,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 323,
@@ -5015,7 +5337,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 324,
@@ -5028,7 +5351,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 325,
@@ -5044,7 +5368,8 @@
     "tecnologias": [
       "Software",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 326,
@@ -5060,7 +5385,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 327,
@@ -5078,7 +5404,8 @@
       "Deep Learning",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 328,
@@ -5089,7 +5416,8 @@
     "site": "https://www.nocnocbrasil.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/dba4aff9-547a-49d5-90f2-5b023afeb1a4",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 329,
@@ -5100,7 +5428,8 @@
     "site": "http://nodica.ai",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/fa507508-550a-44a0-bf24-3de5424bec5d",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 330,
@@ -5114,7 +5443,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 331,
@@ -5130,7 +5460,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 332,
@@ -5144,7 +5475,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 333,
@@ -5160,7 +5492,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 334,
@@ -5177,7 +5510,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 335,
@@ -5192,7 +5526,8 @@
       "Big Data e Data Analytics",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 336,
@@ -5206,7 +5541,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Realidade Virtual"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 337,
@@ -5221,7 +5557,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 338,
@@ -5232,7 +5569,8 @@
     "site": "https://www.opensolo.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/eeca6f10-4d61-466a-9615-3e5865c0086d",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 339,
@@ -5243,7 +5581,8 @@
     "site": "http://www.opinionbox.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ee3ae6ef-111a-4214-bc51-f5f59fce4388",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 340,
@@ -5260,7 +5599,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 341,
@@ -5277,7 +5617,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 342,
@@ -5293,7 +5634,8 @@
       "Computação em nuvem",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 343,
@@ -5310,7 +5652,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 344,
@@ -5321,7 +5664,8 @@
     "site": "http://ordereat.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f46f822d-6588-448c-b23f-f5baed7f42a7",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 345,
@@ -5337,7 +5681,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 346,
@@ -5353,7 +5698,8 @@
       "Software",
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 347,
@@ -5367,7 +5713,8 @@
     "tecnologias": [
       "Robótica",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 348,
@@ -5383,7 +5730,8 @@
       "Software",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 349,
@@ -5394,7 +5742,8 @@
     "site": "https://www.pagbrasil.com/pt-br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/850583c4-fdec-4e1f-95da-1742392c43aa",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 350,
@@ -5410,7 +5759,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 351,
@@ -5421,7 +5771,8 @@
     "site": "http://payface.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ffc3ac25-ace0-4e21-95a9-f23b00f62539",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 352,
@@ -5437,7 +5788,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 353,
@@ -5452,7 +5804,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 354,
@@ -5469,7 +5822,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 355,
@@ -5483,7 +5837,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 356,
@@ -5499,7 +5854,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 357,
@@ -5514,7 +5870,8 @@
       "Inteligência Artificial",
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 358,
@@ -5525,7 +5882,8 @@
     "site": "http://www.eyecueinsights.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2b105eaa-6d7e-483e-b3c9-db97d1ea5fe1",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 359,
@@ -5536,7 +5894,8 @@
     "site": "http://pipefy.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d0752e01-10b9-4110-92eb-6fc7203bbc31",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 360,
@@ -5549,7 +5908,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 361,
@@ -5569,7 +5929,8 @@
       "Outros tipos de tecnologia",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 362,
@@ -5582,7 +5943,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 363,
@@ -5597,7 +5959,8 @@
     ],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 364,
@@ -5612,7 +5975,8 @@
     ],
     "tecnologias": [
       "Blockchain"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 365,
@@ -5625,7 +5989,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 366,
@@ -5640,7 +6005,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 367,
@@ -5654,7 +6020,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 368,
@@ -5675,7 +6042,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 369,
@@ -5694,7 +6062,8 @@
       "Blockchain",
       "Drones",
       "Deep Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 370,
@@ -5709,7 +6078,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 371,
@@ -5725,7 +6095,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 372,
@@ -5744,7 +6115,8 @@
       "Materiais Avançados",
       "Machine Learning",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 373,
@@ -5759,7 +6131,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 374,
@@ -5774,7 +6147,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 375,
@@ -5791,7 +6165,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 376,
@@ -5810,7 +6185,8 @@
       "Machine Learning",
       "Outros tipos de tecnologia",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 377,
@@ -5821,7 +6197,8 @@
     "site": "http://qlic.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/4fd8e25f-118c-4a5a-a0d7-c669dcfd823b",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 378,
@@ -5838,7 +6215,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 379,
@@ -5853,7 +6231,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 380,
@@ -5868,7 +6247,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 381,
@@ -5883,7 +6263,8 @@
       "Computação em nuvem",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 382,
@@ -5900,7 +6281,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 383,
@@ -5917,7 +6299,8 @@
       "Biotecnologia",
       "Materiais Avançados",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 384,
@@ -5935,7 +6318,8 @@
       "Outros tipos de tecnologia",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 385,
@@ -5950,7 +6334,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 386,
@@ -5967,7 +6352,8 @@
       "Computação em nuvem",
       "Deep Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 387,
@@ -5986,7 +6372,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 388,
@@ -6001,7 +6388,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 389,
@@ -6016,7 +6404,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 390,
@@ -6032,7 +6421,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 391,
@@ -6047,7 +6437,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Hardware"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 392,
@@ -6061,7 +6452,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 393,
@@ -6074,7 +6466,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 394,
@@ -6091,7 +6484,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 395,
@@ -6102,7 +6496,8 @@
     "site": "http://www.salvy.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/a7ce6a33-1701-4594-8ce3-8a38877e8e24",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 396,
@@ -6119,7 +6514,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 397,
@@ -6134,7 +6530,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 398,
@@ -6152,7 +6549,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 399,
@@ -6165,7 +6563,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 400,
@@ -6182,7 +6581,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 401,
@@ -6202,7 +6602,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 402,
@@ -6217,7 +6618,8 @@
       "Processamento de Linguagem Natural (PLN)",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 403,
@@ -6228,7 +6630,8 @@
     "site": "http://sinai.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/cf4b1610-3e08-495f-baeb-8b6795946c52",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 404,
@@ -6239,7 +6642,8 @@
     "site": "https://sirros.io",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/65af7b65-641d-405e-841d-c24a14d892ac",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 405,
@@ -6254,7 +6658,8 @@
       "Inteligência Artificial",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 406,
@@ -6272,7 +6677,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 407,
@@ -6283,7 +6689,8 @@
     "site": "http://skyblueanalytics.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2a65ce47-599a-4e64-808c-d50b854aba40",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 408,
@@ -6300,7 +6707,8 @@
       "Blockchain",
       "Deep Learning",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 409,
@@ -6313,7 +6721,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 410,
@@ -6330,7 +6739,8 @@
       "Big Data e Data Analytics",
       "Machine Learning",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 411,
@@ -6344,7 +6754,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 412,
@@ -6359,7 +6770,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 413,
@@ -6377,7 +6789,8 @@
       "Machine Learning",
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 414,
@@ -6390,7 +6803,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 415,
@@ -6408,7 +6822,8 @@
       "Inteligência Artificial",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 416,
@@ -6425,7 +6840,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 417,
@@ -6438,7 +6854,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 418,
@@ -6449,7 +6866,8 @@
     "site": "https://hellostake.com/pt",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/b2a304b7-4484-4478-a449-8189fc8bada8",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 419,
@@ -6466,7 +6884,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 420,
@@ -6481,7 +6900,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 421,
@@ -6495,7 +6915,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 422,
@@ -6509,7 +6930,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 423,
@@ -6520,7 +6942,8 @@
     "site": "https://sumeria.uy",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/82cea8cc-e7a8-461e-b840-c5365876d133",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 424,
@@ -6535,7 +6958,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 425,
@@ -6549,7 +6973,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 426,
@@ -6565,7 +6990,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 427,
@@ -6581,7 +7007,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 428,
@@ -6594,7 +7021,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 429,
@@ -6610,7 +7038,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 430,
@@ -6627,7 +7056,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 431,
@@ -6644,7 +7074,8 @@
       "Inteligência Artificial",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 432,
@@ -6659,7 +7090,8 @@
       "Big Data e Data Analytics",
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 433,
@@ -6678,7 +7110,8 @@
       "Outros tipos de tecnologia",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 434,
@@ -6701,7 +7134,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 435,
@@ -6716,7 +7150,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 436,
@@ -6730,7 +7165,8 @@
     "tecnologias": [
       "Hardware",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 437,
@@ -6744,7 +7180,8 @@
     "tecnologias": [
       "Software",
       "Big Data e Data Analytics"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 438,
@@ -6761,7 +7198,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 439,
@@ -6775,7 +7213,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 440,
@@ -6790,7 +7229,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 441,
@@ -6805,7 +7245,8 @@
       "Software",
       "Inteligência Artificial",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 442,
@@ -6826,7 +7267,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 443,
@@ -6841,7 +7283,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 444,
@@ -6856,7 +7299,8 @@
     ],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 445,
@@ -6871,7 +7315,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 446,
@@ -6894,7 +7339,8 @@
       "Software",
       "Impressão 3D",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 447,
@@ -6915,7 +7361,8 @@
       "Machine Learning",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 448,
@@ -6928,7 +7375,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 449,
@@ -6945,7 +7393,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 450,
@@ -6960,7 +7409,8 @@
       "Internet das Coisas (Iot)",
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 451,
@@ -6971,7 +7421,8 @@
     "site": "http://www.tractionfy.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/5bb1a10a-1c8d-447c-8d3e-a2ea8bda884c",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 452,
@@ -6986,7 +7437,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 453,
@@ -6999,7 +7451,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 454,
@@ -7013,7 +7466,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 455,
@@ -7028,7 +7482,8 @@
     ],
     "tecnologias": [
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 456,
@@ -7044,7 +7499,8 @@
       "Computação em nuvem",
       "Software",
       "Internet das Coisas (Iot)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 457,
@@ -7062,7 +7518,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 458,
@@ -7075,7 +7532,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 459,
@@ -7089,7 +7547,8 @@
     "tecnologias": [
       "Big Data e Data Analytics",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 460,
@@ -7100,7 +7559,8 @@
     "site": "https://site.ume.com.br",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/8aaf5129-e1d8-4cc1-9f51-3078bf90be50",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 461,
@@ -7117,7 +7577,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 462,
@@ -7134,7 +7595,8 @@
       "Inteligência Artificial",
       "Robótica",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 463,
@@ -7149,7 +7611,8 @@
       "Software",
       "Inteligência Artificial",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 464,
@@ -7168,7 +7631,8 @@
       "Deep Learning",
       "Big Data e Data Analytics",
       "Processamento de Linguagem Natural (PLN)"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 465,
@@ -7185,7 +7649,8 @@
       "Big Data e Data Analytics",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 466,
@@ -7198,7 +7663,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 467,
@@ -7213,7 +7679,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 468,
@@ -7226,7 +7693,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 469,
@@ -7241,7 +7709,8 @@
       "Software",
       "Big Data e Data Analytics",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 470,
@@ -7256,7 +7725,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 471,
@@ -7269,7 +7739,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 472,
@@ -7282,7 +7753,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Inteligência Artificial"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 473,
@@ -7299,7 +7771,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 474,
@@ -7310,7 +7783,8 @@
     "site": "http://www.getventia.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/b3f12e3d-0c14-4a8a-a96d-60e45c272c8e",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 475,
@@ -7326,7 +7800,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 476,
@@ -7343,7 +7818,8 @@
       "Machine Learning",
       "Outros tipos de tecnologia",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 477,
@@ -7360,7 +7836,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 478,
@@ -7378,7 +7855,8 @@
       "Computação em nuvem",
       "Blockchain",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 479,
@@ -7394,7 +7872,8 @@
       "Big Data e Data Analytics",
       "Blockchain",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 480,
@@ -7407,7 +7886,8 @@
     "modelos_negocio": [
       "B2C (business to consumer)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 481,
@@ -7422,7 +7902,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 482,
@@ -7437,7 +7918,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 483,
@@ -7454,7 +7936,8 @@
       "Inteligência Artificial",
       "Internet das Coisas (Iot)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 484,
@@ -7469,7 +7952,8 @@
       "Inteligência Artificial",
       "Software",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 485,
@@ -7490,7 +7974,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 486,
@@ -7506,7 +7991,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 487,
@@ -7522,7 +8008,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 488,
@@ -7540,7 +8027,8 @@
       "Inteligência Artificial",
       "Machine Learning",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 489,
@@ -7557,7 +8045,8 @@
       "Inteligência Artificial",
       "Software",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 490,
@@ -7577,7 +8066,8 @@
       "Computação em nuvem",
       "Blockchain",
       "Machine Learning"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 491,
@@ -7593,7 +8083,8 @@
     "tecnologias": [
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 492,
@@ -7604,7 +8095,8 @@
     "site": "https://www.wonasports.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/93b926cb-eca2-4120-be7c-0ef151b51468",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 493,
@@ -7621,7 +8113,8 @@
       "Computação em nuvem",
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 494,
@@ -7640,7 +8133,8 @@
       "Processamento de Linguagem Natural (PLN)",
       "Realidade Virtual",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 495,
@@ -7656,7 +8150,8 @@
       "Software",
       "Machine Learning",
       "Outros tipos de tecnologia"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 496,
@@ -7669,7 +8164,8 @@
     "modelos_negocio": [],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 497,
@@ -7680,7 +8176,8 @@
     "site": "http://yeda",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/6a9c9b76-923c-4bc3-9c15-6855362250fc",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 498,
@@ -7695,7 +8192,8 @@
       "Big Data e Data Analytics",
       "Computação em nuvem",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 499,
@@ -7709,7 +8207,8 @@
     "tecnologias": [
       "Software",
       "Computação em nuvem"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 500,
@@ -7728,7 +8227,8 @@
       "Machine Learning",
       "Processamento de Linguagem Natural (PLN)",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 501,
@@ -7739,7 +8239,8 @@
     "site": "http://www.zaviabio.com",
     "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2fc276ee-ebaa-4feb-a377-46c501b19591",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 502,
@@ -7754,7 +8255,8 @@
     ],
     "tecnologias": [
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 503,
@@ -7770,7 +8272,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 504,
@@ -7786,7 +8289,8 @@
     "tecnologias": [
       "Inteligência Artificial",
       "Software"
-    ]
+    ],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 505,
@@ -7799,7 +8303,8 @@
     "modelos_negocio": [
       "B2B (business to business)"
     ],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 506,
@@ -7810,21 +8315,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
     "id": 507,
-    "nome": "flipzen.com",
-    "descricao": "",
-    "segmento": "",
-    "fundadores": "",
-    "site": "",
-    "url_perfil": "",
-    "modelos_negocio": [],
-    "tecnologias": []
-  },
-  {
-    "id": 508,
     "nome": "Medalz",
     "descricao": "",
     "segmento": "",
@@ -7832,10 +8327,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 509,
+    "id": 508,
     "nome": "Nanoprox",
     "descricao": "",
     "segmento": "",
@@ -7843,10 +8339,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 510,
+    "id": 509,
     "nome": "Repleno - AI Native",
     "descricao": "",
     "segmento": "",
@@ -7854,10 +8351,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 511,
+    "id": 510,
     "nome": "Solo - AI Native",
     "descricao": "",
     "segmento": "",
@@ -7865,10 +8363,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 512,
+    "id": 511,
     "nome": "Tracksale",
     "descricao": "",
     "segmento": "",
@@ -7876,10 +8375,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 513,
+    "id": 512,
     "nome": "Tregu",
     "descricao": "",
     "segmento": "",
@@ -7887,10 +8387,11 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
   },
   {
-    "id": 514,
+    "id": 513,
     "nome": "Zenica",
     "descricao": "",
     "segmento": "",
@@ -7898,26 +8399,48 @@
     "site": "",
     "url_perfil": "",
     "modelos_negocio": [],
-    "tecnologias": []
+    "tecnologias": [],
+    "data_adicionado": "2026-07-26"
+  },
+  {
+    "id": 514,
+    "nome": "Alma",
+    "descricao": "",
+    "segmento": "",
+    "fundadores": "",
+    "site": "http://oialma.com.br",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/56604691-07be-4817-a2fa-85a5cdd86cd3",
+    "modelos_negocio": [],
+    "tecnologias": [],
+    "data_adicionado": "2026-07-27"
   },
   {
     "id": 515,
-    "nome": "Zero Carbon Logistics",
-    "descricao": "A Zero Carbon Logistics é pioneira na logística sustentável, com frota 100% elétrica e práticas ESG inovadoras. Oferecemos soluções de transporte, armazenagem e descarbonização para nossos clientes, neutralizando emissões e promovendo sustentabilidade em toda a cadeia...Ler mais",
-    "segmento": "ESG",
-    "fundadores": "",
-    "site": "https://www.zerocarbongroup.com",
-    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/19c71652-c82d-4477-a523-bb2529537f9d",
-    "modelos_negocio": [],
+    "nome": "Beelog",
+    "descricao": "A Beelog é uma Logtech especializada em entregas rápidas e inteligentes, focada em conectar negócios, entregadores e consumidores por meio de tecnologia. Atuamos na primeira e última milha com soluções que conectam e encurtam distâncias, tornando as operações mais efi...Ler mais",
+    "segmento": "Logística",
+    "fundadores": "Jhouferbio Rodrigues",
+    "site": "http://beelog.app",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/be5b1c53-2127-4dc6-ace7-0d73a69c4fc0",
+    "modelos_negocio": [
+      "B2B2C (business to business to consumer)"
+    ],
     "tecnologias": [
-      "Inteligência Artificial",
-      "Software",
-      "Big Data e Data Analytics",
       "Computação em nuvem",
-      "Drones",
-      "Robótica",
-      "Machine Learning",
-      "Outros tipos de tecnologia"
-    ]
+      "Inteligência Artificial"
+    ],
+    "data_adicionado": "2026-07-27"
+  },
+  {
+    "id": 516,
+    "nome": "flipzen.com",
+    "descricao": "",
+    "segmento": "",
+    "fundadores": "",
+    "site": "http://flipzen.com",
+    "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d2a2d307-6b57-45ff-b839-a62f4021ee2c",
+    "modelos_negocio": [],
+    "tecnologias": [],
+    "data_adicionado": "2026-07-27"
   }
 ]

@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { getDepartamentoPorSlug, getStartupsPorDepartamento, getDepartamentos } from "@/lib/data";
-import { ConfiancaBadge } from "@/components/confianca-badge";
-import { StartupTable } from "@/components/startup-table";
 import { DepartamentoSelector } from "@/components/departamento-selector";
+import { DepartamentoClient } from "../departamento-client";
 
 export async function generateStaticParams() {
   const { DEPARTAMENTOS } = await import("@/lib/constants");
@@ -27,7 +26,7 @@ export default async function DepartamentoPage({
   const todosDepartamentos = getDepartamentos();
 
   return (
-    <div className="mx-auto w-full max-w-[90rem] px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+    <div className="mx-auto w-full max-w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 xl:max-w-[80rem]">
       {/* Breadcrumb */}
       <Link
         href="/"
@@ -54,27 +53,8 @@ export default async function DepartamentoPage({
         />
       </div>
 
-      {/* Stats badges */}
-      <div className="mb-10 flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2 rounded-2xl border border-gray-100 bg-white px-4 py-2.5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <ConfiancaBadge confianca="alta" />
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-            {departamento.altaConfianca}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 rounded-2xl border border-gray-100 bg-white px-4 py-2.5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-          <ConfiancaBadge confianca="media" />
-          <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-            {departamento.mediaConfianca}
-          </span>
-        </div>
-        <div className="rounded-2xl border border-gray-100 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
-          Total: {departamento.totalStartups} startups
-        </div>
-      </div>
-
-      {/* Startups */}
-      <StartupTable startups={startups} />
+      {/* Stats + Startups */}
+      <DepartamentoClient departamento={departamento} startups={startups} />
     </div>
   );
 }

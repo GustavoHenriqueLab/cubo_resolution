@@ -18,8 +18,6 @@ import {
 } from "lucide-react";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { ConfiancaBadge } from "@/components/confianca-badge";
-import { AderenciaBadge } from "@/components/aderencia-badge";
-import { getDepartamentosDaStartup } from "@/lib/data";
 import { nomeParaSlug } from "@/lib/constants";
 import type { AvaliacaoGemini } from "@/lib/types";
 
@@ -51,7 +49,6 @@ export function StartupDrawer() {
 
   if (!startup) return null;
 
-  const deptos = getDepartamentosDaStartup(startup.nome);
   const temAnalise = startup.analise || startup.avaliacao;
 
   return (
@@ -72,9 +69,6 @@ export function StartupDrawer() {
             </h2>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <ConfiancaBadge confianca={startup.confianca} />
-              {startup.aderencia_lab && (
-                <AderenciaBadge nivel={startup.aderencia_lab} />
-              )}
             </div>
           </div>
           <button
@@ -89,7 +83,7 @@ export function StartupDrawer() {
         <div className="flex-1 overflow-y-auto px-6 py-5">
           {/* Department chips */}
           <div className="mb-5 flex flex-wrap gap-1.5">
-            {deptos.map((d) => (
+            {startup.departamentos.map((d) => (
               <Link
                 key={d}
                 href={`/departamentos/${nomeParaSlug(d)}`}
@@ -150,6 +144,21 @@ export function StartupDrawer() {
                 <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
                   Analise do Gemini
                 </span>
+              </div>
+
+              <div className="mb-4 grid grid-cols-2 gap-2">
+                <div className="rounded-xl border border-blue-100 bg-white/60 px-3 py-2 dark:border-blue-500/20 dark:bg-blue-500/5">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Rank</div>
+                  <div className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                    Relevancia para a LAB. 1 = mais relevante.
+                  </div>
+                </div>
+                <div className="rounded-xl border border-blue-100 bg-white/60 px-3 py-2 dark:border-blue-500/20 dark:bg-blue-500/5">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Confianca</div>
+                  <div className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                    Precisao do encaixe no departamento.
+                  </div>
+                </div>
               </div>
 
               {/* Analysis text */}

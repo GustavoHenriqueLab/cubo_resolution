@@ -45,6 +45,7 @@ def _carregar_progresso() -> tuple[dict, set[str]]:
     """
     resultado: dict[str, list[dict]] = {d: [] for d in DEPARTAMENTOS}
     destaques_lab: list[str] = []
+    destaques_analises: list[dict] = []
     nomes_processados: set[str] = set()
 
     if ARQUIVO_SAIDA.exists():
@@ -53,6 +54,7 @@ def _carregar_progresso() -> tuple[dict, set[str]]:
                 dados = json.load(f)
             resultado = {d: dados.get("departamentos", {}).get(d, []) for d in DEPARTAMENTOS}
             destaques_lab = dados.get("destaque_lab", [])
+            destaques_analises = dados.get("destaque_lab_analises", [])
             for startups in resultado.values():
                 for s in startups:
                     nomes_processados.add(s["nome"])
@@ -60,7 +62,11 @@ def _carregar_progresso() -> tuple[dict, set[str]]:
         except Exception:
             print("Aviso: nao foi possivel carregar progresso anterior. Iniciando do zero.")
 
-    return {"departamentos": resultado, "destaque_lab": destaques_lab}, nomes_processados
+    return {
+        "departamentos": resultado,
+        "destaque_lab": destaques_lab,
+        "destaque_lab_analises": destaques_analises,
+    }, nomes_processados
 
 
 def _salvar_progresso(resultado: dict) -> None:
@@ -151,6 +157,23 @@ def executar() -> None:
     # Filtra apenas startups pendentes
     pendentes = [s for s in startups if s["nome"] not in nomes_processados]
     total = len(startups)
+
+    # Separa startups sem conteudo (sem descricao, segmento, site, nem tecnologias)
+    sem_conteudo = [
+        s for s in pendentes
+        if not s.get("descricao")
+        and not s.get("segmento")
+        and not s.get("site")
+        and not s.get("fundadores")
+        and not s.get("tecnologias")
+    ]
+    if sem_conteudo:
+        print(f"Startups sem conteudo (puladas do Gemini): {len(sem_conteudo)}")
+        for s in sem_conteudo:
+            print(f"  - {s['nome']}")
+            nomes_processados.add(s["nome"])
+        pendentes = [s for s in pendentes if s["nome"] not in nomes_processados]
+
     pendentes_count = len(pendentes)
 
     if pendentes_count == 0:

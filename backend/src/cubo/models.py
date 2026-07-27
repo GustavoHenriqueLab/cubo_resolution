@@ -21,6 +21,7 @@ class Startup:
     site: str = ""
     modelos_negocio: list[str] = field(default_factory=list)
     tecnologias: list[str] = field(default_factory=list)
+    data_adicionado: str = ""
 
 
 @dataclass

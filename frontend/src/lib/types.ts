@@ -8,6 +8,7 @@ export interface StartupRaw {
   url_perfil: string;
   modelos_negocio: string[];
   tecnologias: string[];
+  data_adicionado?: string;
 }
 
 export interface AvaliacaoGemini {
@@ -47,7 +48,7 @@ export interface DepartamentosData {
 
 export interface StartupEnriquecida {
   nome: string;
-  confianca: "alta" | "media";
+  confianca: "alta" | "media" | "baixa";
   aderencia_lab?: "alta" | "media" | "baixa";
   analise?: string;
   avaliacao?: AvaliacaoGemini;
@@ -59,6 +60,9 @@ export interface StartupEnriquecida {
   url_perfil: string;
   modelos_negocio: string[];
   tecnologias: string[];
+  departamentos: string[];
+  confiancaPorDepartamento: Record<string, "alta" | "media">;
+  data_adicionado?: string;
 }
 
 export interface DepartamentoInfo {

@@ -5,23 +5,99 @@ import type {
   StartupClassificada,
   DepartamentoInfo,
 } from "@/lib/types";
-import { DEPARTAMENTOS, DEPARTAMENTOS_DESCRICOES, nomeParaSlug } from "@/lib/constants";
+import { DEPARTAMENTOS, DEPARTAMENTOS_DESCRICOES } from "@/lib/constants";
 
 import classificacao from "@/data/departamentos_startups.json";
 import startupsRaw from "@/data/startups_cubo.json";
 
+let _classificacaoCache: Record<string, StartupClassificada[]> | null = null;
+let _indiceStartupDeptos: Map<string, string[]> | null = null;
+let _indiceStartupConfianca: Map<string, Map<string, "alta" | "media">> | null = null;
+
 function _getMapaClassificacao(): Record<string, StartupClassificada[]> {
+  if (_classificacaoCache) return _classificacaoCache;
+
   const dados = classificacao as unknown as Record<string, unknown>;
 
   if (dados.departamentos && typeof dados.departamentos === "object") {
-    return (dados as unknown as DepartamentosData).departamentos;
+    _classificacaoCache = (dados as unknown as DepartamentosData).departamentos;
+  } else {
+    _classificacaoCache = dados as unknown as Record<string, StartupClassificada[]>;
   }
 
-  return dados as unknown as Record<string, StartupClassificada[]>;
+  return _classificacaoCache;
+}
+
+function _construirIndices(): void {
+  if (_indiceStartupDeptos && _indiceStartupConfianca) return;
+
+  const dados = _getMapaClassificacao();
+  _indiceStartupDeptos = new Map();
+  _indiceStartupConfianca = new Map();
+
+  for (const [nomeDepto, startups] of Object.entries(dados)) {
+    const slug = _nomeParaSlug(nomeDepto);
+    for (const s of startups) {
+      if (!_indiceStartupDeptos.has(s.nome)) {
+        _indiceStartupDeptos.set(s.nome, []);
+      }
+      _indiceStartupDeptos.get(s.nome)!.push(nomeDepto);
+
+      if (!_indiceStartupConfianca.has(s.nome)) {
+        _indiceStartupConfianca.set(s.nome, new Map());
+      }
+      _indiceStartupConfianca.get(s.nome)!.set(slug, s.confianca);
+    }
+  }
+}
+
+function _nomeParaSlug(nome: string): string {
+  const entry = Object.entries(DEPARTAMENTOS).find(
+    ([, displayName]) => displayName === nome
+  );
+  return entry?.[0] ?? nome.toLowerCase().replace(/\s+/g, "-");
+}
+
+function _enriquecerStartup(s: StartupClassificada, rawData?: StartupRaw): Omit<StartupEnriquecida, "rank"> {
+  _construirIndices();
+  const deptos = _indiceStartupDeptos!.get(s.nome) ?? [];
+  const confMap = _indiceStartupConfianca!.get(s.nome) ?? new Map();
+  const confiancaRecord: Record<string, "alta" | "media"> = {};
+  for (const [slug, conf] of confMap) {
+    confiancaRecord[slug] = conf;
+  }
+
+  return {
+    nome: s.nome,
+    confianca: s.confianca,
+    aderencia_lab: s.aderencia_lab,
+    analise: s.analise,
+    avaliacao: s.avaliacao,
+    descricao: rawData?.descricao ?? "",
+    segmento: rawData?.segmento ?? "",
+    fundadores: rawData?.fundadores ?? "",
+    site: rawData?.site ?? "",
+    url_perfil: rawData?.url_perfil ?? "",
+    modelos_negocio: rawData?.modelos_negocio ?? [],
+    tecnologias: rawData?.tecnologias ?? [],
+    departamentos: deptos,
+    confiancaPorDepartamento: confiancaRecord,
+    data_adicionado: rawData?.data_adicionado,
+  };
 }
 
 export function getDadosClassificacao(): Record<string, StartupClassificada[]> {
   return _getMapaClassificacao();
+}
+
+export function getIndiceStartupDeptos(): Map<string, string[]> {
+  _construirIndices();
+  return _indiceStartupDeptos!;
+}
+
+export function getIndiceStartupConfianca(): Map<string, Map<string, "alta" | "media">> {
+  _construirIndices();
+  return _indiceStartupConfianca!;
 }
 
 export function getDestaqueLab(): string[] {
@@ -74,21 +150,11 @@ export function getStartupsPorDepartamento(
   return classificadas
     .map((s) => {
       const rawData = mapaRaw.get(s.nome);
+      const base = _enriquecerStartup(s, rawData);
       return {
-        nome: s.nome,
-        confianca: s.confianca,
-        aderencia_lab: s.aderencia_lab,
-        analise: s.analise,
-        avaliacao: s.avaliacao,
+        ...base,
         rank: s.rank,
-        descricao: rawData?.descricao ?? "",
-        segmento: rawData?.segmento ?? "",
-        fundadores: rawData?.fundadores ?? "",
-        site: rawData?.site ?? "",
-        url_perfil: rawData?.url_perfil ?? "",
-        modelos_negocio: rawData?.modelos_negocio ?? [],
-        tecnologias: rawData?.tecnologias ?? [],
-      };
+      } as StartupEnriquecida;
     })
     .sort((a, b) => {
       if (a.rank != null && b.rank != null) return a.rank - b.rank;
@@ -116,41 +182,45 @@ export function getTodasStartups(): StartupEnriquecida[] {
 
   const mapaEnriquecido = new Map<string, StartupEnriquecida>();
 
-  // Classificadas (com analise)
   for (const [, startups] of Object.entries(dados)) {
     for (const s of startups) {
       if (mapaEnriquecido.has(s.nome)) continue;
 
       const rawData = mapaRaw.get(s.nome);
+      if (!rawData) continue; // ignora classificadas sem dados raw
+
       const ehDestaque = destaquesSet.has(s.nome);
+      const base = _enriquecerStartup(s, rawData);
 
       mapaEnriquecido.set(s.nome, {
-        nome: s.nome,
-        confianca: s.confianca,
-        aderencia_lab: s.aderencia_lab,
-        analise: s.analise,
-        avaliacao: s.avaliacao,
+        ...base,
         rank: ehDestaque ? (mapaDestaqueRank.get(s.nome) ?? undefined) : undefined,
-        descricao: rawData?.descricao ?? "",
-        segmento: rawData?.segmento ?? "",
-        fundadores: rawData?.fundadores ?? "",
-        site: rawData?.site ?? "",
-        url_perfil: rawData?.url_perfil ?? "",
-        modelos_negocio: rawData?.modelos_negocio ?? [],
-        tecnologias: rawData?.tecnologias ?? [],
       });
     }
   }
 
-  // Nao classificadas (sem analise, mas estao no raw)
   for (const rawData of raw) {
     if (mapaEnriquecido.has(rawData.nome)) continue;
 
     const ehDestaque = destaquesSet.has(rawData.nome);
+    _construirIndices();
+    const deptos = _indiceStartupDeptos!.get(rawData.nome) ?? [];
+    const confMap = _indiceStartupConfianca!.get(rawData.nome) ?? new Map();
+    const confiancaRecord: Record<string, "alta" | "media"> = {};
+    for (const [slug, conf] of confMap) {
+      confiancaRecord[slug] = conf;
+    }
+
+    const temConteudo =
+      (rawData.descricao && rawData.descricao.trim().length > 0) ||
+      rawData.segmento ||
+      rawData.site ||
+      rawData.fundadores ||
+      (rawData.tecnologias && rawData.tecnologias.length > 0);
 
     mapaEnriquecido.set(rawData.nome, {
       nome: rawData.nome,
-      confianca: "media",
+      confianca: temConteudo ? "media" : "baixa",
       rank: ehDestaque ? (mapaDestaqueRank.get(rawData.nome) ?? undefined) : undefined,
       descricao: rawData.descricao,
       segmento: rawData.segmento,
@@ -159,6 +229,9 @@ export function getTodasStartups(): StartupEnriquecida[] {
       url_perfil: rawData.url_perfil,
       modelos_negocio: rawData.modelos_negocio,
       tecnologias: rawData.tecnologias,
+      departamentos: deptos,
+      confiancaPorDepartamento: confiancaRecord,
+      data_adicionado: rawData.data_adicionado,
     });
   }
 
@@ -168,29 +241,18 @@ export function getTodasStartups(): StartupEnriquecida[] {
 }
 
 export function getDepartamentosDaStartup(nome: string): string[] {
-  const dados = getDadosClassificacao();
-  const deptos: string[] = [];
-
-  for (const [deptoNome, startups] of Object.entries(dados)) {
-    if (startups.some((s) => s.nome === nome)) {
-      deptos.push(deptoNome);
-    }
-  }
-
-  return deptos;
+  _construirIndices();
+  return _indiceStartupDeptos!.get(nome) ?? [];
 }
 
 export function getConfiancaNoDepartamento(
   startupNome: string,
   departamentoSlug: string
 ): "alta" | "media" | null {
-  const dados = getDadosClassificacao();
-  const nomeDepto = DEPARTAMENTOS[departamentoSlug];
-  if (!nomeDepto) return null;
-
-  const classificadas = dados[nomeDepto] ?? [];
-  const match = classificadas.find((s) => s.nome === startupNome);
-  return match?.confianca ?? null;
+  _construirIndices();
+  const confMap = _indiceStartupConfianca!.get(startupNome);
+  if (!confMap) return null;
+  return confMap.get(departamentoSlug) ?? null;
 }
 
 export function getSegmentos(): string[] {
@@ -232,6 +294,8 @@ export function getStartupsDestaqueLab(): StartupEnriquecida[] {
     }
   }
 
+  _construirIndices();
+
   const enriquecidas: StartupEnriquecida[] = [];
 
   for (const nome of destaquesOrdenados) {
@@ -248,6 +312,12 @@ export function getStartupsDestaqueLab(): StartupEnriquecida[] {
     }
 
     const infoAnalise = mapaAnalises.get(nome);
+    const deptos = _indiceStartupDeptos!.get(nome) ?? [];
+    const confMap = _indiceStartupConfianca!.get(nome) ?? new Map();
+    const confiancaRecord: Record<string, "alta" | "media"> = {};
+    for (const [slug, c] of confMap) {
+      confiancaRecord[slug] = c;
+    }
 
     enriquecidas.push({
       nome,
@@ -261,6 +331,9 @@ export function getStartupsDestaqueLab(): StartupEnriquecida[] {
       url_perfil: rawData.url_perfil,
       modelos_negocio: rawData.modelos_negocio,
       tecnologias: rawData.tecnologias,
+      departamentos: deptos,
+      confiancaPorDepartamento: confiancaRecord,
+      data_adicionado: rawData.data_adicionado,
     });
   }
 

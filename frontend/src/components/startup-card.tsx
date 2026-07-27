@@ -1,10 +1,9 @@
 "use client";
 
+import { memo } from "react";
 import Link from "next/link";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { ConfiancaBadge } from "@/components/confianca-badge";
-import { AderenciaBadge } from "@/components/aderencia-badge";
-import { getDepartamentosDaStartup } from "@/lib/data";
 import { nomeParaSlug } from "@/lib/constants";
 import { ExternalLink } from "lucide-react";
 import type { StartupEnriquecida } from "@/lib/types";
@@ -14,9 +13,8 @@ interface Props {
   index?: number;
 }
 
-export function StartupCard({ startup, index = 0 }: Props) {
+export const StartupCard = memo(function StartupCard({ startup, index = 0 }: Props) {
   const { open } = useStartupDrawer();
-  const deptos = getDepartamentosDaStartup(startup.nome);
 
   return (
     <article
@@ -29,22 +27,25 @@ export function StartupCard({ startup, index = 0 }: Props) {
     >
       {/* Rank badge */}
       {startup.rank != null && (
-        <div className="mb-3 inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400">
+        <div
+          className="mb-3 inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400"
+          title="Relevancia para a LAB (1 = mais relevante)"
+        >
           <span className="text-[10px] uppercase tracking-wider text-blue-400">Rank</span>
           #{startup.rank}
         </div>
       )}
 
       {/* Header */}
-      <div className="mb-3 flex items-start justify-between gap-2">
-        <h3 className="font-display text-lg font-semibold text-gray-900 dark:text-gray-100">
+      <div className="mb-3 flex items-start justify-between gap-2 min-w-0">
+        <h3 className="font-display text-lg font-semibold text-gray-900 truncate dark:text-gray-100">
           {startup.nome}
         </h3>
-        <div className="flex items-center gap-1.5">
+        <div
+          className="flex items-center gap-1.5"
+          title="Confianca = precisao do encaixe da startup no departamento"
+        >
           <ConfiancaBadge confianca={startup.confianca} />
-          {startup.aderencia_lab && (
-            <AderenciaBadge nivel={startup.aderencia_lab} />
-          )}
         </div>
       </div>
 
@@ -53,7 +54,7 @@ export function StartupCard({ startup, index = 0 }: Props) {
         className="mb-3 flex flex-wrap gap-1.5"
         onClick={(e) => e.stopPropagation()}
       >
-        {deptos.map((d) => (
+        {startup.departamentos.map((d) => (
           <Link
             key={d}
             href={`/departamentos/${nomeParaSlug(d)}`}
@@ -70,8 +71,8 @@ export function StartupCard({ startup, index = 0 }: Props) {
       </p>
 
       {/* Meta */}
-      <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-gray-500">
-        <span>{startup.segmento || "—"}</span>
+      <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-gray-500 min-w-0 overflow-hidden">
+        <span className="truncate">{startup.segmento || "—"}</span>
         {startup.tecnologias.length > 0 && (
           <>
             <span>·</span>
@@ -102,4 +103,4 @@ export function StartupCard({ startup, index = 0 }: Props) {
       )}
     </article>
   );
-}
+});
