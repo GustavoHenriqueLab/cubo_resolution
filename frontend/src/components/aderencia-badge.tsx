@@ -5,9 +5,9 @@ interface Props {
 }
 
 const STYLES: Record<string, string> = {
-  alta: "bg-green-500/10 text-green-600 border-green-500/20",
-  media: "bg-blue-500/10 text-blue-600 border-blue-500/20",
-  baixa: "bg-slate-500/10 text-slate-600 border-slate-500/20",
+  alta: "bg-green-500/10 text-green-600 border-green-500/20 dark:text-green-400",
+  media: "bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400",
+  baixa: "bg-slate-500/10 text-slate-600 border-slate-500/20 dark:text-slate-400",
 };
 
 const LABELS: Record<string, string> = {

@@ -7,22 +7,22 @@ interface Props {
 export function ConfiancaBadge({ confianca }: Props) {
   const config = ({
     alta: {
-      style: "bg-blue-500/10 text-blue-600 border-blue-500/20",
+      style: "bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400",
       icon: CheckCircle,
       label: "Alta",
     },
     media: {
-      style: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+      style: "bg-amber-500/10 text-amber-600 border-amber-500/20 dark:text-amber-400",
       icon: AlertCircle,
       label: "Media",
     },
     baixa: {
-      style: "bg-gray-500/10 text-gray-500 border-gray-500/20",
+      style: "bg-gray-500/10 text-gray-500 border-gray-500/20 dark:text-gray-400",
       icon: XCircle,
       label: "Baixa",
     },
   } as const)[confianca] ?? {
-    style: "bg-gray-500/10 text-gray-500 border-gray-500/20",
+    style: "bg-gray-500/10 text-gray-500 border-gray-500/20 dark:text-gray-400",
     icon: XCircle,
     label: "—",
   };

@@ -19,7 +19,7 @@ export function StartupTable({ startups }: Props) {
               Alta confianca
             </h2>
             <ConfiancaBadge confianca="alta" />
-            <span className="text-xs font-medium text-slate-400">{alta.length}</span>
+            <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{alta.length}</span>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {alta.map((s, i) => (
@@ -36,7 +36,7 @@ export function StartupTable({ startups }: Props) {
               Media confianca
             </h2>
             <ConfiancaBadge confianca="media" />
-            <span className="text-xs font-medium text-slate-400">{media.length}</span>
+            <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{media.length}</span>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {media.map((s, i) => (
