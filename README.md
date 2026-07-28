@@ -2,6 +2,112 @@
 
 Plataforma que extrai, classifica via IA e visualiza startups do ecossistema [Cubo Itau](https://cubo.itau/), organizadas por departamento do laboratorio LAB Medicina Diagnostica.
 
+---
+
+## Atualizacao Mensal (Pipeline)
+
+Todo mes, execute o pipeline localmente para extrair novas startups do Cubo e reclassifica-las com IA. Ao final, um commit + push atualiza o site na Vercel automaticamente.
+
+### Pre-requisitos (setup unico)
+
+- **Python 3.10+** + Google Chrome instalado
+- **Node.js 20+** (ver `.nvmrc`)
+- Credenciais do Cubo Itau (`CUBO_EMAIL`, `CUBO_PASSWORD`)
+- Chave de API Google Gemini (`GEMINI_API_KEY`) — [criar aqui](https://aistudio.google.com/)
+
+```powershell
+# Setup inicial (so na primeira vez)
+cd backend
+pip install -r requirements.txt
+cp .env.example .env
+# Preencha CUBO_EMAIL, CUBO_PASSWORD, GEMINI_API_KEY no .env
+
+cd ..\frontend
+npm install
+```
+
+### Passo a passo mensal
+
+```powershell
+# 1. Pipeline de dados (a partir da raiz do projeto)
+cd backend
+
+# A. Extrair startups do portal Cubo (~10 min)
+python scripts/run_scraper.py
+
+# B. Classificar com Gemini AI (~3 min)
+python scripts/run_classifier.py
+
+# C. Ranquear e analisar destaques LAB (~3 min)
+python scripts/rankear_deptos.py
+python scripts/analisar_destaques.py
+
+# 2. Copiar JSONs gerados para o frontend
+cd ..
+copy backend\data\raw\startups_cubo.json frontend\src\data\startups_cubo.json
+copy backend\data\processed\departamentos_startups.json frontend\src\data\departamentos_startups.json
+
+# 3. Commit e push → Vercel faz o deploy automatico
+git add frontend\src\data\*.json
+git commit -m "dados: atualizacao mensal de startups"
+git push
+```
+
+> **Atalho**: o script `.\update.ps1 -Tudo` executa os passos 1 e 2 automaticamente.
+
+> **Periodicidade**: o scraper bloqueia execucoes com menos de 30 dias. Rode apenas 1x por mes.
+
+> **Precisa testar localmente?** Va em `frontend\` e rode `npm run dev` (nao precisa de backend — os JSONs ja estao commitados).
+
+---
+
+## Deploy na Vercel (Frontend)
+
+Apenas o frontend (Next.js 15) e deployado na Vercel. O backend (Python + Selenium + Gemini) e um pipeline offline executado localmente 1x por mes para gerar os JSONs de dados — estes ficam commitados em `frontend/src/data/` e sao empacotados no build estatico.
+
+### Configuracao do projeto na Vercel
+
+| Setting | Valor |
+|---|---|
+| **Framework** | Next.js (auto-detectado) |
+| **Root Directory** | `frontend` |
+| **Build Command** | `next build` (padrao) |
+| **Output Directory** | `.next` (padrao) |
+| **Install Command** | `npm install` (padrao) |
+| **Node.js Version** | 20.x (`.nvmrc`) |
+
+> **Importante**: defina **Root Directory = `frontend`** no painel da Vercel (Settings → General → Root Directory). Isso garante que apenas o diretorio `frontend/` seja deployado — o backend Python (`backend/`), scripts e dados brutos ficam de fora do deploy.
+
+### Funcionalidades incluidas no deploy
+
+- **Vercel Analytics** — metricas de audiencia e page views
+- **Vercel Speed Insights** — Core Web Vitals (LCP, CLS, INP) em producao
+- **SSG** — 12 paginas de departamento pre-renderizadas no build
+- **`output: "standalone"`** — bundle otimizado para o ambiente serverless da Vercel
+- **Headers de seguranca** — `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`
+- **Cache otimizado** — `max-age=31536000, immutable` para assets estaticos do Next.js
+
+### Fluxo de atualizacao
+
+```
+1. Roda update.ps1 localmente (scraper + classificador Gemini)
+2. JSONs atualizados sao copiados para frontend/src/data/
+3. Commit e push → Vercel detecta e faz redeploy automatico
+```
+
+Nao ha variaveis de ambiente no frontend — os dados sao 100% estaticos.
+
+### Arquivos relevantes para o deploy
+
+| Arquivo | Funcao |
+|---|---|
+| `frontend/vercel.json` | Configuracao do projeto (framework, headers de cache) |
+| `frontend/next.config.ts` | `output: "standalone"`, headers HTTP, formatos de imagem |
+| `frontend/.nvmrc` | Fixa Node.js 20 LTS |
+| `frontend/src/app/layout.tsx` | Integra `<Analytics />` e `<SpeedInsights />` |
+
+---
+
 ## Proposta
 
 O projeto resolve o problema de descoberta de startups relevantes para um laboratorio de medicina diagnostica. O pipeline automatizado:
@@ -25,42 +131,29 @@ O Gemini avalia cada startup em 9 criterios (aderencia a saude, maturidade, conf
 
 ---
 
-## Rodando o Projeto (Quick Start)
+## Primeira Execucao (Setup Completo)
+
+Para quem vai rodar o projeto pela primeira vez — back e front.
+
+### Backend (Python)
 
 ```bash
-# 1. Backend — instalar dependencias
 cd backend
 pip install -r requirements.txt
-
-# 2. Configurar credenciais
 cp .env.example .env
 # Preencha CUBO_EMAIL, CUBO_PASSWORD, GEMINI_API_KEY no .env
-
-# 3. Extrair startups (Selenium — ~10 min)
-python scripts/run_scraper.py
-
-# 4. Classificar (Gemini — ~3 min)
-python scripts/run_classifier.py
-
-# 5. Ranquear + analisar destaques (~3 min)
-python scripts/rankear_deptos.py
-python scripts/analisar_destaques.py
-
-# 6. Frontend — instalar dependencias
-cd ../frontend
-npm install
-
-# 7. Copiar JSONs + build
-cd ..
-.\update.ps1
-
-# 8. Subir servidor
-cd frontend
-npm start
-# Acesse http://localhost:3000
 ```
 
-**Proximos meses**: repetir passos 3 → 5 → 7 → 8. O scraper so executa se passaram 30 dias da ultima extracao.
+### Frontend (Next.js)
+
+```bash
+cd frontend
+npm install                    # Node.js 20+ (ver .nvmrc)
+npm run dev                    # http://localhost:3000
+npm run build && npm start     # build de producao local
+```
+
+> Apos o setup inicial, o fluxo mensal e coberto na secao **Atualizacao Mensal (Pipeline)** acima. Nao e necessario rodar o backend para desenvoler no frontend — os JSONs ja estao commitados em `frontend/src/data/`.
 
 ---
 
@@ -102,10 +195,12 @@ cubo_resolution/
 │
 ├── frontend/                             # Dashboard (Next.js 15)
 │   ├── package.json                      # Dependencias e scripts
-│   ├── next.config.ts                    # Configuracao Next.js
+│   ├── next.config.ts                    # output standalone + headers + imagens
 │   ├── tsconfig.json                     # TypeScript strict + path alias (@/*)
 │   ├── tailwind.config.ts                # Dark mode, animacoes customizadas
 │   ├── postcss.config.mjs
+│   ├── vercel.json                       # Config de deploy (framework, cache)
+│   ├── .nvmrc                            # Node.js 20 LTS
 │   │
 │   ├── public/                           # Assets estaticos
 │   │   ├── favicon.ico
@@ -234,6 +329,8 @@ A secao **Novidades** mostra apenas startups com a `data_adicionado` mais recent
 ---
 
 ## Backend — Guia de Uso
+
+> Para o passo a passo rapido de execucao mensal, veja **Atualizacao Mensal (Pipeline)** no topo. Esta secao contem a documentacao detalhada de referencia.
 
 ### Pre-requisitos
 
@@ -380,33 +477,13 @@ python scripts/revisar_deptos_faltantes.py # Identifica startups nao classificad
 python scripts/analisar_destaques.py       # Analise aprofundada dos destaques LAB
 ```
 
-### 4. Atualizar o frontend
-
-**Opcao A — Script automatizado (recomendado):**
-
-```powershell
-.\update.ps1               # apenas copiar JSONs + build
-.\update.ps1 -Scraper      # scraper + copiar + build
-.\update.ps1 -Classificar  # classificador + copiar + build
-.\update.ps1 -Tudo         # scraper + classificador + copiar + build
-```
-
-**Opcao B — Manual:**
-
-```bash
-copy backend\data\raw\startups_cubo.json frontend\src\data\startups_cubo.json
-copy backend\data\processed\departamentos_startups.json frontend\src\data\departamentos_startups.json
-cd frontend
-npm run build
-```
-
 ---
 
 ## Frontend — Guia de Uso
 
 ### Pre-requisitos
 
-- **Node.js 18+**
+- **Node.js 20+** (ver `.nvmrc`)
 
 ### 1. Instalar dependencias
 
@@ -554,6 +631,8 @@ Junta `StartupRaw` + `StartupClassificada` + campos pre-computados:
 - **Resiliencia total** — Scraper e classificador suportam resume incremental
 - **Validacao automatica** — Scraper le o total do Cubo, compara com o JSON final e detecta duplicatas
 - **Pipeline automatizado** — `update.ps1` com 4 modos de execucao para atualizar o frontend
+- **Deploy na Vercel** — Frontend deployado com SSG, output standalone, headers de seguranca e cache otimizado
+- **Analytics e Speed Insights** — Metricas de audiencia e Core Web Vitals (LCP, CLS, INP) integrados via Vercel
 - **Indices O(1)** — Lookups de departamento e confianca pre-computados para filtros instantaneos
 - **Debounce + useDeferredValue** — Busca e filtros nao travam a UI
 
@@ -588,6 +667,6 @@ Junta `StartupRaw` + `StartupClassificada` + campos pre-computados:
 
 ### DevOps
 - **Docker** — Containerizar backend e frontend para deploy consistente
-- **CI/CD** — Pipeline no GitHub Actions para rodar scraper → classificador → build → deploy
+- **CI/CD** — Pipeline no GitHub Actions para rodar scraper → classificador → build → deploy (hoje o deploy ja e automatico via Vercel + push; faltam scraper e classificador)
 - **Monitoramento** — Log de erros do scraper/classificador com alertas (Slack/Email)
 - **Testes E2E** — Playwright/Cypress para testar fluxos criticos do frontend

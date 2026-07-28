@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Sidebar } from "@/components/sidebar";
 import { StartupDrawerProvider } from "@/components/startup-drawer-context";
 import { StartupDrawer } from "@/components/startup-drawer";
@@ -28,6 +30,8 @@ export default function RootLayout({
           </main>
           <StartupDrawer />
         </StartupDrawerProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
