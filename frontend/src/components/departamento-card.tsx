@@ -121,7 +121,6 @@ export function DepartamentoCard({ departamento, index }: Props) {
       <article
         className="animate-fade-in-up group relative cursor-pointer overflow-hidden rounded-[20px] border border-white/[.12] p-5 opacity-0 transition-all duration-200 dark:border-white/[.06]"
         style={{
-          background: `linear-gradient(135deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.55) 60%, ${t.tint} 100%)`,
           boxShadow:
             "inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(15,23,42,.04), 0 1px 0 rgba(15,23,42,.04), 0 12px 32px -16px rgba(15,23,42,.18), 0 4px 10px -6px rgba(15,23,42,.10)",
           backdropFilter: "blur(20px)",
@@ -129,6 +128,13 @@ export function DepartamentoCard({ departamento, index }: Props) {
           animationFillMode: "forwards",
         }}
       >
+        {/* Tint overlay — light */}
+        <div
+          className="pointer-events-none absolute inset-0 dark:hidden"
+          style={{
+            background: `linear-gradient(135deg, rgba(255,255,255,.85) 0%, rgba(255,255,255,.55) 60%, ${t.tint} 100%)`,
+          }}
+        />
         {/* Tint overlay — dark */}
         <div
           className="pointer-events-none absolute inset-0 hidden dark:block"
