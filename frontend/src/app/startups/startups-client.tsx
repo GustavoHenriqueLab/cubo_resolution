@@ -4,7 +4,7 @@ import { useMemo, useState, useEffect, useDeferredValue } from "react";
 import { StartupCard } from "@/components/startup-card";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
-import { SearchX, Star, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { SearchX, Sparkles, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import type { StartupEnriquecida, DepartamentoInfo } from "@/lib/types";
 
 function useDebounce<T>(value: T, delay: number): T {
@@ -118,19 +118,21 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
         </div>
         <button
           onClick={() => setApenasDestaques(!apenasDestaques)}
-          className={`inline-flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-medium transition-all ${
+          className={`group inline-flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
             apenasDestaques
-              ? "border-blue-300 bg-blue-50 text-blue-700 shadow-blue-glow dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400"
-              : "border-gray-200 bg-white text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-gray-600"
+              ? "border-blue-400 bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/25 dark:border-blue-400/40 dark:from-blue-500 dark:to-indigo-500"
+              : "border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 hover:border-amber-300 hover:from-amber-100 hover:to-orange-100 hover:shadow-md dark:border-amber-500/20 dark:from-amber-500/10 dark:to-orange-500/10 dark:text-amber-400 dark:hover:border-amber-500/30 dark:hover:from-amber-500/15 dark:hover:to-orange-500/15"
           }`}
         >
-          <Star size={16} className={apenasDestaques ? "text-blue-500" : "text-gray-400"} />
+          <Zap size={16} className={apenasDestaques ? "text-white" : "text-amber-500 dark:text-amber-400"} />
           Destaques LAB
-          {apenasDestaques && (
-            <span className="rounded-full bg-blue-200 px-1.5 py-0.5 text-[10px] font-bold text-blue-700 dark:bg-blue-500/30 dark:text-blue-300">
-              {estaquesSet.size}
-            </span>
-          )}
+          <span className={`ml-0.5 rounded-full px-2 py-0.5 text-[11px] font-bold transition-colors ${
+            apenasDestaques
+              ? "bg-white/20 text-white"
+              : "bg-amber-200 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400"
+          }`}>
+            {estaquesSet.size}
+          </span>
         </button>
       </div>
 

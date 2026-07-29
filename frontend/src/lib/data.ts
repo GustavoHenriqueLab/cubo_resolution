@@ -211,16 +211,12 @@ export function getTodasStartups(): StartupEnriquecida[] {
       confiancaRecord[slug] = conf;
     }
 
-    const temConteudo =
-      (rawData.descricao && rawData.descricao.trim().length > 0) ||
-      rawData.segmento ||
-      rawData.site ||
-      rawData.fundadores ||
-      (rawData.tecnologias && rawData.tecnologias.length > 0);
+    const temDescricao =
+      rawData.descricao && rawData.descricao.trim().length > 0;
 
     mapaEnriquecido.set(rawData.nome, {
       nome: rawData.nome,
-      confianca: temConteudo ? "media" : "baixa",
+      confianca: temDescricao ? "media" : "baixa",
       rank: ehDestaque ? (mapaDestaqueRank.get(rawData.nome) ?? undefined) : undefined,
       descricao: rawData.descricao,
       segmento: rawData.segmento,

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { ConfiancaBadge } from "@/components/confianca-badge";
 import { nomeParaSlug } from "@/lib/constants";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Star } from "lucide-react";
 import type { StartupEnriquecida } from "@/lib/types";
 
 interface Props {
@@ -15,24 +15,30 @@ interface Props {
 
 export const StartupCard = memo(function StartupCard({ startup, index = 0 }: Props) {
   const { open } = useStartupDrawer();
+  const isDestaque = startup.rank != null;
 
   return (
     <article
-      className={`hover-lift animate-fade-in-up group cursor-pointer rounded-2xl border border-gray-100 bg-white p-6 shadow-sm opacity-0 transition-all dark:border-gray-700 dark:bg-gray-800`}
+      className="hover-lift animate-fade-in-up group cursor-pointer rounded-2xl border border-gray-100 bg-white p-6 shadow-sm opacity-0 transition-all dark:border-gray-700 dark:bg-gray-800"
       style={{
         animationDelay: `${index * 50}ms`,
         animationFillMode: "forwards",
       }}
       onClick={() => open(startup)}
     >
-      {/* Rank badge */}
-      {startup.rank != null && (
-        <div
-          className="mb-3 inline-flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 text-[11px] font-bold text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400"
-          title="Relevancia para a LAB (1 = mais relevante)"
-        >
-          <span className="text-[10px] uppercase tracking-wider text-blue-400">Rank</span>
-          #{startup.rank}
+      {/* Rank badge — destaque */}
+      {isDestaque && (
+        <div className="mb-3 flex items-center gap-2">
+          <div className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 px-3 py-1 shadow-sm shadow-blue-500/20">
+            <Star size={10} className="fill-white text-white" />
+            <span className="text-[10px] font-bold uppercase tracking-wider text-white">Destaque LAB</span>
+          </div>
+          <span
+            className="rounded-full border border-blue-200 bg-white px-2 py-0.5 text-[11px] font-bold text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400"
+            title="Rank de relevancia para a LAB (1 = mais relevante)"
+          >
+            #{startup.rank}
+          </span>
         </div>
       )}
 
@@ -66,9 +72,20 @@ export const StartupCard = memo(function StartupCard({ startup, index = 0 }: Pro
       </div>
 
       {/* Description */}
-      <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-        {startup.descricao}
-      </p>
+      {startup.descricao ? (
+        <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+          {startup.descricao}
+        </p>
+      ) : (
+        <div className="mb-4 rounded-xl border border-blue-200 bg-blue-50/80 px-4 py-3 dark:border-blue-500/20 dark:bg-blue-500/10">
+          <p className="text-sm font-medium leading-relaxed text-blue-700 dark:text-blue-400">
+            Esta empresa nao disponibilizou informacoes sobre ela no site do Cubo Itau.
+          </p>
+          <p className="mt-1 text-xs leading-relaxed text-blue-600 dark:text-blue-500">
+            Para saber mais, recomendamos acessar o site da empresa.
+          </p>
+        </div>
+      )}
 
       {/* Meta */}
       <div className="flex items-center gap-2 text-xs text-slate-400 dark:text-gray-500 min-w-0 overflow-hidden">
