@@ -83,7 +83,7 @@ export function Sidebar() {
             alt="LAB."
             width={256}
             height={56}
-            className="h-14 w-auto"
+            className="h-14 w-auto dark:[filter:brightness(0)_invert(1)]"
             priority
           />
         )}
