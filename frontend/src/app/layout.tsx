@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Sidebar } from "@/components/sidebar";
-import { StartupDrawerProvider } from "@/components/startup-drawer-context";
-import { StartupDrawer } from "@/components/startup-drawer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -23,13 +20,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className="font-sans antialiased">
-        <StartupDrawerProvider>
-          <Sidebar />
-          <main className="min-h-screen overflow-x-hidden bg-slate-50 transition-all duration-300 dark:bg-gray-900 lg:ml-64">
-            {children}
-          </main>
-          <StartupDrawer />
-        </StartupDrawerProvider>
+        {children}
         <Analytics />
         <SpeedInsights />
       </body>

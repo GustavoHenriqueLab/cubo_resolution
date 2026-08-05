@@ -8,6 +8,8 @@ import {
   LayoutDashboard,
   Package,
   Search,
+  FileText,
+  Settings,
   ChevronLeft,
   ChevronRight,
   Sun,
@@ -15,11 +17,15 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { useUser } from "@/components/user-provider";
 
 const NAV_ITEMS = [
   { id: "dashboard", label: "Dashboard", href: "/", icon: LayoutDashboard },
   { id: "departamentos", label: "Departamentos", href: "/departamentos/atendimento", icon: Package },
   { id: "startups", label: "Buscar Startups", href: "/startups", icon: Search },
+  { id: "propostas", label: "Minhas Propostas", href: "/propostas", icon: FileText },
+  
+  { id: "admin", label: "Admin", href: "/admin", icon: Settings },
 ];
 
 export function Sidebar() {
@@ -27,6 +33,7 @@ export function Sidebar() {
   const [dark, setDark] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { isAdmin } = useUser();
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -63,6 +70,8 @@ export function Sidebar() {
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     if (href === "/startups") return pathname === "/startups";
+    if (href === "/propostas") return pathname === "/propostas";
+    if (href.startsWith("/admin")) return pathname.startsWith("/admin");
     return pathname.startsWith("/departamentos");
   };
 
@@ -109,7 +118,7 @@ export function Sidebar() {
           {collapsed ? "" : "DEPARTAMENTOS"}
         </p>
         <ul className="space-y-1">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.filter((item) => item.id !== "admin" || isAdmin).map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
             return (

@@ -1,8 +1,7 @@
-"""Ranqueamento de startups por departamento + analise dos destaques LAB.
+"""Ranqueamento de startups por departamento (Supabase).
 
-Pede ao Gemini para:
-1. Rankear startups dentro de cada departamento (1 = mais relevante)
-2. Fornecer analise para os destaques LAB que nao tinham
+Pede ao Gemini para rankear startups dentro de cada departamento.
+Atualiza a coluna rank na tabela startup_departamentos.
 """
 
 from __future__ import annotations
@@ -23,8 +22,23 @@ from cubo.gemini import (
     GeminiQuotaError,
 )
 from cubo.empresa import CONTEXTO_COMPLETO, AVISO_DADOS_PUBLICOS
+from cubo.supabase_client import criar_cliente_supabase
 
-ARQUIVO_SAIDA = Path(__file__).resolve().parent.parent / "data" / "processed" / "departamentos_startups.json"
+SLUG_MAP = {
+    "Atendimento": "atendimento",
+    "Comercial": "comercial",
+    "Qualidade": "qualidade",
+    "Transporte": "transporte",
+    "Biologia Molecular": "biologia-molecular",
+    "Faturamento": "faturamento",
+    "RH": "rh",
+    "Área Técnica": "area-tecnica",
+    "Estoque": "estoque",
+    "Financeiro": "financeiro",
+    "TI": "ti",
+    "Equipe Médica": "equipe-medica",
+}
+SLUG_TO_DEPTO = {v: k for k, v in SLUG_MAP.items()}
 
 SYSTEM_PROMPT_RANK = (
     f"{AVISO_DADOS_PUBLICOS}\n\n"
@@ -33,18 +47,9 @@ SYSTEM_PROMPT_RANK = (
     "---\n\n"
     "Voce recebera uma lista de startups associadas a UM unico departamento "
     "da LAB Medicina Diagnostica. Sua tarefa e RANQUEAR essas startups da "
-    "MAIS relevante (rank 1) para a MENOS relevante (ultimo rank) para a LAB, "
-    "considerando:\n\n"
-    "- Impacto real e imediato que a solucao traria para a LAB\n"
-    "- Aderencia ao contexto especifico da LAB (4 unidades, Brasilia, patologia)\n"
-    "- Maturidade da solucao e facilidade de integracao\n"
-    "- Custo-beneficio e viabilidade de implementacao\n\n"
-    "ATENCAO: Mantenha o nivel de confianca (alta/media) ja definido. "
-    "Apenas ADICIONE o campo \"rank\" (numero inteiro, 1 = melhor).\n\n"
-    "NAO altere os campos existentes. Retorne o JSON completo com o campo \"rank\" adicionado.\n\n"
-    "Formato:\n"
-    '{"startups": [{"nome": "...", "confianca": "alta", "rank": 1, ...todos os campos originais...}, ...]}\n\n'
-    "Ordene o array de saida pelo rank (1 primeiro)."
+    "MAIS relevante (rank 1) para a MENOS relevante (ultimo rank) para a LAB.\n\n"
+    "Retorne JSON:\n"
+    '{"startups": [{"nome": "...", "rank": 1}, ...]}'
 )
 
 
@@ -53,23 +58,28 @@ def _dividir_em_lotes(itens, tamanho):
         yield itens[indice:indice + tamanho]
 
 
-def _salvar(dados):
-    tmp = ARQUIVO_SAIDA.with_suffix(".tmp")
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(dados, f, ensure_ascii=False, indent=2)
-    tmp.replace(ARQUIVO_SAIDA)
-
-
 def executar():
     config = load_config()
     if not config.gemini_api_key:
         print("ERRO: GEMINI_API_KEY nao configurada.")
         sys.exit(1)
+    if not config.supabase_url or not config.supabase_service_role_key:
+        print("ERRO: SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY nao configurados.")
+        sys.exit(1)
 
-    with open(ARQUIVO_SAIDA, encoding="utf-8") as f:
-        dados = json.load(f)
+    supabase = criar_cliente_supabase(config.supabase_url, config.supabase_service_role_key)
 
-    deptos = dados.get("departamentos", {})
+    # Marca execucao
+    try:
+        exec_resp = supabase.table("pipeline_executions").insert({
+            "type": "ranker",
+            "status": "running",
+            "started_at": "now()",
+        }).execute()
+        execution_id = exec_resp.data[0]["id"] if exec_resp.data else None
+    except Exception:
+        execution_id = None
+
     client = GeminiClient(
         api_key=config.gemini_api_key,
         model_name=config.gemini_model,
@@ -80,26 +90,34 @@ def executar():
     total_deptos = len(DEPARTAMENTOS)
 
     for idx, depto_nome in enumerate(DEPARTAMENTOS, 1):
-        startups = deptos.get(depto_nome, [])
-        if not startups:
+        slug = SLUG_MAP.get(depto_nome, "")
+        if not slug:
             continue
 
+        # Busca startups deste departamento no Supabase
+        response = supabase.table("startup_departamentos").select(
+            "id, startup_id, departamento_slug, confianca, aderencia_lab, analise, startup:startups(nome)"
+        ).eq("departamento_slug", slug).execute()
+
+        if not response.data:
+            continue
+
+        startups = response.data
         print(f"\n[{idx}/{total_deptos}] {depto_nome}: {len(startups)} startups")
 
-        # Envia em lotes de 30 (rankear é mais leve que análise completa)
         lotes = list(_dividir_em_lotes(startups, 30))
         todas_rankeadas = []
         rank_offset = 0
 
         for lote_idx, lote in enumerate(lotes, 1):
-            nomes = [s["nome"] for s in lote]
-            print(f"  Lote {lote_idx}/{len(lotes)}: {len(lote)} startups — {nomes[0]}...")
+            nomes_lote = [s["startup"]["nome"] for s in lote]
+            print(f"  Lote {lote_idx}/{len(lotes)}: {len(lote)} startups — {nomes_lote[0]}...")
 
-            # Monta prompt simples: só a lista de startups
             blocos = []
             for i, s in enumerate(lote, 1):
+                startup = s.get("startup", {})
                 blocos.append(
-                    f"{i}. {s['nome']} | Confianca: {s.get('confianca','-')} | "
+                    f"{i}. {startup.get('nome','')} | Confianca: {s.get('confianca','-')} | "
                     f"Aderencia LAB: {s.get('aderencia_lab','-')} | "
                     f"Descricao: {s.get('analise','')[:200]}"
                 )
@@ -115,17 +133,16 @@ def executar():
                 resposta = client.classificar_lote(lote)
             except GeminiDailyQuotaExceeded as exc:
                 print(f"\n[COTA DIARIA] {exc}")
-                _salvar(dados)
+                _finalizar(supabase, execution_id, "interrupted")
                 return
             except (GeminiTemporaryRateLimit, GeminiQuotaError) as exc:
                 print(f"\n[ERRO COTA] {exc}")
-                _salvar(dados)
+                _finalizar(supabase, execution_id, "failed")
                 return
             except Exception as exc:
                 print(f"  [!] Erro: {exc}")
                 continue
 
-            # Merge ranks com offset para manter ordem entre lotes
             ranks_recebidos = {}
             for s in resposta.get("startups", []):
                 nome = s.get("nome", "")
@@ -133,10 +150,16 @@ def executar():
                 if nome and rank is not None:
                     ranks_recebidos[nome] = int(rank) + rank_offset
 
-            # Aplica ranks
             for s in lote:
-                if s["nome"] in ranks_recebidos:
-                    s["rank"] = ranks_recebidos[s["nome"]]
+                nome = s["startup"]["nome"]
+                if nome in ranks_recebidos:
+                    new_rank = ranks_recebidos[nome]
+                    try:
+                        supabase.table("startup_departamentos").update({
+                            "rank": new_rank,
+                        }).eq("id", s["id"]).execute()
+                    except Exception as e:
+                        print(f"    [!] Erro ao atualizar rank de {nome}: {e}")
 
             todas_rankeadas.extend(lote)
             rank_offset += len(lote)
@@ -144,14 +167,22 @@ def executar():
             if config.gemini_delay_between_batches > 0 and lote_idx < len(lotes):
                 time.sleep(config.gemini_delay_between_batches)
 
-        # Ordena por rank (ja sequencial entre lotes)
-        todas_rankeadas.sort(key=lambda x: x.get("rank", 9999))
-        deptos[depto_nome] = todas_rankeadas
-        _salvar(dados)
         print(f"  Salvo: {len(todas_rankeadas)} startups ranqueadas.")
 
-    _salvar(dados)
+    _finalizar(supabase, execution_id, "completed")
     print("\nRanqueamento concluido!")
+
+
+def _finalizar(supabase, execution_id: str | None, status: str) -> None:
+    if not execution_id:
+        return
+    try:
+        supabase.table("pipeline_executions").update({
+            "status": status,
+            "completed_at": "now()",
+        }).eq("id", execution_id).execute()
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":

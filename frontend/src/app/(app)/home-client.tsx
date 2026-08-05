@@ -51,7 +51,7 @@ export function HomeClient({ departamentos, novidades }: Props) {
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {novidades.slice(0, 6).map((s, i) => (
-              <StartupCard key={s.nome} startup={s} index={i} />
+              <StartupCard key={s.id} startup={s} index={i} />
             ))}
           </div>
           {novidades.length > 6 && (

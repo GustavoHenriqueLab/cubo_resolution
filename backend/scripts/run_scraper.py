@@ -1,10 +1,10 @@
-"""Ponto de entrada principal do extrator de startups do Cubo Itaú.
+"""Ponto de entrada principal do extrator de startups do Cubo Itau.
 
 Orquestra o pipeline completo:
 1. Abre o navegador e faz login na plataforma.
 2. Percorre a busca paginada, clica em cada card de startup,
    extrai o perfil completo.
-3. Salva tudo em um arquivo JSON para análise posterior.
+3. Salva diretamente no Supabase.
 """
 
 from __future__ import annotations
@@ -23,16 +23,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from cubo.config import load_config
 from cubo import scraper
 from cubo.models import ScrapingReport, Startup
+from cubo.supabase_client import criar_cliente_supabase
 
 logger = logging.getLogger("cubo")
 
+# Ainda mantemos JSON local como backup
 ARQUIVO_SAIDA = Path(__file__).resolve().parent.parent / "data" / "raw" / "startups_cubo.json"
-ARQUIVO_PARCIAL = Path(__file__).resolve().parent.parent / "data" / "raw" / "startups_cubo_parcial.json"
-ARQUIVO_PAGINAS = Path(__file__).resolve().parent.parent / "data" / "raw" / "paginas_rastreadas.json"
 
 
 def _configurar_logging() -> None:
-    """Configura o formato e nível dos logs da aplicação."""
+    """Configura o formato e nivel dos logs da aplicacao."""
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s [%(levelname)-7s] %(name)s — %(message)s",
@@ -41,8 +41,41 @@ def _configurar_logging() -> None:
     )
 
 
+def _carregar_nomes_supabase(supabase) -> set[str]:
+    """Carrega os nomes de startups ja existentes no Supabase para evitar duplicatas."""
+    try:
+        response = supabase.table("startups").select("nome").execute()
+        return {s["nome"] for s in response.data}
+    except Exception:
+        logger.warning("Nao foi possivel carregar startups do Supabase. Iniciando do zero.")
+        return set()
+
+
+def _salvar_startup_no_supabase(supabase, startup_dict: dict) -> bool:
+    """Insere ou atualiza uma startup no Supabase."""
+    try:
+        supabase.table("startups").upsert(
+            {
+                "nome": startup_dict["nome"],
+                "descricao": startup_dict.get("descricao", ""),
+                "segmento": startup_dict.get("segmento", ""),
+                "fundadores": startup_dict.get("fundadores", ""),
+                "site": startup_dict.get("site", ""),
+                "url_perfil": startup_dict.get("url_perfil", ""),
+                "modelos_negocio": startup_dict.get("modelos_negocio", []),
+                "tecnologias": startup_dict.get("tecnologias", []),
+                "data_adicionado": startup_dict.get("data_adicionado"),
+            },
+            on_conflict="nome",
+        ).execute()
+        return True
+    except Exception as e:
+        logger.error("Erro ao salvar %s no Supabase: %s", startup_dict.get("nome"), e)
+        return False
+
+
 def _startup_para_dict(startup: Startup, id_: int, data_adicionado: str = "") -> dict:
-    """Converte uma Startup para um dicionário serializável em JSON."""
+    """Converte uma Startup para um dicionario serializavel em JSON."""
     return {
         "id": id_,
         "nome": startup.nome,
@@ -57,89 +90,17 @@ def _startup_para_dict(startup: Startup, id_: int, data_adicionado: str = "") ->
     }
 
 
-def _salvar_parcial(startups: list[dict]) -> None:
-    """Salva os resultados parciais em disco para evitar perda de dados."""
+def _pode_executar(supabase) -> tuple[bool, str]:
+    """Verifica se ja passaram 30 dias desde a ultima extracao."""
     try:
-        with open(ARQUIVO_PARCIAL, "w", encoding="utf-8") as f:
-            json.dump(startups, f, ensure_ascii=False, indent=2)
-    except Exception:
-        logger.warning("Não foi possível salvar arquivo parcial.")
+        response = supabase.table("startups").select("data_adicionado").order("data_adicionado", desc=True).limit(1).execute()
+        if not response.data:
+            return True, "Primeira execucao — sem startups no banco."
 
-
-def _carregar_parcial() -> list[dict]:
-    """Carrega resultados parciais salvos anteriormente.
-
-    Usa o arquivo com mais dados entre ``_parcial`` e o final,
-    garantindo que nenhum dado seja perdido em caso de crash.
-    """
-    melhor: list[dict] = []
-    for arquivo in (ARQUIVO_PARCIAL, ARQUIVO_SAIDA):
-        if arquivo.exists():
-            try:
-                with open(arquivo, encoding="utf-8") as f:
-                    dados = json.load(f)
-                if len(dados) > len(melhor):
-                    melhor = dados
-            except Exception:
-                pass
-    return melhor
-
-
-def _carregar_paginas() -> dict[int, list[str]]:
-    """Carrega o tracking de páginas já processadas.
-
-    Returns:
-        Dicionário ``{número_página: [lista_de_nomes]}`` com nomes
-        únicos por página.
-    """
-    if ARQUIVO_PAGINAS.exists():
-        try:
-            with open(ARQUIVO_PAGINAS, encoding="utf-8") as f:
-                raw = json.load(f)
-            return {
-                int(k): list(dict.fromkeys(v)) for k, v in raw.items()
-            }
-        except Exception:
-            pass
-    return {}
-
-
-def _salvar_paginas(rastreio: dict[int, list[str]]) -> None:
-    """Persiste o tracking de páginas no disco, garantindo nomes únicos."""
-    try:
-        dedup = {p: list(dict.fromkeys(nomes)) for p, nomes in rastreio.items()}
-        with open(ARQUIVO_PAGINAS, "w", encoding="utf-8") as f:
-            json.dump(
-                {str(k): v for k, v in dedup.items()},
-                f,
-                ensure_ascii=False,
-                indent=2,
-            )
-    except Exception:
-        logger.warning("Não foi possível salvar arquivo de páginas.")
-
-
-def _pode_executar() -> tuple[bool, str]:
-    """Verifica se ja passaram 30 dias desde a ultima extracao.
-
-    Returns:
-        Tupla (pode_executar, mensagem).
-    """
-    if not ARQUIVO_SAIDA.exists():
-        return True, "Primeira execucao — arquivo de startups ainda nao existe."
-
-    try:
-        with open(ARQUIVO_SAIDA, encoding="utf-8") as f:
-            startups = json.load(f)
-
-        if not startups:
-            return True, "Arquivo de startups vazio — primeira execucao."
-
-        datas = [s.get("data_adicionado", "") for s in startups if s.get("data_adicionado")]
-        if not datas:
+        ultima_data = response.data[0].get("data_adicionado")
+        if not ultima_data:
             return True, "Nenhuma data_adicionado encontrada — permitindo execucao."
 
-        ultima_data = max(datas)
         ultima = date.fromisoformat(ultima_data)
         dias = (date.today() - ultima).days
 
@@ -155,40 +116,43 @@ def _pode_executar() -> tuple[bool, str]:
 
 
 def executar() -> ScrapingReport:
-    """Executa o pipeline completo de extração e persistência em JSON."""
+    """Executa o pipeline completo de extracao e persistencia no Supabase."""
     config = load_config()
     report = ScrapingReport()
     data_hoje = date.today().isoformat()
 
-    pode, msg = _pode_executar()
+    if not config.supabase_url or not config.supabase_service_role_key:
+        logger.error("SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY nao configurados no .env")
+        return report
+
+    supabase = criar_cliente_supabase(config.supabase_url, config.supabase_service_role_key)
+
+    nomes_salvos = _carregar_nomes_supabase(supabase)
+
+    pode, msg = _pode_executar(supabase)
     logger.info("Verificacao de periodo: %s", msg)
     if not pode:
         logger.warning("Execucao bloqueada: %s", msg)
         return report
 
     if not config.cubo_email or not config.cubo_password:
-        logger.error("CUBO_EMAIL e CUBO_PASSWORD não configurados no .env")
+        logger.error("CUBO_EMAIL e CUBO_PASSWORD nao configurados no .env")
         return report
 
-    startups_salvas = _carregar_parcial()
-    nomes_salvos: set[str] = {s["nome"] for s in startups_salvas}
-
-    for i, s in enumerate(startups_salvas, start=1):
-        if "id" not in s:
-            s["id"] = i
-
-    proximo_id = len(startups_salvas) + 1
-
-    rastreio = _carregar_paginas()
-
-    logger.info(
-        "Progresso anterior: %d startups em %d páginas rastreadas.",
-        len(startups_salvas),
-        len(rastreio),
-    )
+    # Marca pipeline como running
+    try:
+        exec_response = supabase.table("pipeline_executions").insert({
+            "type": "scraper",
+            "status": "running",
+            "started_at": "now()",
+        }).execute()
+        execution_id = exec_response.data[0]["id"] if exec_response.data else None
+    except Exception:
+        execution_id = None
 
     driver = scraper.criar_driver(headless=config.headless)
     total_cubo = 0
+    startups_salvas: list[dict] = []
 
     try:
         sucesso = scraper.fazer_login(
@@ -214,24 +178,17 @@ def executar() -> ScrapingReport:
                 continue
 
             try:
-                startups_salvas.append(
-                    _startup_para_dict(startup, proximo_id, data_hoje)
-                )
-                nomes_salvos.add(startup.nome)
-                proximo_id += 1
-                report.total_extraidos += 1
-
-                rastreio.setdefault(pagina, [])
-                if startup.nome not in rastreio[pagina]:
-                    rastreio[pagina].append(startup.nome)
+                startup_dict = _startup_para_dict(startup, 0, data_hoje)
+                if _salvar_startup_no_supabase(supabase, startup_dict):
+                    nomes_salvos.add(startup.nome)
+                    startups_salvas.append(startup_dict)
+                    report.total_extraidos += 1
+                else:
+                    report.total_falhas += 1
+                    report.erros.append(f"Supabase error: {startup.nome}")
 
                 if report.total_extraidos % 10 == 0:
-                    _salvar_parcial(startups_salvas)
-                    _salvar_paginas(rastreio)
-                    logger.info(
-                        ">> Parciais salvos: %d startups.",
-                        len(startups_salvas),
-                    )
+                    logger.info(">> Progresso: %d startups salvas.", len(startups_salvas))
 
             except Exception:
                 logger.exception("Erro ao serializar: %s", startup.nome)
@@ -241,68 +198,53 @@ def executar() -> ScrapingReport:
             time.sleep(config.request_delay)
 
     except KeyboardInterrupt:
-        logger.warning("Interrompido pelo usuário. Salvando dados parciais...")
+        logger.warning("Interrompido pelo usuario.")
     finally:
-        _salvar_parcial(startups_salvas)
-        _salvar_paginas(rastreio)
         try:
             driver.quit()
         except Exception:
             pass
 
-    with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as f:
-        json.dump(startups_salvas, f, ensure_ascii=False, indent=2)
-
-    logger.info("Arquivo final salvo: %s", ARQUIVO_SAIDA)
-    logger.info("Tracking de páginas salvo: %s", ARQUIVO_PAGINAS)
-
-    # Verifica duplicatas
-    nomes_contados = Counter(s["nome"] for s in startups_salvas)
-    duplicatas = [n for n, c in nomes_contados.items() if c > 1]
-    if duplicatas:
-        logger.warning("DUPLICATAS ENCONTRADAS (%d): %s", len(duplicatas), duplicatas)
-        # Remove duplicatas mantendo a primeira ocorrencia
-        vistos: set[str] = set()
-        dedup = []
-        for s in startups_salvas:
-            if s["nome"] not in vistos:
-                vistos.add(s["nome"])
-                dedup.append(s)
-        startups_salvas[:] = dedup
-        logger.info("Duplicatas removidas. Total apos dedup: %d", len(startups_salvas))
-
-        # Re-salva o JSON limpo
+    # Salva backup JSON local
+    try:
         with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as f:
             json.dump(startups_salvas, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
 
-    # Compara com o total do Cubo
-    if total_cubo and len(startups_salvas) != total_cubo:
-        logger.warning(
-            "DISCREPANCIA: JSON tem %d startups, Cubo reporta %d (diferença: %+d)",
-            len(startups_salvas),
-            total_cubo,
-            len(startups_salvas) - total_cubo,
-        )
-    elif total_cubo:
-        logger.info("Total confere: %d startups = Cubo (%d)", len(startups_salvas), total_cubo)
+    # Atualiza pipeline_execution
+    if execution_id:
+        try:
+            supabase.table("pipeline_executions").update({
+                "status": "completed",
+                "completed_at": "now()",
+                "summary": {
+                    "total_extracted": report.total_extraidos,
+                    "total_failures": report.total_falhas,
+                    "total_cubo": total_cubo,
+                },
+            }).eq("id", execution_id).execute()
+        except Exception:
+            pass
+
+    logger.info("Arquivo final salvo (backup): %s", ARQUIVO_SAIDA)
+    logger.info("Total de startups no Supabase: %d", len(nomes_salvos))
 
     return report
 
 
 def main() -> None:
-    """Função de entrada do script."""
+    """Funcao de entrada do script."""
     _configurar_logging()
 
     logger.info("=" * 60)
-    logger.info("Cubo Itaú — Startup Data Extractor")
-    logger.info("Saída: %s", ARQUIVO_SAIDA)
-    logger.info("Tracking: %s", ARQUIVO_PAGINAS)
+    logger.info("Cubo Itau — Startup Data Extractor (Supabase)")
     logger.info("=" * 60)
 
     try:
         report = executar()
     except KeyboardInterrupt:
-        logger.warning("Interrompido pelo usuário. Dados parciais foram salvos.")
+        logger.warning("Interrompido pelo usuario.")
         sys.exit(0)
     except Exception:
         logger.exception("Erro fatal.")
@@ -311,9 +253,8 @@ def main() -> None:
     logger.info("=" * 60)
     logger.info("RESUMO")
     logger.info("=" * 60)
-    logger.info("  Extraídos : %d", report.total_extraidos)
+    logger.info("  Extraidos : %d", report.total_extraidos)
     logger.info("  Falhas    : %d", report.total_falhas)
-    logger.info("  Arquivo   : %s", ARQUIVO_SAIDA)
 
     if report.erros:
         logger.info("  Erros (%d):", len(report.erros))

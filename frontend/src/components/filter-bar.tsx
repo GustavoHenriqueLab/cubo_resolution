@@ -2,8 +2,8 @@
 
 import { X } from "lucide-react";
 import { MultiCombobox } from "@/components/multi-combobox";
-import { Combobox } from "@/components/combobox";
-import type { DepartamentoInfo } from "@/lib/types";
+import { STATUS_LABELS, STATUS_ORDER } from "@/lib/types";
+import type { DepartamentoInfo, StartupStatus } from "@/lib/types";
 
 interface Props {
   segmentos: string[];
@@ -12,11 +12,13 @@ interface Props {
   segmentosAtivos: string[];
   tecnologiasAtivas: string[];
   departamentosAtivos: string[];
-  confiancaAtiva: string;
+  confiancaAtiva: string[];
+  statusAtivo: StartupStatus[];
   onSegmentosChange: (v: string[]) => void;
   onTecnologiasChange: (v: string[]) => void;
   onDepartamentosChange: (v: string[]) => void;
-  onConfiancaChange: (v: "" | "alta" | "media" | "baixa") => void;
+  onConfiancaChange: (v: string[]) => void;
+  onStatusChange: (v: StartupStatus[]) => void;
 }
 
 export function FilterBar({
@@ -27,20 +29,23 @@ export function FilterBar({
   tecnologiasAtivas,
   departamentosAtivos,
   confiancaAtiva,
+  statusAtivo,
   onSegmentosChange,
   onTecnologiasChange,
   onDepartamentosChange,
   onConfiancaChange,
+  onStatusChange,
 }: Props) {
   const temFiltros =
     segmentosAtivos.length > 0 ||
     tecnologiasAtivas.length > 0 ||
     departamentosAtivos.length > 0 ||
-    confiancaAtiva;
+    confiancaAtiva.length > 0 ||
+    statusAtivo.length > 0;
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
         <MultiCombobox
           options={segmentos.map((s) => ({ value: s, label: s }))}
           values={segmentosAtivos}
@@ -62,15 +67,22 @@ export function FilterBar({
           placeholder="Departamentos"
         />
 
-        <Combobox
+        <MultiCombobox
           options={[
             { value: "alta", label: "Alta" },
             { value: "media", label: "Media" },
             { value: "baixa", label: "Baixa" },
           ]}
-          value={confiancaAtiva}
-          onChange={(v) => onConfiancaChange(v as "" | "alta" | "media" | "baixa")}
+          values={confiancaAtiva}
+          onChange={onConfiancaChange}
           placeholder="Confianca"
+        />
+
+        <MultiCombobox
+          options={STATUS_ORDER.map((s) => ({ value: s, label: STATUS_LABELS[s] }))}
+          values={statusAtivo}
+          onChange={(v) => onStatusChange(v as StartupStatus[])}
+          placeholder="Status"
         />
       </div>
 
@@ -80,7 +92,8 @@ export function FilterBar({
             onSegmentosChange([]);
             onTecnologiasChange([]);
             onDepartamentosChange([]);
-            onConfiancaChange("");
+            onConfiancaChange([]);
+            onStatusChange([]);
           }}
           className="mt-2 inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-200"
         >

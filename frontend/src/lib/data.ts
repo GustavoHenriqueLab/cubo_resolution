@@ -68,6 +68,7 @@ function _enriquecerStartup(s: StartupClassificada, rawData?: StartupRaw): Omit<
   }
 
   return {
+    id: rawData?.id?.toString() ?? s.nome,
     nome: s.nome,
     confianca: s.confianca,
     aderencia_lab: s.aderencia_lab,
@@ -82,6 +83,7 @@ function _enriquecerStartup(s: StartupClassificada, rawData?: StartupRaw): Omit<
     tecnologias: rawData?.tecnologias ?? [],
     departamentos: deptos,
     confiancaPorDepartamento: confiancaRecord,
+    status: "a_contatar" as const,
     data_adicionado: rawData?.data_adicionado,
   };
 }
@@ -215,6 +217,7 @@ export function getTodasStartups(): StartupEnriquecida[] {
       rawData.descricao && rawData.descricao.trim().length > 0;
 
     mapaEnriquecido.set(rawData.nome, {
+      id: rawData.id?.toString() ?? rawData.nome,
       nome: rawData.nome,
       confianca: temDescricao ? "media" : "baixa",
       rank: ehDestaque ? (mapaDestaqueRank.get(rawData.nome) ?? undefined) : undefined,
@@ -227,6 +230,7 @@ export function getTodasStartups(): StartupEnriquecida[] {
       tecnologias: rawData.tecnologias,
       departamentos: deptos,
       confiancaPorDepartamento: confiancaRecord,
+      status: "a_contatar" as const,
       data_adicionado: rawData.data_adicionado,
     });
   }
@@ -316,6 +320,7 @@ export function getStartupsDestaqueLab(): StartupEnriquecida[] {
     }
 
     enriquecidas.push({
+      id: rawData.id?.toString() ?? nome,
       nome,
       confianca,
       rank: infoAnalise?.rank,
@@ -329,6 +334,7 @@ export function getStartupsDestaqueLab(): StartupEnriquecida[] {
       tecnologias: rawData.tecnologias,
       departamentos: deptos,
       confiancaPorDepartamento: confiancaRecord,
+      status: "a_contatar" as const,
       data_adicionado: rawData.data_adicionado,
     });
   }

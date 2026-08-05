@@ -60,6 +60,9 @@ class Config:
     selenium_timeout: int
     request_delay: float
 
+    supabase_url: str
+    supabase_service_role_key: str
+
 
 def load_config() -> Config:
     """Cria a instancia de :class:`Config` a partir do ambiente."""
@@ -74,4 +77,6 @@ def load_config() -> Config:
         headless=_env_bool("HEADLESS"),
         selenium_timeout=int(_env("SELENIUM_TIMEOUT", "15")),
         request_delay=float(_env("REQUEST_DELAY", "1.5")),
+        supabase_url=_env("SUPABASE_URL"),
+        supabase_service_role_key=_env("SUPABASE_SERVICE_ROLE_KEY"),
     )

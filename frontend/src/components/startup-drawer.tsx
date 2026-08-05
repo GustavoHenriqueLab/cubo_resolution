@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   X,
@@ -17,9 +17,15 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
+import { useUser } from "@/components/user-provider";
 import { ConfiancaBadge } from "@/components/confianca-badge";
+import { StatusBadge } from "@/components/status-badge";
+import { StatusSelector } from "@/components/status-selector";
+import { FavoriteButton } from "@/components/favorite-button";
 import { nomeParaSlug } from "@/lib/constants";
-import type { AvaliacaoGemini } from "@/lib/types";
+import { DEPARTAMENTOS } from "@/lib/constants";
+import { ProposalForm } from "@/components/proposal-form";
+import type { AvaliacaoGemini, StartupStatus } from "@/lib/types";
 
 const CRITERIOS: { key: keyof AvaliacaoGemini; label: string; icon: typeof Target }[] = [
   { key: "problema_atendido", label: "Problema atendido", icon: Target },
@@ -35,10 +41,14 @@ const CRITERIOS: { key: keyof AvaliacaoGemini; label: string; icon: typeof Targe
 
 export function StartupDrawer() {
   const { startup, close } = useStartupDrawer();
+  const { isAdmin } = useUser();
+  const [status, setStatus] = useState<StartupStatus | null>(null);
+  const [favorited, setFavorited] = useState(false);
 
   useEffect(() => {
     if (startup) {
       document.body.style.overflow = "hidden";
+      setStatus(startup.status);
     } else {
       document.body.style.overflow = "";
     }
@@ -47,9 +57,32 @@ export function StartupDrawer() {
     };
   }, [startup]);
 
+  useEffect(() => {
+    if (startup) {
+      fetch("/api/startups/favorite")
+        .then((res) => res.json())
+        .then((data: { favorites: string[] }) => {
+          setFavorited(data.favorites?.includes(startup.id) ?? false);
+        })
+        .catch(() => {});
+    }
+  }, [startup]);
+
   if (!startup) return null;
 
   const temAnalise = startup.analise || startup.avaliacao;
+
+  const handleStatusChange = async (newStatus: StartupStatus) => {
+    const res = await fetch("/api/startups/status", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ startupId: startup.id, status: newStatus }),
+    });
+
+    if (res.ok) {
+      setStatus(newStatus);
+    }
+  };
 
   return (
     <>
@@ -64,10 +97,18 @@ export function StartupDrawer() {
         {/* Header */}
         <div className="flex items-start justify-between gap-4 border-b border-gray-100 px-6 py-5 dark:border-gray-700">
           <div className="min-w-0 flex-1">
-            <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100">
-              {startup.nome}
-            </h2>
+            <div className="flex items-center gap-2">
+              <h2 className="font-display text-xl font-bold text-gray-900 dark:text-gray-100">
+                {startup.nome}
+              </h2>
+              <FavoriteButton
+                startupId={startup.id}
+                initialFavorited={favorited}
+                onToggle={setFavorited}
+              />
+            </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
+              {status && <StatusBadge status={status} />}
               <ConfiancaBadge confianca={startup.confianca} />
             </div>
           </div>
@@ -81,6 +122,21 @@ export function StartupDrawer() {
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
+          {/* Admin status selector */}
+          {isAdmin && status && (
+            <div className="mb-5 rounded-xl border border-dashed border-blue-200 bg-blue-50/50 p-3 dark:border-blue-500/20 dark:bg-blue-500/5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+                  Status da startup
+                </span>
+                <StatusSelector
+                  currentStatus={status}
+                  onStatusChange={handleStatusChange}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Department chips */}
           <div className="mb-5 flex flex-wrap gap-1.5">
             {startup.departamentos.map((d) => (
@@ -93,6 +149,15 @@ export function StartupDrawer() {
                 {d}
               </Link>
             ))}
+          </div>
+
+          {/* Proposta de Integracao */}
+          <div className="mb-6">
+            <ProposalForm
+              startupId={startup.id}
+              startupNome={startup.nome}
+              departamentosDisponiveis={Object.entries(DEPARTAMENTOS).map(([slug, nome]) => ({ slug, nome }))}
+            />
           </div>
 
           {/* Description */}

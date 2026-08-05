@@ -1,9 +1,11 @@
-import { getDepartamentos, getTodasStartups } from "@/lib/data";
+import { getDepartamentos, getTodasStartups } from "@/lib/queries";
 import { HomeClient } from "./home-client";
 
-export default function HomePage() {
-  const departamentos = getDepartamentos();
-  const todas = getTodasStartups();
+export default async function HomePage() {
+  const [departamentos, todas] = await Promise.all([
+    getDepartamentos(),
+    getTodasStartups(),
+  ]);
 
   let dataMaisRecente = "";
   for (const s of todas) {

@@ -4,8 +4,8 @@ import { useMemo, useState, useEffect, useDeferredValue } from "react";
 import { StartupCard } from "@/components/startup-card";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
-import { SearchX, Sparkles, ChevronLeft, ChevronRight, Zap } from "lucide-react";
-import type { StartupEnriquecida, DepartamentoInfo } from "@/lib/types";
+import { Star, SearchX, Sparkles, ChevronLeft, ChevronRight, Zap } from "lucide-react";
+import type { StartupEnriquecida, DepartamentoInfo, StartupStatus } from "@/lib/types";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debounced, setDebounced] = useState(value);
@@ -32,9 +32,22 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
   const [segmentosFiltro, setSegmentosFiltro] = useState<string[]>([]);
   const [tecnologiasFiltro, setTecnologiasFiltro] = useState<string[]>([]);
   const [departamentosFiltro, setDepartamentosFiltro] = useState<string[]>([]);
-  const [confiancaFiltro, setConfiancaFiltro] = useState<"" | "alta" | "media" | "baixa">("");
+  const [confiancaFiltro, setConfiancaFiltro] = useState<string[]>([]);
   const [apenasDestaques, setApenasDestaques] = useState(false);
+  const [apenasFavoritos, setApenasFavoritos] = useState(false);
+  const [statusFiltro, setStatusFiltro] = useState<StartupStatus[]>([]);
   const [pagina, setPagina] = useState(1);
+
+  const [favoritosSet, setFavoritosSet] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    fetch("/api/startups/favorite")
+      .then((res) => res.json())
+      .then((data: { favorites: string[] }) => {
+        setFavoritosSet(new Set(data.favorites ?? []));
+      })
+      .catch(() => {});
+  }, []);
 
   const buscaDebounced = useDebounce(busca, 300);
   const buscaDeferred = useDeferredValue(buscaDebounced);
@@ -43,10 +56,17 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
   const departamentosDeferred = useDeferredValue(departamentosFiltro);
   const confiancaDeferred = useDeferredValue(confiancaFiltro);
   const destaquesDeferred = useDeferredValue(apenasDestaques);
+  const favoritosDeferred = useDeferredValue(apenasFavoritos);
+  const statusDeferred = useDeferredValue(statusFiltro);
 
   const filtradas = useMemo(() => {
     const resultado = todas.filter((s: StartupEnriquecida) => {
       if (destaquesDeferred && !estaquesSet.has(s.nome)) return false;
+
+      if (favoritosDeferred && !favoritosSet.has(s.id)) return false;
+
+      if (statusDeferred.length > 0 && !statusDeferred.includes(s.status)) return false;
+
       if (buscaDeferred && !s.nome.toLowerCase().includes(buscaDeferred.toLowerCase())) return false;
 
       if (segmentosDeferred.length > 0 && !segmentosDeferred.includes(s.segmento)) return false;
@@ -57,13 +77,13 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
         if (!departamentosDeferred.some((slug) => s.confiancaPorDepartamento[slug] !== undefined)) return false;
       }
 
-      if (confiancaDeferred) {
+      if (confiancaDeferred.length > 0) {
         if (departamentosDeferred.length > 0) {
-          if (!departamentosDeferred.some((slug) => s.confiancaPorDepartamento[slug] === confiancaDeferred)) return false;
+          if (!departamentosDeferred.some((slug) => confiancaDeferred.includes(s.confiancaPorDepartamento[slug] ?? ""))) return false;
         } else {
           if (
-            !Object.values(s.confiancaPorDepartamento).some((c) => c === confiancaDeferred) &&
-            s.confianca !== confiancaDeferred
+            !Object.values(s.confiancaPorDepartamento).some((c) => confiancaDeferred.includes(c)) &&
+            !confiancaDeferred.includes(s.confianca)
           ) return false;
         }
       }
@@ -81,7 +101,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
     }
 
     return resultado;
-  }, [todas, buscaDeferred, segmentosDeferred, tecnologiasDeferred, departamentosDeferred, confiancaDeferred, destaquesDeferred, estaquesSet]);
+  }, [todas, buscaDeferred, segmentosDeferred, tecnologiasDeferred, departamentosDeferred, confiancaDeferred, destaquesDeferred, favoritosDeferred, statusDeferred, favoritosSet, estaquesSet]);
 
   const totalPaginas = Math.max(Math.ceil(filtradas.length / ITENS_POR_PAGINA), 1);
   const paginaAtual = Math.min(pagina, totalPaginas);
@@ -93,7 +113,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
 
   useEffect(() => {
     setPagina(1);
-  }, [buscaDebounced, segmentosFiltro, tecnologiasFiltro, departamentosFiltro, confiancaFiltro, apenasDestaques]);
+  }, [buscaDebounced, segmentosFiltro, tecnologiasFiltro, departamentosFiltro, confiancaFiltro, apenasDestaques, apenasFavoritos, statusFiltro]);
 
   return (
     <div className="mx-auto w-full max-w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 xl:max-w-[80rem]">
@@ -107,8 +127,8 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
         </p>
       </div>
 
-      {/* Search + Toggle */}
-      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      {/* Search + Toggles */}
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:flex-wrap">
         <div className="w-full max-w-md">
           <SearchInput
             placeholder="Buscar por nome da startup..."
@@ -116,24 +136,45 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
             onChange={setBusca}
           />
         </div>
-        <button
-          onClick={() => setApenasDestaques(!apenasDestaques)}
-          className={`group inline-flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
-            apenasDestaques
-              ? "border-blue-400 bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/25 dark:border-blue-400/40 dark:from-blue-500 dark:to-indigo-500"
-              : "border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 hover:border-amber-300 hover:from-amber-100 hover:to-orange-100 hover:shadow-md dark:border-amber-500/20 dark:from-amber-500/10 dark:to-orange-500/10 dark:text-amber-400 dark:hover:border-amber-500/30 dark:hover:from-amber-500/15 dark:hover:to-orange-500/15"
-          }`}
-        >
-          <Zap size={16} className={apenasDestaques ? "text-white" : "text-amber-500 dark:text-amber-400"} />
-          Destaques LAB
-          <span className={`ml-0.5 rounded-full px-2 py-0.5 text-[11px] font-bold transition-colors ${
-            apenasDestaques
-              ? "bg-white/20 text-white"
-              : "bg-amber-200 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400"
-          }`}>
-            {estaquesSet.size}
-          </span>
-        </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={() => setApenasFavoritos(!apenasFavoritos)}
+            className={`group inline-flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
+              apenasFavoritos
+                ? "border-amber-400 bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg shadow-amber-500/25"
+                : "border-gray-200 bg-white text-gray-600 hover:border-amber-300 hover:bg-amber-50 hover:text-amber-700 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:border-amber-500/30 dark:hover:bg-amber-500/10 dark:hover:text-amber-400"
+            }`}
+          >
+            <Star size={16} className={apenasFavoritos ? "fill-current text-white" : ""} />
+            Favoritos
+            <span className={`ml-0.5 rounded-full px-2 py-0.5 text-[11px] font-bold transition-colors ${
+              apenasFavoritos
+                ? "bg-white/20 text-white"
+                : "bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+            }`}>
+              {favoritosSet.size}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setApenasDestaques(!apenasDestaques)}
+            className={`group inline-flex shrink-0 items-center gap-2 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all duration-300 ${
+              apenasDestaques
+                ? "border-blue-400 bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-lg shadow-blue-500/25 dark:border-blue-400/40 dark:from-blue-500 dark:to-indigo-500"
+                : "border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 hover:border-amber-300 hover:from-amber-100 hover:to-orange-100 hover:shadow-md dark:border-amber-500/20 dark:from-amber-500/10 dark:to-orange-500/10 dark:text-amber-400 dark:hover:border-amber-500/30 dark:hover:from-amber-500/15 dark:hover:to-orange-500/15"
+            }`}
+          >
+            <Zap size={16} className={apenasDestaques ? "text-white" : "text-amber-500 dark:text-amber-400"} />
+            Destaques LAB
+            <span className={`ml-0.5 rounded-full px-2 py-0.5 text-[11px] font-bold transition-colors ${
+              apenasDestaques
+                ? "bg-white/20 text-white"
+                : "bg-amber-200 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400"
+            }`}>
+              {estaquesSet.size}
+            </span>
+          </button>
+        </div>
       </div>
 
       {/* Filters */}
@@ -146,10 +187,12 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
           tecnologiasAtivas={tecnologiasFiltro}
           departamentosAtivos={departamentosFiltro}
           confiancaAtiva={confiancaFiltro}
+          statusAtivo={statusFiltro}
           onSegmentosChange={setSegmentosFiltro}
           onTecnologiasChange={setTecnologiasFiltro}
           onDepartamentosChange={setDepartamentosFiltro}
           onConfiancaChange={setConfiancaFiltro}
+          onStatusChange={setStatusFiltro}
         />
       </div>
 
@@ -163,6 +206,16 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
         </div>
       )}
 
+      {/* Favorites banner */}
+      {apenasFavoritos && filtradas.length > 0 && (
+        <div className="mb-6 flex items-center gap-2 rounded-2xl border border-amber-100 bg-amber-50/50 px-4 py-2.5 text-sm text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/5 dark:text-amber-400">
+          <Star size={16} className="shrink-0 fill-current" />
+          <span>
+            {filtradas.length} startup(s) na sua lista de favoritos.
+          </span>
+        </div>
+      )}
+
       {/* Count */}
       <p className="mb-6 text-sm font-medium text-slate-400 dark:text-gray-500">
         {filtradas.length} startup(s) encontrada(s)
@@ -172,7 +225,12 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
       {exibidas.length > 0 ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {exibidas.map((s, i) => (
-            <StartupCard key={s.nome} startup={s} index={i} />
+            <StartupCard
+              key={s.id}
+              startup={s}
+              index={i}
+              initialFavorited={favoritosSet.has(s.id)}
+            />
           ))}
         </div>
       ) : (

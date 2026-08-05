@@ -1,7 +1,8 @@
-"""Analisa e rankeia os destaques LAB via Gemini.
+"""Analisa e rankeia os destaques LAB via Gemini (Supabase).
 
-Envia as startups (com dados completos) pedindo ranqueamento e analise
+Envia as startups com dados completos pedindo ranqueamento e analise
 especifica sobre porque cada uma e destaque para a LAB.
+Atualiza a tabela destaques_lab.
 """
 
 from __future__ import annotations
@@ -19,37 +20,23 @@ from google.genai import types
 from cubo.config import load_config
 from cubo.gemini import GeminiDailyQuotaExceeded, GeminiTemporaryRateLimit, GeminiQuotaError
 from cubo.empresa import CONTEXTO_COMPLETO, AVISO_DADOS_PUBLICOS
+from cubo.supabase_client import criar_cliente_supabase
 
-ARQUIVO_STARTUPS = Path(__file__).resolve().parent.parent / "data" / "raw" / "startups_cubo.json"
-ARQUIVO_SAIDA = Path(__file__).resolve().parent.parent / "data" / "processed" / "departamentos_startups.json"
 BATCH = 10
 
 SYSTEM_PROMPT = (
     f"{AVISO_DADOS_PUBLICOS}\n\n---\n\n{CONTEXTO_COMPLETO}\n\n---\n\n"
     "Voce recebera um lote de startups que foram pre-selecionadas como "
-    "DESTAQUES para a LAB Medicina Diagnostica. Cada startup vem com nome, "
-    "descricao, segmento e tecnologias.\n\n"
+    "DESTAQUES para a LAB Medicina Diagnostica.\n\n"
     "Sua tarefa para CADA startup:\n"
-    "1. Atribuir um RANK dentro deste lote (1 = mais relevante para LAB)\n"
+    "1. Atribuir um RANK (1 = mais relevante para LAB)\n"
     "2. Escrever uma ANALISE de 2-3 frases explicando POR QUE esta startup "
-    "merece ser destaque para a LAB especificamente — qual dor resolve, "
-    "qual o valor concreto para a realidade da LAB (4 unidades, Brasilia, "
-    "foco em patologia, 200+ exames)\n\n"
-    "Seja ESPECIFICO sobre a LAB. Nao use descricoes genericas de 'laboratorios'.\n\n"
+    "merece ser destaque\n\n"
+    "Seja ESPECIFICO sobre a LAB. Nao use descricoes genericas.\n\n"
     "Retorne APENAS JSON:\n"
-    '{"startups": [\n'
-    '  {"nome": "...", "rank": 1, "analise": "Analise especifica para LAB..."},\n'
-    '  ...\n'
-    "]}\n\n"
+    '{"startups": [{"nome": "...", "rank": 1, "analise": "..."}]}\n\n'
     "Ordene pelo rank (1 primeiro)."
 )
-
-
-def _salvar(dados):
-    tmp = ARQUIVO_SAIDA.with_suffix(".tmp")
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(dados, f, ensure_ascii=False, indent=2)
-    tmp.replace(ARQUIVO_SAIDA)
 
 
 def executar():
@@ -57,15 +44,35 @@ def executar():
     if not config.gemini_api_key:
         print("ERRO: GEMINI_API_KEY nao configurada.")
         sys.exit(1)
+    if not config.supabase_url or not config.supabase_service_role_key:
+        print("ERRO: SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY nao configurados.")
+        sys.exit(1)
 
-    with open(ARQUIVO_SAIDA, encoding="utf-8") as f:
-        dados = json.load(f)
+    supabase = criar_cliente_supabase(config.supabase_url, config.supabase_service_role_key)
 
-    with open(ARQUIVO_STARTUPS, encoding="utf-8") as f:
-        raw = json.load(f)
+    # Marca execucao
+    try:
+        exec_resp = supabase.table("pipeline_executions").insert({
+            "type": "destaques",
+            "status": "running",
+            "started_at": "now()",
+        }).execute()
+        execution_id = exec_resp.data[0]["id"] if exec_resp.data else None
+    except Exception:
+        execution_id = None
 
-    mapa_raw = {s["nome"]: s for s in raw}
-    destaques = dados.get("destaque_lab", [])
+    # Busca destaques com dados das startups
+    response = supabase.table("destaques_lab").select(
+        "id, startup_id, startup:startups(nome, descricao, segmento, tecnologias)"
+    ).execute()
+
+    if not response.data:
+        print("Nenhum destaque encontrado.")
+        _finalizar(supabase, execution_id, "completed")
+        return
+
+    destaques = response.data
+    nomes_destaques = [d["startup"]["nome"] for d in destaques]
     print(f"Destaques a analisar: {len(destaques)}")
 
     client = genai.Client(api_key=config.gemini_api_key)
@@ -77,16 +84,17 @@ def executar():
     for inicio in range(0, len(destaques), BATCH):
         fim = min(inicio + BATCH, len(destaques))
         lote = destaques[inicio:fim]
-        print(f"\nLote {inicio//BATCH + 1}: {len(lote)} startups — {lote[0]}...")
+        nomes_lote = [d["startup"]["nome"] for d in lote]
+        print(f"\nLote {inicio//BATCH + 1}: {len(lote)} startups — {nomes_lote[0]}...")
 
         blocos = []
-        for nome in lote:
-            r = mapa_raw.get(nome, {})
+        for d in lote:
+            s = d["startup"]
             blocos.append(
-                f"Nome: {nome}\n"
-                f"Descricao: {r.get('descricao', '')[:300]}\n"
-                f"Segmento: {r.get('segmento', 'N/I')}\n"
-                f"Tecnologias: {', '.join(r.get('tecnologias', []))}\n"
+                f"Nome: {s['nome']}\n"
+                f"Descricao: {s.get('descricao', '')[:300]}\n"
+                f"Segmento: {s.get('segmento', 'N/I')}\n"
+                f"Tecnologias: {', '.join(s.get('tecnologias', []))}\n"
                 "---"
             )
 
@@ -104,10 +112,10 @@ def executar():
 
         for tentativa in range(1, config.gemini_max_retries + 1):
             try:
-                response = client.models.generate_content(
+                response_gemini = client.models.generate_content(
                     model=model, contents=prompt, config=cfg
                 )
-                texto = response.text.strip()
+                texto = response_gemini.text.strip()
                 if texto.startswith("```json"):
                     texto = texto[7:]
                 elif texto.startswith("```"):
@@ -151,13 +159,34 @@ def executar():
         todas_analises.items(), key=lambda x: x[1]["rank_lote"]
     )
 
-    dados["destaque_lab_analises"] = [
-        {"nome": nome, "rank": i + 1, "analise": info["analise"]}
-        for i, (nome, info) in enumerate(analises_ordenadas)
-    ]
+    # Atualiza destaques_lab no Supabase
+    for i, (nome, info) in enumerate(analises_ordenadas):
+        for d in destaques:
+            if d["startup"]["nome"] == nome:
+                try:
+                    supabase.table("destaques_lab").update({
+                        "rank": i + 1,
+                        "analise": info["analise"],
+                        "batch_id": execution_id,
+                    }).eq("id", d["id"]).execute()
+                except Exception as e:
+                    print(f"  [!] Erro ao atualizar destaque {nome}: {e}")
+                break
 
-    _salvar(dados)
-    print(f"\nSalvo! {len(dados['destaque_lab_analises'])} destaques com analise e rank.")
+    _finalizar(supabase, execution_id, "completed")
+    print(f"\nSalvo! {len(analises_ordenadas)} destaques com analise e rank.")
+
+
+def _finalizar(supabase, execution_id: str | None, status: str) -> None:
+    if not execution_id:
+        return
+    try:
+        supabase.table("pipeline_executions").update({
+            "status": status,
+            "completed_at": "now()",
+        }).eq("id", execution_id).execute()
+    except Exception:
+        pass
 
 
 if __name__ == "__main__":
