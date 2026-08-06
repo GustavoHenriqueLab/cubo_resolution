@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
 import type { StartupEnriquecida } from "@/lib/types";
 
 interface DrawerContextType {
@@ -22,11 +22,12 @@ export function useStartupDrawer() {
 export function StartupDrawerProvider({ children }: { children: ReactNode }) {
   const [startup, setStartup] = useState<StartupEnriquecida | null>(null);
 
-  const open = (s: StartupEnriquecida) => setStartup(s);
-  const close = () => setStartup(null);
+  const open = useCallback((s: StartupEnriquecida) => setStartup(s), []);
+  const close = useCallback(() => setStartup(null), []);
+  const value = useMemo(() => ({ startup, open, close }), [startup, open, close]);
 
   return (
-    <DrawerContext.Provider value={{ startup, open, close }}>
+    <DrawerContext.Provider value={value}>
       {children}
     </DrawerContext.Provider>
   );

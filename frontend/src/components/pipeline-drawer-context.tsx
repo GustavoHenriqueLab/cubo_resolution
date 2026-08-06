@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
 
 export type PipelineType = "scraper" | "classifier" | "ranker" | "destaques";
 
@@ -29,14 +29,12 @@ export function usePipelineDrawer() {
 export function PipelineDrawerProvider({ children }: { children: ReactNode }) {
   const [pipeline, setPipeline] = useState<PipelineInfo | null>(null);
 
+  const open = useCallback((p: PipelineInfo) => setPipeline(p), []);
+  const close = useCallback(() => setPipeline(null), []);
+  const value = useMemo(() => ({ pipeline, open, close }), [pipeline, open, close]);
+
   return (
-    <PipelineDrawerContext.Provider
-      value={{
-        pipeline,
-        open: setPipeline,
-        close: () => setPipeline(null),
-      }}
-    >
+    <PipelineDrawerContext.Provider value={value}>
       {children}
     </PipelineDrawerContext.Provider>
   );

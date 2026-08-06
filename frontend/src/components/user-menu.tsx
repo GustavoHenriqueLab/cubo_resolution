@@ -41,6 +41,10 @@ export function UserMenu() {
     );
   }
 
+  if (!profile) {
+    return null;
+  }
+
   return (
     <div ref={ref} className="relative">
       <button

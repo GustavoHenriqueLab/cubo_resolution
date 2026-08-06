@@ -117,7 +117,7 @@ export function DepartamentoCard({ departamento, index }: Props) {
       : 0;
 
   return (
-    <Link href={`/departamentos/${departamento.slug}`} prefetch={true} className="block">
+    <Link href={`/departamentos/${departamento.slug}`} prefetch={false} className="block">
       <article
         className="animate-fade-in-up group relative cursor-pointer overflow-hidden rounded-[20px] border border-white/[.12] p-5 opacity-0 transition-all duration-200 dark:border-white/[.06]"
         style={{

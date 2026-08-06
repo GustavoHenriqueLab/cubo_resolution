@@ -5,6 +5,7 @@ import { StartupCard } from "@/components/startup-card";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
 import { Star, SearchX, Sparkles, ChevronLeft, ChevronRight, Zap } from "lucide-react";
+import { seedFavorites } from "@/components/favorites-store";
 import type { StartupEnriquecida, DepartamentoInfo, StartupStatus } from "@/lib/types";
 
 function useDebounce<T>(value: T, delay: number): T {
@@ -22,11 +23,14 @@ interface Props {
   tecnologiasDisponiveis: string[];
   departamentos: DepartamentoInfo[];
   destaques: string[];
+  initialFavorites: string[];
 }
 
-export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponiveis, departamentos, destaques }: Props) {
+export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponiveis, departamentos, destaques, initialFavorites }: Props) {
   const estaquesSet = useMemo(() => new Set(destaques), [destaques]);
   const ITENS_POR_PAGINA = 50;
+
+  seedFavorites(initialFavorites);
 
   const [busca, setBusca] = useState("");
   const [segmentosFiltro, setSegmentosFiltro] = useState<string[]>([]);
@@ -38,16 +42,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
   const [statusFiltro, setStatusFiltro] = useState<StartupStatus[]>([]);
   const [pagina, setPagina] = useState(1);
 
-  const [favoritosSet, setFavoritosSet] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    fetch("/api/startups/favorite")
-      .then((res) => res.json())
-      .then((data: { favorites: string[] }) => {
-        setFavoritosSet(new Set(data.favorites ?? []));
-      })
-      .catch(() => {});
-  }, []);
+  const [favoritosSet, setFavoritosSet] = useState<Set<string>>(() => new Set(initialFavorites));
 
   const buscaDebounced = useDebounce(busca, 300);
   const buscaDeferred = useDeferredValue(buscaDebounced);
@@ -60,6 +55,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
   const statusDeferred = useDeferredValue(statusFiltro);
 
   const filtradas = useMemo(() => {
+    const buscaLower = buscaDeferred.toLowerCase();
     const resultado = todas.filter((s: StartupEnriquecida) => {
       if (destaquesDeferred && !estaquesSet.has(s.nome)) return false;
 
@@ -67,7 +63,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
 
       if (statusDeferred.length > 0 && !statusDeferred.includes(s.status)) return false;
 
-      if (buscaDeferred && !s.nome.toLowerCase().includes(buscaDeferred.toLowerCase())) return false;
+      if (buscaLower && !s.nome.toLowerCase().includes(buscaLower)) return false;
 
       if (segmentosDeferred.length > 0 && !segmentosDeferred.includes(s.segmento)) return false;
 

@@ -25,6 +25,7 @@ export default async function DepartamentoPage({
     <div className="mx-auto w-full max-w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 xl:max-w-[80rem]">
       <Link
         href="/"
+        prefetch={false}
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 transition-colors hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
       >
         <ChevronLeft size={16} />

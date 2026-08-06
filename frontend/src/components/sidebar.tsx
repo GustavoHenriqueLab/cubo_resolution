@@ -9,6 +9,7 @@ import {
   Package,
   Search,
   FileText,
+  Handshake,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { id: "departamentos", label: "Departamentos", href: "/departamentos/atendimento", icon: Package },
   { id: "startups", label: "Buscar Startups", href: "/startups", icon: Search },
   { id: "propostas", label: "Minhas Propostas", href: "/propostas", icon: FileText },
+  { id: "parcerias", label: "Parcerias", href: "/parcerias", icon: Handshake },
   
   { id: "admin", label: "Admin", href: "/admin", icon: Settings },
 ];
@@ -71,6 +73,7 @@ export function Sidebar() {
     if (href === "/") return pathname === "/";
     if (href === "/startups") return pathname === "/startups";
     if (href === "/propostas") return pathname === "/propostas";
+    if (href === "/parcerias") return pathname === "/parcerias";
     if (href.startsWith("/admin")) return pathname.startsWith("/admin");
     return pathname.startsWith("/departamentos");
   };

@@ -78,6 +78,7 @@ export const StartupCard = memo(function StartupCard({
             <Link
               key={d}
               href={`/departamentos/${nomeParaSlug(d)}`}
+              prefetch={false}
               className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-medium text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:hover:bg-blue-500/20"
             >
               {d}

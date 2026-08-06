@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   FlaskConical,
   ExternalLink,
+  History,
 } from "lucide-react";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { useUser } from "@/components/user-provider";
@@ -25,7 +26,9 @@ import { FavoriteButton } from "@/components/favorite-button";
 import { nomeParaSlug } from "@/lib/constants";
 import { DEPARTAMENTOS } from "@/lib/constants";
 import { ProposalForm } from "@/components/proposal-form";
-import type { AvaliacaoGemini, StartupStatus } from "@/lib/types";
+import { STATUS_LABELS } from "@/lib/types";
+import { fetchFavorites } from "@/components/favorites-store";
+import type { AvaliacaoGemini, StartupStatus, StartupStatusLogEntry } from "@/lib/types";
 
 const CRITERIOS: { key: keyof AvaliacaoGemini; label: string; icon: typeof Target }[] = [
   { key: "problema_atendido", label: "Problema atendido", icon: Target },
@@ -44,6 +47,8 @@ export function StartupDrawer() {
   const { isAdmin } = useUser();
   const [status, setStatus] = useState<StartupStatus | null>(null);
   const [favorited, setFavorited] = useState(false);
+  const [statusLog, setStatusLog] = useState<StartupStatusLogEntry[]>([]);
+  const [loadingLog, setLoadingLog] = useState(false);
 
   useEffect(() => {
     if (startup) {
@@ -59,24 +64,34 @@ export function StartupDrawer() {
 
   useEffect(() => {
     if (startup) {
-      fetch("/api/startups/favorite")
-        .then((res) => res.json())
-        .then((data: { favorites: string[] }) => {
-          setFavorited(data.favorites?.includes(startup.id) ?? false);
-        })
-        .catch(() => {});
+      fetchFavorites().then((favs) => {
+        setFavorited(favs.includes(startup.id));
+      });
     }
   }, [startup]);
+
+  useEffect(() => {
+    if (startup) {
+      setLoadingLog(true);
+      fetch("/api/startups/status-log?startupId=" + startup.id)
+        .then((res) => res.json())
+        .then((data: { log: StartupStatusLogEntry[] }) => {
+          setStatusLog(data.log ?? []);
+        })
+        .catch(() => {})
+        .finally(() => setLoadingLog(false));
+    }
+  }, [startup, status]);
 
   if (!startup) return null;
 
   const temAnalise = startup.analise || startup.avaliacao;
 
-  const handleStatusChange = async (newStatus: StartupStatus) => {
+  const handleStatusChange = async (newStatus: StartupStatus, notas: string) => {
     const res = await fetch("/api/startups/status", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ startupId: startup.id, status: newStatus }),
+      body: JSON.stringify({ startupId: startup.id, status: newStatus, notas }),
     });
 
     if (res.ok) {
@@ -137,12 +152,58 @@ export function StartupDrawer() {
             </div>
           )}
 
+          {/* Status History */}
+          <div className="mb-5 rounded-xl border border-gray-100 bg-gray-50/50 p-3 dark:border-gray-700 dark:bg-gray-800/50">
+            <div className="mb-2 flex items-center gap-1.5">
+              <History size={14} className="text-gray-400" />
+              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                Historico de status
+              </span>
+            </div>
+            {loadingLog ? (
+              <p className="text-xs text-gray-400">Carregando...</p>
+            ) : statusLog.length > 0 ? (
+              <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                {statusLog.map((entry) => (
+                  <div
+                    key={entry.id}
+                    className="flex items-start gap-2 rounded-lg bg-white px-2.5 py-2 dark:bg-gray-800"
+                  >
+                    <div className="mt-0.5 flex items-center gap-1.5 shrink-0">
+                      <span className="inline-block rounded px-1.5 py-px text-[10px] font-semibold bg-slate-100 text-slate-500 dark:bg-gray-700 dark:text-gray-400">
+                        {STATUS_LABELS[entry.status_anterior]}
+                      </span>
+                      <span className="text-[10px] text-gray-300">&rarr;</span>
+                      <span className="inline-block rounded px-1.5 py-px text-[10px] font-semibold bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-400">
+                        {STATUS_LABELS[entry.status_novo]}
+                      </span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      {entry.notas && (
+                        <p className="text-[11px] leading-relaxed text-gray-600 dark:text-gray-300">
+                          {entry.notas}
+                        </p>
+                      )}
+                      <p className="mt-0.5 text-[10px] text-gray-400">
+                        {new Date(entry.created_at).toLocaleString("pt-BR")}
+                        {entry.admin_nome && <> &middot; {entry.admin_nome}</>}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-xs text-gray-400">Nenhuma alteracao de status registrada.</p>
+            )}
+          </div>
+
           {/* Department chips */}
           <div className="mb-5 flex flex-wrap gap-1.5">
             {startup.departamentos.map((d) => (
               <Link
                 key={d}
                 href={`/departamentos/${nomeParaSlug(d)}`}
+                prefetch={false}
                 onClick={close}
                 className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[11px] font-medium text-blue-600 transition-colors hover:bg-blue-100 dark:bg-blue-500/10 dark:text-blue-400 dark:hover:bg-blue-500/20"
               >

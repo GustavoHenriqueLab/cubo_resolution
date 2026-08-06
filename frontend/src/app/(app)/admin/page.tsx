@@ -14,6 +14,7 @@ import {
   CircleDot,
   Loader2,
   FileText,
+  Handshake,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getPipelineExecutions, getCurrentProfile } from "@/lib/queries";
@@ -63,6 +64,13 @@ export default async function AdminPage() {
           >
             <FileText size={16} />
             Propostas
+          </Link>
+          <Link
+            href="/admin/parcerias"
+            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+          >
+            <Handshake size={16} />
+            Parcerias
           </Link>
           <form action="/api/auth/signout" method="post">
             <button className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700">

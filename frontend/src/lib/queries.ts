@@ -1,15 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/database.types";
-import type { StartupStatus } from "@/lib/types";
+import type { StartupStatus, Parceria, StartupStatusLogEntry, PropostaStatusLogEntry } from "@/lib/types";
 import { DEPARTAMENTOS } from "@/lib/constants";
 
 const VALID_STATUSES: StartupStatus[] = [
   "a_contatar",
-  "interesse",
-  "em_tratativas",
-  "em_poc",
-  "sobrestado",
-  "finalizado",
+  "em_contato",
+  "parceiro",
 ];
 
 function normalizeStatus(raw: unknown): StartupStatus {
@@ -46,19 +43,17 @@ export async function getDepartamentos(): Promise<
 > {
   const supabase = await createClient();
 
-  const { data: deptos } = await supabase
-    .from("departamentos")
-    .select("slug, nome, descricao");
+  const [deptosRes, countsRes] = await Promise.all([
+    supabase.from("departamentos").select("slug, nome, descricao"),
+    supabase.from("startup_departamentos").select("departamento_slug, confianca"),
+  ]);
 
+  const deptos = deptosRes.data;
   if (!deptos) return [];
 
   const countMap = new Map<string, { total: number; alta: number; media: number }>();
 
-  const { data: counts } = await supabase
-    .from("startup_departamentos")
-    .select("departamento_slug, confianca");
-
-  for (const c of (counts ?? []) as AnyRow[]) {
+  for (const c of (countsRes.data ?? []) as AnyRow[]) {
     const slug = c.departamento_slug as string;
     const conf = c.confianca as string;
     if (!countMap.has(slug)) {
@@ -193,21 +188,27 @@ export async function getStartupsPorDepartamento(slug: string) {
 export async function getTodasStartups() {
   const supabase = await createClient();
 
-  const { data: startups } = await supabase
-    .from("startups")
-    .select("*")
-    .order("nome");
+  const [startupsRes, relsRes, destaquesRes, deptosRes] = await Promise.all([
+    supabase
+      .from("startups")
+      .select("id, nome, descricao, segmento, fundadores, site, url_perfil, modelos_negocio, tecnologias, status, data_adicionado")
+      .order("nome"),
+    supabase
+      .from("startup_departamentos")
+      .select("startup_id, departamento_slug, confianca, aderencia_lab, analise, avaliacao, rank"),
+    supabase
+      .from("destaques_lab")
+      .select("startup_id, rank, analise")
+      .order("rank"),
+    supabase
+      .from("departamentos")
+      .select("slug, nome"),
+  ]);
 
-  const { data: rels } = await supabase
-    .from("startup_departamentos")
-    .select(
-      "startup_id, departamento_slug, confianca, aderencia_lab, analise, avaliacao, rank",
-    );
-
-  const { data: destaques } = await supabase
-    .from("destaques_lab")
-    .select("startup_id, rank, analise")
-    .order("rank");
+  const startups = startupsRes.data;
+  const rels = relsRes.data;
+  const destaques = destaquesRes.data;
+  const deptosData = deptosRes.data;
 
   if (!startups) return [];
 
@@ -237,10 +238,6 @@ export async function getTodasStartups() {
       analise: (d.analise as string) ?? "",
     });
   }
-
-  const { data: deptosData } = await supabase
-    .from("departamentos")
-    .select("slug, nome");
 
   const slugParaNome = new Map<string, string>();
   for (const d of (deptosData ?? []) as AnyRow[]) {
@@ -513,11 +510,16 @@ export async function getFavoritedStartups() {
   } = await supabase.auth.getUser();
   if (!user) return [];
 
-  const { data: favs } = await supabase
-    .from("startup_favorites")
-    .select("startup_id, startup:startups(*)")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: favs }, { data: rels }, { data: destaques }, { data: deptosData }] = await Promise.all([
+    supabase
+      .from("startup_favorites")
+      .select("startup_id, startup:startups(id, nome, descricao, segmento, fundadores, site, url_perfil, modelos_negocio, tecnologias, status, data_adicionado)")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false }),
+    supabase.from("startup_departamentos").select("startup_id, departamento_slug, confianca, rank"),
+    supabase.from("destaques_lab").select("startup_id, rank, analise").order("rank"),
+    supabase.from("departamentos").select("slug, nome"),
+  ]);
 
   if (!favs) return [];
 
@@ -525,17 +527,6 @@ export async function getFavoritedStartups() {
     const s = (f.startup as AnyRow) ?? {};
     return { ...s, id: f.startup_id } as StartupRow;
   });
-
-  const { data: rels } = await supabase
-    .from("startup_departamentos")
-    .select("startup_id, departamento_slug, confianca, rank");
-
-  const { data: destaques } = await supabase
-    .from("destaques_lab")
-    .select("startup_id, rank, analise")
-    .order("rank");
-
-  if (!startups) return [];
 
   const relsPorStartup = new Map<
     string,
@@ -558,10 +549,6 @@ export async function getFavoritedStartups() {
       analise: (d.analise as string) ?? "",
     });
   }
-
-  const { data: deptosData } = await supabase
-    .from("departamentos")
-    .select("slug, nome");
 
   const slugParaNome = new Map<string, string>();
   for (const d of (deptosData ?? []) as AnyRow[]) {
@@ -642,6 +629,7 @@ export async function toggleFavorite(startupId: string): Promise<boolean> {
 export async function updateStartupStatus(
   startupId: string,
   status: StartupStatus,
+  notas: string = "",
 ): Promise<boolean> {
   const supabase = await createClient();
   const {
@@ -657,6 +645,16 @@ export async function updateStartupStatus(
 
   if (!profile || (profile as { role: string }).role !== "admin") return false;
 
+  const { data: current } = await (supabase as any)
+    .from("startups")
+    .select("status")
+    .eq("id", startupId)
+    .maybeSingle();
+
+  if (!current) return false;
+
+  const statusAnterior: StartupStatus = normalizeStatus((current as any).status);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: updated, error } = await (supabase as any)
     .from("startups")
@@ -666,6 +664,19 @@ export async function updateStartupStatus(
     .maybeSingle();
 
   if (error) return false;
+
+  if (statusAnterior !== status || notas.trim()) {
+    await (supabase as any)
+      .from("startup_status_log")
+      .insert({
+        startup_id: startupId,
+        admin_id: user.id,
+        status_anterior: statusAnterior,
+        status_novo: status,
+        notas: notas.trim(),
+      });
+  }
+
   return updated !== null;
 }
 
@@ -689,23 +700,17 @@ export interface AdminStartupRow {
 export async function getAdminStartups(): Promise<AdminStartupRow[]> {
   const supabase = await createClient();
 
-  const { data: startups } = await supabase
-    .from("startups")
-    .select("*")
-    .order("nome");
+  const [startupsRes, assignmentsRes, relsRes, profilesRes] = await Promise.all([
+    supabase.from("startups").select("id, nome, status, segmento, site, fundadores, data_adicionado").order("nome"),
+    supabase.from("startup_users").select("startup_id, user:profiles(id, nome)"),
+    supabase.from("startup_departamentos").select("startup_id, departamento:departamentos(nome)"),
+    supabase.from("profiles").select("id, nome").order("nome"),
+  ]);
 
-  const { data: assignments } = await supabase
-    .from("startup_users")
-    .select("startup_id, user:profiles(id, nome)");
-
-  const { data: rels } = await supabase
-    .from("startup_departamentos")
-    .select("startup_id, departamento:departamentos(nome)");
-
-  const { data: profiles } = await supabase
-    .from("profiles")
-    .select("id, nome")
-    .order("nome");
+  const startups = startupsRes.data;
+  const assignments = assignmentsRes.data;
+  const rels = relsRes.data;
+  const profiles = profilesRes.data;
 
   if (!startups) return [];
 
@@ -932,5 +937,141 @@ export async function getPropostasUsuario(): Promise<PropostaAdminRow[]> {
     admin_notas: p.admin_notas as string | null,
     created_at: p.created_at as string,
     updated_at: p.updated_at as string,
+  }));
+}
+
+// ============================================================
+// PARCERIAS
+// ============================================================
+
+export async function getParcerias(): Promise<Parceria[]> {
+  const supabase = await createClient();
+
+  const { data } = await (supabase as any)
+    .from("parcerias")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+
+  const startupIds = [...new Set((data as AnyRow[]).map((p) => p.startup_id as string))];
+  const propostaIds = [...new Set((data as AnyRow[]).filter((p) => p.proposta_id).map((p) => p.proposta_id as string))];
+
+  const [{ data: startups }, { data: propostas }] = await Promise.all([
+    startupIds.length > 0
+      ? supabase.from("startups").select("id, nome").in("id", startupIds)
+      : Promise.resolve({ data: [] }),
+    propostaIds.length > 0
+      ? (supabase as any).from("propostas").select("id, tipo_integracao").in("id", propostaIds)
+      : Promise.resolve({ data: [] }),
+  ]);
+
+  const startupMap = new Map((startups ?? []).map((s: any) => [s.id, s.nome]));
+  const propostaMap = new Map((propostas ?? []).map((p: any) => [p.id, p.tipo_integracao]));
+  const resolveDepto = (slug: string | null) => (slug ? DEPARTAMENTOS[slug] ?? slug : null);
+
+  return (data as AnyRow[]).map((p) => ({
+    id: p.id as string,
+    startup_id: p.startup_id as string,
+    startup_nome: startupMap.get(p.startup_id as string),
+    departamento_slug: p.departamento_slug as string | null,
+    departamento_nome: resolveDepto(p.departamento_slug as string | null),
+    proposta_id: p.proposta_id as string | null,
+    proposta_tipo: (propostaMap.get(p.proposta_id as string) as string) ?? null,
+    descricao: (p.descricao as string) ?? "",
+    created_at: p.created_at as string,
+    updated_at: p.updated_at as string,
+  }));
+}
+
+export async function updateParceriaDescricao(
+  parceriaId: string,
+  descricao: string,
+): Promise<void> {
+  const supabase = await createClient();
+
+  const { error } = await (supabase as any)
+    .from("parcerias")
+    .update({ descricao, updated_at: new Date().toISOString() })
+    .eq("id", parceriaId);
+
+  if (error) throw new Error(error.message);
+}
+
+// ============================================================
+// STATUS LOG
+// ============================================================
+
+export async function getStartupStatusLog(
+  startupId: string,
+): Promise<StartupStatusLogEntry[]> {
+  const supabase = await createClient();
+
+  const { data } = await (supabase as any)
+    .from("startup_status_log")
+    .select("*")
+    .eq("startup_id", startupId)
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+
+  const adminIds = [...new Set(
+    (data as AnyRow[]).filter((l) => l.admin_id).map((l) => l.admin_id as string),
+  )];
+
+  const { data: profiles } = adminIds.length > 0
+    ? await supabase.from("profiles").select("id, nome").in("id", adminIds)
+    : { data: [] };
+
+  const adminMap = new Map((profiles ?? []).map((p: any) => [p.id, p.nome]));
+
+  return (data as AnyRow[]).map((l) => ({
+    id: l.id as string,
+    startup_id: l.startup_id as string,
+    admin_id: l.admin_id as string | null,
+    admin_nome: (l.admin_id ? adminMap.get(l.admin_id as string) ?? null : null) as string | null,
+    status_anterior: normalizeStatus(l.status_anterior),
+    status_novo: normalizeStatus(l.status_novo),
+    notas: (l.notas as string) ?? "",
+    created_at: l.created_at as string,
+  }));
+}
+
+// ============================================================
+// PROPOSTA STATUS LOG
+// ============================================================
+
+export async function getPropostaStatusLog(
+  propostaId: string,
+): Promise<PropostaStatusLogEntry[]> {
+  const supabase = await createClient();
+
+  const { data } = await (supabase as any)
+    .from("proposta_status_log")
+    .select("*")
+    .eq("proposta_id", propostaId)
+    .order("created_at", { ascending: true });
+
+  if (!data) return [];
+
+  const adminIds = [...new Set(
+    (data as AnyRow[]).filter((l) => l.admin_id).map((l) => l.admin_id as string),
+  )];
+
+  const { data: profiles } = adminIds.length > 0
+    ? await supabase.from("profiles").select("id, nome").in("id", adminIds)
+    : { data: [] };
+
+  const adminMap = new Map((profiles ?? []).map((p: any) => [p.id, p.nome]));
+
+  return (data as AnyRow[]).map((l) => ({
+    id: l.id as string,
+    proposta_id: l.proposta_id as string,
+    admin_id: l.admin_id as string | null,
+    admin_nome: (l.admin_id ? adminMap.get(l.admin_id as string) ?? null : null) as string | null,
+    status_anterior: l.status_anterior as PropostaStatusLogEntry["status_anterior"],
+    status_novo: l.status_novo as PropostaStatusLogEntry["status_novo"],
+    notas: (l.notas as string) ?? "",
+    created_at: l.created_at as string,
   }));
 }

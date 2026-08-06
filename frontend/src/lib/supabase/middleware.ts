@@ -3,6 +3,19 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
 
 export async function updateSession(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  const isApiPath = pathname.startsWith("/api/");
+
+  if (isApiPath) {
+    return NextResponse.next({ request });
+  }
+
+  const publicPaths = ["/login", "/cadastro", "/auth/callback"];
+  const isPublicPath = publicPaths.some(
+    (p) => pathname === p || pathname.startsWith("/auth/"),
+  );
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient<Database>(
@@ -26,29 +39,27 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  if (!isPublicPath) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("redirect", pathname);
+      return NextResponse.redirect(url);
+    }
+  } else {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  const publicPaths = ["/login", "/cadastro", "/auth/callback"];
-  const isPublicPath = publicPaths.some(
-    (p) => pathname === p || pathname.startsWith("/auth/"),
-  );
-  const isApiPath = pathname.startsWith("/api/");
-
-  if (!user && !isPublicPath && !isApiPath) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(url);
-  }
-
-  if (user && (pathname === "/login" || pathname === "/cadastro")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+    if (user && (pathname === "/login" || pathname === "/cadastro")) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/";
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

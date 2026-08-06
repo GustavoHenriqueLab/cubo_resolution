@@ -1,7 +1,8 @@
 "use client";
 
-import { FileText, ChevronDown, Building2, Calendar, Clock, CheckCircle2, XCircle } from "lucide-react";
-import { PROPOSTA_STATUS_LABELS, PROPOSTA_TIPO_LABELS } from "@/lib/types";
+import { FileText, ChevronDown, Building2, Calendar, Clock } from "lucide-react";
+import { PROPOSTA_STATUS_LABELS, PROPOSTA_STATUS_COLORS, PROPOSTA_TIPO_LABELS } from "@/lib/types";
+import { PropostaTimeline, PROPOSAL_STATUS_ICONS } from "@/components/proposta-timeline";
 import type { PropostaAdminRow } from "@/lib/queries";
 import type { PropostaStatus, PropostaTipo } from "@/lib/types";
 
@@ -34,25 +35,9 @@ export function PropostasUsuarioClient({ propostas }: Props) {
       ) : (
         <div className="space-y-3">
           {propostas.map((p) => {
-            const statusConfig = {
-              pendente: {
-                icon: Clock,
-                color: "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-500/30 dark:bg-yellow-500/10 dark:text-yellow-400",
-              },
-              aprovada: {
-                icon: CheckCircle2,
-                color: "border-green-200 bg-green-50 text-green-700 dark:border-green-500/30 dark:bg-green-500/10 dark:text-green-400",
-              },
-              rejeitada: {
-                icon: XCircle,
-                color: "border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400",
-              },
-            }[p.status as PropostaStatus] ?? {
-              icon: Clock,
-              color: "border-gray-200 bg-gray-50 text-gray-600",
-            };
-
-            const StatusIcon = statusConfig.icon;
+            const status = p.status as PropostaStatus;
+            const StatusIcon = PROPOSAL_STATUS_ICONS[status] ?? Clock;
+            const colors = PROPOSTA_STATUS_COLORS[status] ?? "";
 
             return (
               <details
@@ -65,9 +50,9 @@ export function PropostasUsuarioClient({ propostas }: Props) {
                       <h3 className="text-sm font-semibold text-gray-900 truncate dark:text-white">
                         {p.startup_nome}
                       </h3>
-                      <span className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold ${statusConfig.color}`}>
+                      <span className={"inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-semibold " + colors}>
                         <StatusIcon size={12} />
-                        {PROPOSTA_STATUS_LABELS[p.status as PropostaStatus]}
+                        {PROPOSTA_STATUS_LABELS[status]}
                       </span>
                     </div>
                     <div className="mt-1 flex items-center gap-3 text-xs text-gray-400 dark:text-gray-500">
@@ -120,16 +105,7 @@ export function PropostasUsuarioClient({ propostas }: Props) {
                     </ul>
                   </div>
 
-                  {p.admin_notas && (
-                    <div className="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-gray-700/50">
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
-                        Resposta do Admin
-                      </p>
-                      <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
-                        {p.admin_notas}
-                      </p>
-                    </div>
-                  )}
+                  <PropostaTimeline propostaId={p.id} status={status} />
                 </div>
               </details>
             );

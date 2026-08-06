@@ -4,18 +4,16 @@ import type { StartupStatus } from "@/lib/types";
 
 const VALID_STATUSES: StartupStatus[] = [
   "a_contatar",
-  "interesse",
-  "em_tratativas",
-  "em_poc",
-  "sobrestado",
-  "finalizado",
+  "em_contato",
+  "parceiro",
 ];
 
 export async function POST(request: Request) {
   try {
-    const { startupId, status } = (await request.json()) as {
+    const { startupId, status, notas } = (await request.json()) as {
       startupId?: string;
       status?: string;
+      notas?: string;
     };
 
     if (!startupId || !status) {
@@ -32,7 +30,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const ok = await updateStartupStatus(startupId, status as StartupStatus);
+    const ok = await updateStartupStatus(
+      startupId,
+      status as StartupStatus,
+      notas?.trim() || "",
+    );
 
     if (!ok) {
       return NextResponse.json(
