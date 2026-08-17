@@ -137,6 +137,15 @@ export function StartupDrawer() {
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto px-6 py-5">
+          {/* Proposta de Integracao */}
+          <div className="mb-6">
+            <ProposalForm
+              startupId={startup.id}
+              startupNome={startup.nome}
+              departamentosDisponiveis={Object.entries(DEPARTAMENTOS).map(([slug, nome]) => ({ slug, nome }))}
+            />
+          </div>
+
           {/* Admin status selector */}
           {isAdmin && status && (
             <div className="mb-5 rounded-xl border border-dashed border-blue-200 bg-blue-50/50 p-3 dark:border-blue-500/20 dark:bg-blue-500/5">
@@ -210,15 +219,6 @@ export function StartupDrawer() {
                 {d}
               </Link>
             ))}
-          </div>
-
-          {/* Proposta de Integracao */}
-          <div className="mb-6">
-            <ProposalForm
-              startupId={startup.id}
-              startupNome={startup.nome}
-              departamentosDisponiveis={Object.entries(DEPARTAMENTOS).map(([slug, nome]) => ({ slug, nome }))}
-            />
           </div>
 
           {/* Description */}

@@ -14,12 +14,14 @@ interface Props {
   startup: StartupEnriquecida;
   index?: number;
   initialFavorited?: boolean;
+  onToggleFavorite?: (startupId: string, favorited: boolean) => void;
 }
 
 export const StartupCard = memo(function StartupCard({
   startup,
   index = 0,
   initialFavorited = false,
+  onToggleFavorite,
 }: Props) {
   const { open } = useStartupDrawer();
   const isDestaque = startup.rank != null;
@@ -43,6 +45,7 @@ export const StartupCard = memo(function StartupCard({
             <FavoriteButton
               startupId={startup.id}
               initialFavorited={initialFavorited}
+              onToggle={(favorited) => onToggleFavorite?.(startup.id, favorited)}
             />
           </div>
           <ConfiancaBadge confianca={startup.confianca} />

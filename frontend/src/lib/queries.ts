@@ -607,17 +607,25 @@ export async function toggleFavorite(startupId: string): Promise<boolean> {
     .maybeSingle();
 
   if (existing) {
-    await supabase
+    const { error } = await supabase
       .from("startup_favorites")
       .delete()
       .eq("id", (existing as { id: string }).id);
+    if (error) {
+      console.error("[toggleFavorite] Delete error:", error.message);
+      throw new Error(error.message);
+    }
     return false;
   } else {
-    await supabase.from("startup_favorites").insert({
+    const { error } = await supabase.from("startup_favorites").insert({
       user_id: user.id,
       startup_id: startupId,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any);
+    if (error) {
+      console.error("[toggleFavorite] Insert error:", error.message);
+      throw new Error(error.message);
+    }
     return true;
   }
 }

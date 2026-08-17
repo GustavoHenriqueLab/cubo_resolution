@@ -9,6 +9,15 @@ export function getCachedFavorites(): Set<string> | null {
   return cached;
 }
 
+export function updateCachedFavorite(id: string, favorited: boolean) {
+  if (!cached) cached = new Set();
+  if (favorited) {
+    cached.add(id);
+  } else {
+    cached.delete(id);
+  }
+}
+
 export async function fetchFavorites(): Promise<string[]> {
   if (cached) return Array.from(cached);
 

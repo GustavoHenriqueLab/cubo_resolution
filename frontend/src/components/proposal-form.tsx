@@ -82,7 +82,7 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 py-3 text-sm font-medium text-gray-400 transition-colors hover:border-blue-300 hover:text-blue-600 dark:border-gray-700 dark:hover:border-blue-400 dark:hover:text-blue-400"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500"
       >
         <FileText size={16} />
         Propor Integracao para {startupNome}
@@ -140,9 +140,8 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
             <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
               Tipo de Integracao
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               {[
-                { value: "poc", label: "POC" },
                 { value: "parceria", label: "Parceria" },
                 { value: "contratacao", label: "Contratacao" },
                 { value: "outro", label: "Outro" },

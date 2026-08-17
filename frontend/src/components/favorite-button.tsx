@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Star } from "lucide-react";
+import { updateCachedFavorite } from "@/components/favorites-store";
 
 interface Props {
   startupId: string;
@@ -37,6 +38,7 @@ export function FavoriteButton({ startupId, initialFavorited, onToggle }: Props)
 
       const data = (await res.json()) as { favorited: boolean };
       setFavorited(data.favorited);
+      updateCachedFavorite(startupId, data.favorited);
       onToggle?.(data.favorited);
     } catch {
       setFavorited(!optimistic);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect, useDeferredValue } from "react";
+import { useMemo, useState, useEffect, useDeferredValue, useCallback } from "react";
 import { StartupCard } from "@/components/startup-card";
 import { SearchInput } from "@/components/search-input";
 import { FilterBar } from "@/components/filter-bar";
@@ -43,6 +43,18 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
   const [pagina, setPagina] = useState(1);
 
   const [favoritosSet, setFavoritosSet] = useState<Set<string>>(() => new Set(initialFavorites));
+
+  const handleToggleFavorite = useCallback((startupId: string, favorited: boolean) => {
+    setFavoritosSet((prev) => {
+      const next = new Set(prev);
+      if (favorited) {
+        next.add(startupId);
+      } else {
+        next.delete(startupId);
+      }
+      return next;
+    });
+  }, []);
 
   const buscaDebounced = useDebounce(busca, 300);
   const buscaDeferred = useDeferredValue(buscaDebounced);
@@ -226,6 +238,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
               startup={s}
               index={i}
               initialFavorited={favoritosSet.has(s.id)}
+              onToggleFavorite={handleToggleFavorite}
             />
           ))}
         </div>
