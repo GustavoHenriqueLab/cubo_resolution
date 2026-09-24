@@ -11,7 +11,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
-  const publicPaths = ["/login", "/cadastro", "/auth/callback"];
+  const publicPaths = ["/login", "/auth/callback"];
   const isPublicPath = publicPaths.some(
     (p) => pathname === p || pathname.startsWith("/auth/"),
   );
@@ -55,7 +55,7 @@ export async function updateSession(request: NextRequest) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (user && (pathname === "/login" || pathname === "/cadastro")) {
+    if (user && pathname === "/login") {
       const url = request.nextUrl.clone();
       url.pathname = "/";
       return NextResponse.redirect(url);

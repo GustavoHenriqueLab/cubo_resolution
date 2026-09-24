@@ -153,7 +153,71 @@ npm run dev                    # http://localhost:3000
 npm run build && npm start     # build de producao local
 ```
 
+### Login (Supabase do FlowLab)
+
+O login valida email/senha no Supabase do **FlowLab** (sistema Lab) e espelha a sessao no Supabase do cubo — o resto do app continua 100% no banco do cubo. Preencha no `frontend/.env.local`:
+
+| Variavel | Origem |
+|---|---|
+| `FLOWLAB_SUPABASE_URL` | Supabase do FlowLab (Project URL) |
+| `FLOWLAB_SUPABASE_ANON_KEY` | Supabase do FlowLab (anon key) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase do cubo (service role — somente servidor) |
+
+No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espelho e criada automaticamente (como `viewer`, com o nome vindo do FlowLab) — nao e preciso importar nem cadastrar ninguem.
+
+> Opcional: `backend/scripts/importar_usuarios_flowlab.py` pre-cria as contas em lote. Requer acesso admin ao FlowLab (`FLOWLAB_SERVICE_ROLE_KEY`, ou `FLOWLAB_IMPORT_EMAIL`/`FLOWLAB_IMPORT_PASSWORD` de uma conta ativa no `backend/.env`); sem isso, o login cria as contas sob demanda.
+
 > Apos o setup inicial, o fluxo mensal e coberto na secao **Atualizacao Mensal (Pipeline)** acima. Nao e necessario rodar o backend para desenvoler no frontend — os JSONs ja estao commitados em `frontend/src/data/`.
+
+---
+
+## Fluxo de Uso (Usuário normal + Admin)
+
+### Setup (uma vez)
+
+1. Criar um projeto no [Supabase](https://supabase.com/) e rodar as migrations no SQL Editor, nesta ordem:
+   `schema.sql` → `add_status_favoritos.sql` → `add_propostas.sql` → `migracao_status_parcerias.sql` → `add_user_departamento.sql` → `fix_rls*.sql` → `backfill_profiles.sql` (só se existirem contas antigas sem profile).
+2. Configurar o `.env.local` do frontend:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   FLOWLAB_SUPABASE_URL=...
+   FLOWLAB_SUPABASE_ANON_KEY=...
+   SUPABASE_SERVICE_ROLE_KEY=...
+   ```
+3. Os 12 departamentos já são seedados pelo `schema.sql`.
+4. Promover o primeiro admin com `supabase/promote_admin.sql` (e-mail já preenchido) ou em `/admin/usuarios`. Não é preciso importar usuários: o primeiro login de cada pessoa cria a conta-espelho automaticamente.
+
+### Autenticação
+
+- `/login` — entrar com email/senha do **FlowLab** (sistema Lab). Não há cadastro: os usuários vêm do banco do FlowLab.
+- A senha é validada no Supabase do FlowLab; a sessão é espelhada no Supabase do cubo (service role, server-side).
+- No primeiro login, se o e-mail ainda não existir no banco do cubo, a conta-espelho é criada automaticamente como `viewer`. A promoção a admin é feita em `/admin/usuarios`.
+- O login garante o registro em `profiles` (upsert) mesmo se o trigger `handle_new_user` falhar.
+- Opcional: `backend/scripts/importar_usuarios_flowlab.py` pré-cria as contas em lote (requer acesso admin ao FlowLab).
+
+### Fluxo — Usuário normal (viewer)
+
+1. **Login** → cai na **Home** (`/`): grid dos 12 departamentos + seção **Novidades** (startups do mês).
+2. **Explorar**: `/departamentos/[slug]` (lista ranqueada com filtro Alta/Média/Baixa) e `/startups` (busca global por nome, segmento, tecnologia, departamento, confiança + toggle **Destaques LAB** e **Favoritos**).
+3. **Abrir o drawer da startup** (clicar no card): ver descrição, metadados, análise Gemini (9 critérios), status e histórico.
+4. **Favoritar**: clicar na estrela do card/drawer (persiste e reflete no filtro Favoritos).
+5. **Propor Integração**: no drawer, botão destacado "Propor Integracao" → escolher tipo (Parceria / Contratacao / Outro), departamento, benefícios e justificativa.
+6. **Acompanhar**: `/propostas` mostra o status e a timeline (pendente → em tratativas → em poc → aprovada/rejeitada/cancelada → finalizado).
+7. **Parcerias**: `/parcerias` lista as parcerias firmadas (criadas quando uma proposta é finalizada).
+
+### Fluxo — Admin
+
+1. **Login admin** → item **Admin** no sidebar.
+2. **`/admin`** — dashboard com stats (startups, classificados, destaques, usuários), **Pipelines** (disparar scraper / classifier / ranker / destaques) e histórico de execuções.
+3. **`/admin/startups`** — mudar o status de uma startup e atribuir usuários a ela.
+4. **`/admin/usuarios`** — tornar admin/viewer e definir o departamento de cada usuário.
+5. **`/admin/propostas`** — revisar as propostas enviadas e mover o status (pendente → em tratativas → em poc → aprovada/rejeitada/cancelada → **finalizado**). Ao **finalizar**, uma parceria é criada automaticamente e a startup vira **Parceiro**.
+6. **`/admin/parcerias`** — gerenciar as parcerias registradas.
+
+### Reset de dados
+
+Para limpar **apenas propostas e parcerias** (mantendo startups e usuários), execute `supabase/limpar_propostas_parcerias.sql` no SQL Editor do Supabase.
 
 ---
 

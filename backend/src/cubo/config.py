@@ -63,6 +63,12 @@ class Config:
     supabase_url: str
     supabase_service_role_key: str
 
+    flowlab_supabase_url: str
+    flowlab_service_role_key: str
+    flowlab_supabase_anon_key: str
+    flowlab_import_email: str
+    flowlab_import_password: str
+
 
 def load_config() -> Config:
     """Cria a instancia de :class:`Config` a partir do ambiente."""
@@ -79,4 +85,9 @@ def load_config() -> Config:
         request_delay=float(_env("REQUEST_DELAY", "1.5")),
         supabase_url=_env("SUPABASE_URL"),
         supabase_service_role_key=_env("SUPABASE_SERVICE_ROLE_KEY"),
+        flowlab_supabase_url=_env("FLOWLAB_SUPABASE_URL"),
+        flowlab_service_role_key=_env("FLOWLAB_SERVICE_ROLE_KEY"),
+        flowlab_supabase_anon_key=_env("FLOWLAB_SUPABASE_ANON_KEY"),
+        flowlab_import_email=_env("FLOWLAB_IMPORT_EMAIL"),
+        flowlab_import_password=_env("FLOWLAB_IMPORT_PASSWORD"),
     )
