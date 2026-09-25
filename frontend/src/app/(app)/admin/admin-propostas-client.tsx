@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Check, ChevronDown, User, Building2, Calendar, AlertTriangle, UserCog, ShieldCheck } from "lucide-react";
 import { PROPOSTA_STATUS_LABELS, PROPOSTA_STATUS_COLORS, PROPOSTA_STATUS_FILTER_COLORS, PROPOSTA_TIPO_LABELS } from "@/lib/types";
+import { AnexosProposta } from "@/components/anexos-proposta";
 import type { PropostaAdminRow } from "@/lib/queries";
 import type { PropostaStatus } from "@/lib/types";
 
@@ -285,6 +286,13 @@ export function AdminPropostasClient({ propostas }: Props) {
                       ))}
                     </ul>
                   </div>
+
+                  <AnexosProposta
+                    propostaId={p.id}
+                    anexos={p.anexos}
+                    podeRemover
+                    semBorda
+                  />
 
                   {/* Admin notes if already decided */}
                   {p.admin_notas && !(p.id in notas) && (

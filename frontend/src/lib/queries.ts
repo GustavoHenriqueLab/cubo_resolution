@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/database.types";
-import type { StartupStatus, Parceria, StartupStatusLogEntry, PropostaStatusLogEntry } from "@/lib/types";
+import type { StartupStatus, Parceria, StartupStatusLogEntry, PropostaStatusLogEntry, PropostaAnexo } from "@/lib/types";
 import { DEPARTAMENTOS } from "@/lib/constants";
 
 const VALID_STATUSES: StartupStatus[] = [
@@ -783,6 +783,7 @@ export interface PropostaAdminRow {
   gestor_nome: string | null;
   gestor_status: string;
   gestor_notas: string | null;
+  anexos: PropostaAnexo[];
   created_at: string;
   updated_at: string;
 }
@@ -838,6 +839,44 @@ async function montarPropostaRows(
   );
   const resolveDepto = (slug: string | null) => (slug ? DEPARTAMENTOS[slug] ?? slug : null);
 
+  // Anexos + URLs assinadas (bucket privado "proposta-anexos")
+  const propostaIds = data.map((p) => p.id as string);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: anexosData } = propostaIds.length > 0
+    ? await (supabase as any)
+        .from("proposta_anexos")
+        .select("id, proposta_id, enviado_por, nome, path, mime, tamanho, created_at")
+        .in("proposta_id", propostaIds)
+        .order("created_at", { ascending: true })
+    : { data: [] as AnyRow[] };
+
+  const paths = ((anexosData ?? []) as AnyRow[]).map((a) => a.path as string);
+  const urlsPorPath = new Map<string, string>();
+  if (paths.length > 0) {
+    const { data: assinadas } = await supabase.storage
+      .from("proposta-anexos")
+      .createSignedUrls(paths, 3600);
+    for (const s of assinadas ?? []) {
+      if (s.path && s.signedUrl) urlsPorPath.set(s.path, s.signedUrl);
+    }
+  }
+
+  const anexosPorProposta = new Map<string, PropostaAnexo[]>();
+  for (const a of (anexosData ?? []) as AnyRow[]) {
+    const lista = anexosPorProposta.get(a.proposta_id as string) ?? [];
+    lista.push({
+      id: a.id as string,
+      nome: a.nome as string,
+      path: a.path as string,
+      mime: (a.mime as string | null) ?? null,
+      tamanho: (a.tamanho as number | null) ?? null,
+      url: urlsPorPath.get(a.path as string) ?? null,
+      enviado_por: (a.enviado_por as string | null) ?? null,
+      created_at: a.created_at as string,
+    });
+    anexosPorProposta.set(a.proposta_id as string, lista);
+  }
+
   return data.map((p) => {
     const perfil = perfis.get(p.usuario_id as string) ?? {
       nome: null,
@@ -863,6 +902,7 @@ async function montarPropostaRows(
       gestor_nome: gestorId ? gestores.get(gestorId) ?? null : null,
       gestor_status: (p.gestor_status as string) ?? "aprovada",
       gestor_notas: (p.gestor_notas as string | null) ?? null,
+      anexos: anexosPorProposta.get(p.id as string) ?? [],
       created_at: p.created_at as string,
       updated_at: p.updated_at as string,
     };

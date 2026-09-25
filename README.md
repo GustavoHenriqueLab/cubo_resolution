@@ -176,7 +176,7 @@ No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espel
 ### Setup (uma vez)
 
 1. Criar um projeto no [Supabase](https://supabase.com/) e rodar as migrations no SQL Editor, nesta ordem:
-   `schema.sql` → `add_status_favoritos.sql` → `add_propostas.sql` → `migracao_status_parcerias.sql` → `add_user_departamento.sql` → `fix_rls*.sql` → `add_startup_users.sql` (se a tabela `startup_users` não existir) → `add_manager_role.sql` (papel `manager`) → `add_gestor_flow.sql` (fluxo de propostas com gestor) → `backfill_profiles.sql` (só se existirem contas antigas sem profile).
+   `schema.sql` → `add_status_favoritos.sql` → `add_propostas.sql` → `migracao_status_parcerias.sql` → `add_user_departamento.sql` → `fix_rls*.sql` → `add_startup_users.sql` (se a tabela `startup_users` não existir) → `add_manager_role.sql` (papel `manager`) → `add_gestor_flow.sql` (fluxo de propostas com gestor) → `add_proposta_anexos.sql` (anexos das propostas) → `backfill_profiles.sql` (só se existirem contas antigas sem profile).
 2. Configurar o `.env.local` do frontend:
    ```
    NEXT_PUBLIC_SUPABASE_URL=...
@@ -203,14 +203,14 @@ No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espel
 2. **Explorar**: `/departamentos/[slug]` (lista ranqueada com filtro Alta/Média/Baixa) e `/startups` (busca global por nome, segmento, tecnologia, departamento, confiança + toggle **Destaques LAB** e **Favoritos**).
 3. **Abrir o drawer da startup** (clicar no card): ver descrição, metadados, análise Gemini (9 critérios), status e histórico.
 4. **Favoritar**: clicar na estrela do card/drawer (persiste e reflete no filtro Favoritos).
-5. **Propor Integração**: no drawer, botão destacado "Propor Integracao" → escolher **o gestor que vai receber** (obrigatório), tipo (Parceria / Contratacao / Outro), departamento, benefícios e justificativa.
+5. **Propor Integração**: no drawer, botão destacado "Propor Integracao" → escolher **o gestor que vai receber** (obrigatório), tipo (Parceria / Contratacao / Outro), departamento, benefícios e justificativa. Pode anexar **até 5 documentos** (10 MB cada: PDF, imagens, Word/Excel, TXT/CSV, ZIP) — o autor também pode adicionar/remover anexos enquanto a proposta está pendente.
 6. **Acompanhar**: `/propostas` mostra o status e a timeline — primeiro "Aguardando Gestor"; com a aprovação do gestor vira **"Aguardando Admin"** e, quando o admin age, segue o fluxo (em tratativas → em poc → aprovada/rejeitada/cancelada → finalizado).
 7. **Parcerias**: `/parcerias` lista as parcerias firmadas (criadas quando uma proposta é finalizada).
 
 ### Fluxo — Gestor (manager)
 
 1. Recebe as propostas que foram enviadas para ele em `/propostas` → aba **Recebidas**.
-2. Pode **editar** a proposta (tipo, departamento, benefícios, justificativa), **recusar** (com motivo, visível ao autor) ou **aprovar** (encaminha ao admin).
+2. Pode **editar** a proposta (tipo, departamento, benefícios, justificativa), **anexar/remover documentos** durante a revisão, **recusar** (com motivo, visível ao autor) ou **aprovar** (encaminha ao admin).
 3. Na aba **Respondidas** (aprovadas e recusadas), acompanha o andamento no admin pela timeline.
 4. Ao criar uma proposta, o gestor escolhe no formulário: **"Direto para o Admin"** (sem passar por gestor) ou "Para um gestor".
 

@@ -26,6 +26,7 @@ import {
 } from "@/lib/types";
 import { DEPARTAMENTOS } from "@/lib/constants";
 import { PropostaTimeline, PROPOSAL_STATUS_ICONS } from "@/components/proposta-timeline";
+import { AnexosProposta } from "@/components/anexos-proposta";
 import type { PropostaAdminRow } from "@/lib/queries";
 import type { PropostaStatus, PropostaTipo } from "@/lib/types";
 
@@ -64,7 +65,15 @@ function BadgeStatus({ proposta }: { proposta: PropostaAdminRow }) {
   );
 }
 
-function DetalhesProposta({ proposta }: { proposta: PropostaAdminRow }) {
+function DetalhesProposta({
+  proposta,
+  podeAnexar = false,
+  podeRemover = false,
+}: {
+  proposta: PropostaAdminRow;
+  podeAnexar?: boolean;
+  podeRemover?: boolean;
+}) {
   return (
     <div className="space-y-4 border-t border-gray-100 px-5 py-4 dark:border-gray-700">
       <div className="flex flex-wrap gap-6">
@@ -130,6 +139,13 @@ function DetalhesProposta({ proposta }: { proposta: PropostaAdminRow }) {
         </div>
       )}
 
+      <AnexosProposta
+        propostaId={proposta.id}
+        anexos={proposta.anexos}
+        podeAnexar={podeAnexar}
+        podeRemover={podeRemover}
+      />
+
       <PropostaTimeline propostaId={proposta.id} status={proposta.status as PropostaStatus} />
     </div>
   );
@@ -138,9 +154,13 @@ function DetalhesProposta({ proposta }: { proposta: PropostaAdminRow }) {
 function PropostaCard({
   proposta,
   mostrarAutor = false,
+  podeAnexar = false,
+  podeRemover = false,
 }: {
   proposta: PropostaAdminRow;
   mostrarAutor?: boolean;
+  podeAnexar?: boolean;
+  podeRemover?: boolean;
 }) {
   return (
     <details className="group rounded-2xl border border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -175,7 +195,11 @@ function PropostaCard({
         />
       </summary>
 
-      <DetalhesProposta proposta={proposta} />
+      <DetalhesProposta
+        proposta={proposta}
+        podeAnexar={podeAnexar}
+        podeRemover={podeRemover}
+      />
     </details>
   );
 }
@@ -304,6 +328,14 @@ function PropostaRecebidaCard({ proposta }: { proposta: PropostaAdminRow }) {
               departamentoNome={proposta.departamento_nome || proposta.departamento_slug || "Geral (LAB)"}
               justificativa={proposta.justificativa}
               beneficios={proposta.beneficios}
+            />
+
+            <AnexosProposta
+              propostaId={proposta.id}
+              anexos={proposta.anexos}
+              podeAnexar
+              podeRemover
+              semBorda
             />
 
             {erro && (
@@ -579,16 +611,19 @@ function ListaVazia({ titulo, descricao }: { titulo: string; descricao: string }
 }
 
 export function PropostasUsuarioClient({ propostas, gestorPropostas, isManager }: Props) {
-  const [aba, setAba] = useState<"minhas" | "recebidas" | "respondidas">("minhas");
+  const [aba, setAba] = useState<"minhas" | "recebidas" | "respondidas">(
+    isManager ? "recebidas" : "minhas",
+  );
 
   const recebidas = gestorPropostas.filter((p) => p.gestor_status === "pendente");
   const respondidas = gestorPropostas.filter(
     (p) => p.gestor_status === "aprovada" || p.gestor_status === "rejeitada",
   );
 
+  // Para o gestor, a aba "Recebidas" vem primeiro (e e a aba inicial)
   const abas = [
-    { id: "minhas" as const, label: "Minhas", count: propostas.length },
     { id: "recebidas" as const, label: "Recebidas", count: recebidas.length },
+    { id: "minhas" as const, label: "Minhas", count: propostas.length },
     { id: "respondidas" as const, label: "Respondidas", count: respondidas.length },
   ];
 
@@ -598,7 +633,7 @@ export function PropostasUsuarioClient({ propostas, gestorPropostas, isManager }
     <div className="mx-auto w-full max-w-full px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 xl:max-w-[80rem]">
       <div className="mb-8">
         <h1 className="font-display text-2xl font-bold sm:text-3xl">
-          <span className="text-gradient-brand">Minhas Propostas</span>
+          <span className="text-gradient-brand">Propostas</span>
         </h1>
         <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           {isManager
@@ -635,7 +670,12 @@ export function PropostasUsuarioClient({ propostas, gestorPropostas, isManager }
         ) : (
           <div className="space-y-3">
             {propostas.map((p) => (
-              <PropostaCard key={p.id} proposta={p} />
+              <PropostaCard
+                key={p.id}
+                proposta={p}
+                podeAnexar={p.status === "pendente"}
+                podeRemover={p.status === "pendente"}
+              />
             ))}
           </div>
         ))}

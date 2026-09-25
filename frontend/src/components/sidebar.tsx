@@ -21,10 +21,10 @@ import {
 import { useUser } from "@/components/user-provider";
 
 const NAV_ITEMS = [
+  { id: "startups", label: "Buscar Startups", href: "/startups", icon: Search },
   { id: "dashboard", label: "Dashboard", href: "/", icon: LayoutDashboard },
   { id: "departamentos", label: "Departamentos", href: "/departamentos/atendimento", icon: Package },
-  { id: "startups", label: "Buscar Startups", href: "/startups", icon: Search },
-  { id: "propostas", label: "Minhas Propostas", href: "/propostas", icon: FileText },
+  { id: "propostas", label: "Propostas", href: "/propostas", icon: FileText },
   { id: "parcerias", label: "Parcerias", href: "/parcerias", icon: Handshake },
   
   { id: "admin", label: "Admin", href: "/admin", icon: Settings },

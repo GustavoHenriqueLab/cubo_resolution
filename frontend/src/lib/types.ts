@@ -179,6 +179,17 @@ export interface Parceria {
   updated_at: string;
 }
 
+export interface PropostaAnexo {
+  id: string;
+  nome: string;
+  path: string;
+  mime: string | null;
+  tamanho: number | null;
+  url: string | null;
+  enviado_por: string | null;
+  created_at: string;
+}
+
 export interface PropostaRaw {
   id: string;
   startup_id: string;
@@ -204,6 +215,7 @@ export interface PropostaEnriquecida extends PropostaRaw {
   usuario_departamento?: string | null;
   departamento_nome: string | null;
   gestor_nome: string | null;
+  anexos: PropostaAnexo[];
 }
 
 export interface StartupStatusLogEntry {

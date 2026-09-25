@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FileText,
   Plus,
@@ -10,8 +10,16 @@ import {
   ShieldCheck,
   UserCog,
   AlertCircle,
+  Paperclip,
 } from "lucide-react";
 import { useUser } from "@/components/user-provider";
+import {
+  ACCEPT_ANEXO,
+  MAX_ANEXOS,
+  enviarAnexosProposta,
+  formatarTamanho,
+  validarAnexos,
+} from "@/lib/anexos";
 
 interface Props {
   startupId: string;
@@ -44,6 +52,41 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
   const [gestorId, setGestorId] = useState("");
   const [destino, setDestino] = useState<"admin" | "gestor">("admin");
 
+  const [arquivos, setArquivos] = useState<File[]>([]);
+  const [avisoAnexos, setAvisoAnexos] = useState("");
+  const arquivoInputRef = useRef<HTMLInputElement>(null);
+
+  const handleArquivos = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const lista = Array.from(files);
+    const vagas = MAX_ANEXOS - arquivos.length;
+
+    if (vagas <= 0) {
+      setError(`Limite de ${MAX_ANEXOS} anexos por proposta.`);
+      return;
+    }
+    if (lista.length > vagas) {
+      setError(`Voce pode adicionar mais ${vagas} anexo(s).`);
+      if (arquivoInputRef.current) arquivoInputRef.current.value = "";
+      return;
+    }
+
+    const invalido = validarAnexos(lista, vagas);
+    if (invalido) {
+      setError(invalido);
+      if (arquivoInputRef.current) arquivoInputRef.current.value = "";
+      return;
+    }
+
+    setArquivos([...arquivos, ...lista]);
+    setError("");
+    if (arquivoInputRef.current) arquivoInputRef.current.value = "";
+  };
+
+  const removerArquivo = (indice: number) => {
+    setArquivos(arquivos.filter((_, i) => i !== indice));
+  };
+
   useEffect(() => {
     if (!open || gestoresCarregados) return;
     setGestoresCarregados(true);
@@ -68,6 +111,7 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
 
   const handleSubmit = async () => {
     setError("");
+    setAvisoAnexos("");
     if (justificativa.length < 50) {
       setError("Justificativa precisa ter no minimo 50 caracteres.");
       return;
@@ -108,6 +152,16 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
         return;
       }
 
+      if (arquivos.length > 0 && data.id) {
+        const { erros } = await enviarAnexosProposta(data.id as string, arquivos);
+        if (erros.length > 0) {
+          setAvisoAnexos(
+            `Proposta enviada, mas alguns anexos falharam: ${erros.join(" ")}`,
+          );
+        }
+      }
+      setArquivos([]);
+
       const nomeGestor = gestores.find((g) => g.id === gestorSelecionado)?.nome;
       setEnviadoPara(nomeGestor ? `o gestor ${nomeGestor}` : "o Admin");
       setDone(true);
@@ -145,8 +199,13 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
             Proposta enviada para {enviadoPara}!
           </p>
           <p className="text-xs text-green-600 dark:text-green-500">
-            Acompanhe o andamento em &quot;Minhas Propostas&quot;.
+            Acompanhe o andamento em &quot;Propostas&quot;.
           </p>
+          {avisoAnexos && (
+            <p className="mt-1 rounded-lg bg-amber-50 px-2.5 py-1.5 text-[11px] text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">
+              {avisoAnexos}
+            </p>
+          )}
         </div>
       ) : (
         <div className="space-y-4">
@@ -341,6 +400,55 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
             <p className="mt-0.5 text-right text-[10px] text-gray-400">
               {justificativa.length}/50
             </p>
+          </div>
+
+          {/* Anexos */}
+          <div>
+            <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+              Documentos (opcional) — ate {MAX_ANEXOS} arquivos, 10 MB cada
+            </label>
+            {arquivos.length > 0 && (
+              <div className="space-y-1.5">
+                {arquivos.map((f, i) => (
+                  <div
+                    key={`${f.name}-${i}`}
+                    className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 dark:border-gray-600 dark:bg-gray-800"
+                  >
+                    <Paperclip size={13} className="shrink-0 text-gray-400" />
+                    <span className="min-w-0 flex-1 truncate text-xs text-gray-700 dark:text-gray-300">
+                      {f.name}
+                    </span>
+                    <span className="shrink-0 text-[10px] text-gray-400">
+                      {formatarTamanho(f.size)}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removerArquivo(i)}
+                      className="shrink-0 rounded p-1 text-gray-400 hover:text-red-500"
+                    >
+                      <X size={13} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => arquivoInputRef.current?.click()}
+              disabled={arquivos.length >= MAX_ANEXOS}
+              className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 disabled:opacity-50 dark:text-blue-400"
+            >
+              <Plus size={12} />
+              Adicionar documento
+            </button>
+            <input
+              ref={arquivoInputRef}
+              type="file"
+              multiple
+              hidden
+              accept={ACCEPT_ANEXO}
+              onChange={(e) => handleArquivos(e.target.files)}
+            />
           </div>
 
           {error && (
