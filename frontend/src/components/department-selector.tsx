@@ -13,9 +13,10 @@ const DEPTO_ENTRIES = Object.entries(DEPARTAMENTOS).sort(([, a], [, b]) =>
 interface Props {
   userId: string;
   currentDepto: string | null;
+  bloquearNenhum?: boolean;
 }
 
-export function DepartmentSelector({ userId, currentDepto }: Props) {
+export function DepartmentSelector({ userId, currentDepto, bloquearNenhum = false }: Props) {
   const [selected, setSelected] = useState<string | null>(currentDepto);
   const [open, setOpen] = useState(false);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
@@ -98,20 +99,22 @@ export function DepartmentSelector({ userId, currentDepto }: Props) {
       style={dropdownStyle}
       className="max-h-72 overflow-auto rounded-xl border border-gray-100 bg-white py-1 shadow-xl dark:border-gray-700 dark:bg-gray-800"
     >
-      <button
-        type="button"
-        onClick={() => handleSelect(null)}
-        className={`flex w-full items-center gap-2 px-3 py-2 text-xs font-medium transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 ${
-          selected === null
-            ? "text-blue-600 dark:text-blue-400"
-            : "text-gray-600 dark:text-gray-400"
-        }`}
-      >
-        <span className="w-4 flex-shrink-0">
-          {selected === null && <Check size={12} />}
-        </span>
-        Nenhum
-      </button>
+      {!bloquearNenhum && (
+        <button
+          type="button"
+          onClick={() => handleSelect(null)}
+          className={`flex w-full items-center gap-2 px-3 py-2 text-xs font-medium transition-colors hover:bg-gray-50 dark:hover:bg-gray-700 ${
+            selected === null
+              ? "text-blue-600 dark:text-blue-400"
+              : "text-gray-600 dark:text-gray-400"
+          }`}
+        >
+          <span className="w-4 flex-shrink-0">
+            {selected === null && <Check size={12} />}
+          </span>
+          Nenhum
+        </button>
+      )}
       {DEPTO_ENTRIES.map(([slug, nome]) => (
         <button
           key={slug}

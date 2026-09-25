@@ -11,15 +11,6 @@ const ROLE_ICONS: Record<string, React.ReactNode> = {
   viewer: <User size={14} className="text-gray-400" />,
 };
 
-const ROLE_BADGES: Record<string, string> = {
-  admin:
-    "border-blue-200 bg-blue-100 text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400",
-  manager:
-    "border-amber-200 bg-amber-100 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400",
-  viewer:
-    "border-gray-200 bg-gray-100 text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400",
-};
-
 export default async function AdminUsuariosPage() {
   const profile = await getCurrentProfile();
 
@@ -58,7 +49,6 @@ export default async function AdminUsuariosPage() {
                 <th className="px-6 py-3">Role</th>
                 <th className="px-6 py-3">Departamento</th>
                 <th className="px-6 py-3">Criado em</th>
-                <th className="px-6 py-3">Acoes</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50 dark:divide-gray-700">
@@ -74,31 +64,28 @@ export default async function AdminUsuariosPage() {
                     {p.id.slice(0, 8)}...
                   </td>
                   <td className="px-6 py-3">
-                    <span
-                      className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${
-                        ROLE_BADGES[p.role] ?? ROLE_BADGES.viewer
-                      }`}
-                    >
-                      {p.role}
-                    </span>
+                    <RoleSelector
+                      key={`${p.id}-${p.role}`}
+                      userId={p.id}
+                      currentRole={p.role}
+                      currentDepartamento={p.departamento_slug ?? null}
+                    />
                   </td>
                   <td className="px-6 py-3">
                     <DepartmentSelector
                       userId={p.id}
                       currentDepto={p.departamento_slug ?? null}
+                      bloquearNenhum={p.role === "manager"}
                     />
                   </td>
                   <td className="px-6 py-3 text-gray-500 dark:text-gray-400">
                     {new Date(p.created_at).toLocaleDateString("pt-BR")}
                   </td>
-                  <td className="px-6 py-3">
-                    <RoleSelector userId={p.id} currentRole={p.role} />
-                  </td>
                 </tr>
               ))}
               {profiles.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-gray-400">
+                  <td colSpan={5} className="px-6 py-8 text-center text-gray-400">
                     Nenhum usuario cadastrado.
                   </td>
                 </tr>
@@ -110,4 +97,3 @@ export default async function AdminUsuariosPage() {
     </div>
   );
 }
-

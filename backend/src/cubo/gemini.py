@@ -162,7 +162,10 @@ def _construir_system_prompt() -> str:
         "- So associe se a startup REALMENTE entrega valor para aquele departamento\n"
         "- Nao associe so porque a tecnologia 'poderia ser usada'\n"
         "- Priorize startups cujo segmento, descricao ou tecnologias indicam foco real\n"
-        '- Para "Biologia Molecular", "Qualidade" e "Equipe Medica": seja muito restritivo\n'
+        '- Para "Qualidade" e "Equipe Medica": seja muito restritivo\n'
+        '- Para "Biologia Molecular": seja criterioso, mas considere biotech/molecular '
+        "com aplicacao laboratorial (PCR/NGS, genetica, microbiota, biomarcadores, "
+        "diagnostico molecular), nao so diagnostico clinico\n"
         '- Para "TI": so associe se a startup e DO setor de TI/saude digital\n\n'
         "NIVEIS DE ADERENCIA A LAB:\n"
         "- Use aderencia_lab = 'alta' quando a startup resolve um problema "

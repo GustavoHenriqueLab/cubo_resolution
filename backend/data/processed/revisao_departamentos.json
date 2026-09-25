@@ -1,0 +1,46 @@
+{
+  "departamentos": [
+    "Biologia Molecular",
+    "Equipe Médica",
+    "Estoque",
+    "Faturamento",
+    "Qualidade"
+  ],
+  "total_novas": 25,
+  "novas": {
+    "Biologia Molecular": [
+      "Clic Health ID",
+      "EasyTelling",
+      "Precision Data"
+    ],
+    "Equipe Médica": [],
+    "Estoque": [
+      "Biti9",
+      "Evcomx",
+      "Oransys",
+      "Shooju",
+      "Smart Sell Pro",
+      "Tachyonix",
+      "Implanta It Solutions",
+      "Tecspal"
+    ],
+    "Faturamento": [
+      "Clara Pagamentos",
+      "Damap",
+      "Escavador",
+      "Receiv",
+      "Tachyonix",
+      "Taxcel",
+      "Taxly",
+      "TI Saúde",
+      "Wellbe"
+    ],
+    "Qualidade": [
+      "Biti9",
+      "Flokzu",
+      "Laboratorio Kasem",
+      "Revoluti",
+      "Zenith"
+    ]
+  }
+}

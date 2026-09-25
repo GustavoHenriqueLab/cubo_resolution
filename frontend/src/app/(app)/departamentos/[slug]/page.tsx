@@ -32,17 +32,12 @@ export default async function DepartamentoPage({
         Departamentos
       </Link>
 
-      <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="font-display text-2xl font-bold sm:text-3xl">
-            <span className="text-gradient-brand">{departamento.nome}</span>
-          </h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            {departamento.descricao}
-          </p>
-        </div>
+      <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="font-display text-2xl font-bold sm:text-3xl">
+          <span className="text-gradient-brand">{departamento.nome}</span>
+        </h1>
 
-        <div className="w-full sm:w-64 shrink-0">
+        <div className="w-full shrink-0 sm:w-64">
           <DepartamentoSelector
             departamentos={todosDepartamentos}
             slugAtual={slug}

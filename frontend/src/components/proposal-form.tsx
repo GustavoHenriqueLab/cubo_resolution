@@ -403,52 +403,71 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
           </div>
 
           {/* Anexos */}
-          <div>
-            <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
-              Documentos (opcional) — ate {MAX_ANEXOS} arquivos, 10 MB cada
-            </label>
-            {arquivos.length > 0 && (
-              <div className="space-y-1.5">
-                {arquivos.map((f, i) => (
-                  <div
-                    key={`${f.name}-${i}`}
-                    className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-1.5 dark:border-gray-600 dark:bg-gray-800"
-                  >
-                    <Paperclip size={13} className="shrink-0 text-gray-400" />
-                    <span className="min-w-0 flex-1 truncate text-xs text-gray-700 dark:text-gray-300">
-                      {f.name}
-                    </span>
-                    <span className="shrink-0 text-[10px] text-gray-400">
-                      {formatarTamanho(f.size)}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => removerArquivo(i)}
-                      className="shrink-0 rounded p-1 text-gray-400 hover:text-red-500"
-                    >
-                      <X size={13} />
-                    </button>
-                  </div>
-                ))}
+          <div className="rounded-xl border-2 border-dashed border-blue-200 bg-blue-50/40 p-4 dark:border-blue-500/30 dark:bg-blue-500/5">
+            <div className="flex items-start gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">
+                <Paperclip size={16} />
               </div>
-            )}
-            <button
-              type="button"
-              onClick={() => arquivoInputRef.current?.click()}
-              disabled={arquivos.length >= MAX_ANEXOS}
-              className="mt-1.5 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 disabled:opacity-50 dark:text-blue-400"
-            >
-              <Plus size={12} />
-              Adicionar documento
-            </button>
-            <input
-              ref={arquivoInputRef}
-              type="file"
-              multiple
-              hidden
-              accept={ACCEPT_ANEXO}
-              onChange={(e) => handleArquivos(e.target.files)}
-            />
+
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                  Documentos de apoio{" "}
+                  <span className="font-normal text-gray-400 dark:text-gray-500">
+                    (opcional)
+                  </span>
+                </p>
+                <p className="mt-0.5 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+                  Anexe ate {MAX_ANEXOS} arquivos (PDF, imagens, Word/Excel, ZIP) de ate
+                  10 MB cada — o gestor e o admin poderao baixar.
+                </p>
+
+                {arquivos.length > 0 && (
+                  <div className="mt-3 space-y-1.5">
+                    {arquivos.map((f, i) => (
+                      <div
+                        key={`${f.name}-${i}`}
+                        className="flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
+                      >
+                        <Paperclip size={13} className="shrink-0 text-blue-500" />
+                        <span className="min-w-0 flex-1 truncate text-xs font-medium text-gray-700 dark:text-gray-300">
+                          {f.name}
+                        </span>
+                        <span className="shrink-0 text-[10px] text-gray-400">
+                          {formatarTamanho(f.size)}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => removerArquivo(i)}
+                          className="shrink-0 rounded p-1 text-gray-400 hover:text-red-500"
+                        >
+                          <X size={13} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => arquivoInputRef.current?.click()}
+                  disabled={arquivos.length >= MAX_ANEXOS}
+                  className="mt-3 inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-white px-3.5 py-2 text-xs font-semibold text-blue-600 shadow-sm transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-blue-500/30 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-blue-500/10"
+                >
+                  <Plus size={14} />
+                  {arquivos.length === 0
+                    ? "Adicionar documentos"
+                    : `Adicionar mais (${MAX_ANEXOS - arquivos.length} restante(s))`}
+                </button>
+                <input
+                  ref={arquivoInputRef}
+                  type="file"
+                  multiple
+                  hidden
+                  accept={ACCEPT_ANEXO}
+                  onChange={(e) => handleArquivos(e.target.files)}
+                />
+              </div>
+            </div>
           </div>
 
           {error && (
