@@ -130,7 +130,7 @@ def executar():
             )
 
             try:
-                resposta = client.classificar_lote(lote)
+                resposta = client.classificar_lote(lote, prompt=prompt)
             except GeminiDailyQuotaExceeded as exc:
                 print(f"\n[COTA DIARIA] {exc}")
                 _finalizar(supabase, execution_id, "interrupted")

@@ -13,6 +13,7 @@ interface Props {
   tecnologiasAtivas: string[];
   departamentosAtivos: string[];
   confiancaAtiva: string[];
+  confiancaPlaceholder?: string;
   statusAtivo: StartupStatus[];
   onSegmentosChange: (v: string[]) => void;
   onTecnologiasChange: (v: string[]) => void;
@@ -29,6 +30,7 @@ export function FilterBar({
   tecnologiasAtivas,
   departamentosAtivos,
   confiancaAtiva,
+  confiancaPlaceholder = "Confiança",
   statusAtivo,
   onSegmentosChange,
   onTecnologiasChange,
@@ -75,7 +77,7 @@ export function FilterBar({
           ]}
           values={confiancaAtiva}
           onChange={onConfiancaChange}
-          placeholder="Confianca"
+          placeholder={confiancaPlaceholder}
         />
 
         <MultiCombobox

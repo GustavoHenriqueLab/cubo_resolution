@@ -4,9 +4,10 @@ import { memo } from "react";
 import Link from "next/link";
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { ConfiancaBadge } from "@/components/confianca-badge";
+import { AderenciaBadge } from "@/components/aderencia-badge";
 import { StatusBadge } from "@/components/status-badge";
 import { FavoriteButton } from "@/components/favorite-button";
-import { nomeParaSlug } from "@/lib/constants";
+import { nomeParaSlug, slugParaNome } from "@/lib/constants";
 import { ExternalLink, Star } from "lucide-react";
 import type { StartupEnriquecida } from "@/lib/types";
 
@@ -15,6 +16,8 @@ interface Props {
   index?: number;
   initialFavorited?: boolean;
   onToggleFavorite?: (startupId: string, favorited: boolean) => void;
+  departamentoSlug?: string;
+  confiancaDepartamento?: "alta" | "media" | "baixa";
 }
 
 export const StartupCard = memo(function StartupCard({
@@ -22,9 +25,17 @@ export const StartupCard = memo(function StartupCard({
   index = 0,
   initialFavorited = false,
   onToggleFavorite,
+  departamentoSlug,
+  confiancaDepartamento,
 }: Props) {
   const { open } = useStartupDrawer();
   const isDestaque = startup.rank != null;
+  const contextoDepartamento = departamentoSlug
+    ? {
+        nome: slugParaNome(departamentoSlug),
+        confianca: confiancaDepartamento ?? startup.confianca,
+      }
+    : undefined;
 
   return (
     <article
@@ -33,7 +44,7 @@ export const StartupCard = memo(function StartupCard({
         animationDelay: `${index * 50}ms`,
         animationFillMode: "forwards",
       }}
-      onClick={() => open(startup)}
+      onClick={() => open(startup, contextoDepartamento)}
     >
       {/* Header — titulo + acoes */}
       <div className="mb-3 flex items-start justify-between gap-2 min-w-0">
@@ -48,7 +59,17 @@ export const StartupCard = memo(function StartupCard({
               onToggle={(favorited) => onToggleFavorite?.(startup.id, favorited)}
             />
           </div>
-          <ConfiancaBadge confianca={startup.confianca} />
+          {confiancaDepartamento ? (
+            <ConfiancaBadge
+              confianca={confiancaDepartamento}
+              title="Confiança da classificação no departamento"
+            />
+          ) : startup.aderencia_lab ? (
+            <AderenciaBadge
+              nivel={startup.aderencia_lab}
+              title="Aderência da startup à LAB"
+            />
+          ) : null}
         </div>
       </div>
 

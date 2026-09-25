@@ -311,12 +311,14 @@ class GeminiClient:
     def model_name(self) -> str:
         return self._model_name
 
-    def classificar_lote(self, startups: list[dict]) -> dict:
+    def classificar_lote(self, startups: list[dict], prompt: str | None = None) -> dict:
         """Classifica um lote de startups nos departamentos com analise detalhada.
 
         Args:
             startups: Lista de dicionarios com chaves ``nome``, ``descricao``,
                 ``segmento``, ``tecnologias`` e ``modelos_negocio``.
+            prompt: Prompt customizado. Se ``None``, monta o prompt padrao de
+                classificacao a partir de ``startups``.
 
         Returns:
             Dicionario com ``startups`` (lista de classificacoes) e
@@ -327,19 +329,20 @@ class GeminiClient:
             GeminiTemporaryRateLimit: Limite temporario — tentativas esgotadas.
             GeminiQuotaError: Outro erro de cota.
         """
-        blocos = []
-        for i, s in enumerate(startups, 1):
-            bloco = (
-                f"--- Startup {i} ---\n"
-                f"Nome: {s['nome']}\n"
-                f"Descricao: {s.get('descricao', '')[:400]}\n"
-                f"Segmento: {s.get('segmento', 'N/I')}\n"
-                f"Tecnologias: {', '.join(s.get('tecnologias', []))}\n"
-                f"Modelos de negocio: {', '.join(s.get('modelos_negocio', []))}\n"
-            )
-            blocos.append(bloco)
+        if prompt is None:
+            blocos = []
+            for i, s in enumerate(startups, 1):
+                bloco = (
+                    f"--- Startup {i} ---\n"
+                    f"Nome: {s['nome']}\n"
+                    f"Descricao: {s.get('descricao', '')[:400]}\n"
+                    f"Segmento: {s.get('segmento', 'N/I')}\n"
+                    f"Tecnologias: {', '.join(s.get('tecnologias', []))}\n"
+                    f"Modelos de negocio: {', '.join(s.get('modelos_negocio', []))}\n"
+                )
+                blocos.append(bloco)
 
-        prompt = "Classifique as seguintes startups:\n\n" + "\n".join(blocos)
+            prompt = "Classifique as seguintes startups:\n\n" + "\n".join(blocos)
 
         logger.info(
             "Chamando Gemini: modelo=%s, lote=%d startup(s), tentativas_max=%d",

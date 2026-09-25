@@ -18,20 +18,6 @@ export const STATUS_ORDER: StartupStatus[] = [
   "parceiro",
 ];
 
-export interface StartupRaw {
-  id: number;
-  nome: string;
-  descricao: string;
-  segmento: string;
-  fundadores: string;
-  site: string;
-  url_perfil: string;
-  modelos_negocio: string[];
-  tecnologias: string[];
-  status: StartupStatus;
-  data_adicionado?: string;
-}
-
 export interface AvaliacaoGemini {
   problema_atendido?: string;
   aderencia_saude?: string;
@@ -42,29 +28,6 @@ export interface AvaliacaoGemini {
   prazo?: string;
   riscos?: string;
   piloto?: string;
-}
-
-export interface StartupClassificada {
-  nome: string;
-  confianca: "alta" | "media";
-  aderencia_lab?: "alta" | "media" | "baixa";
-  analise?: string;
-  avaliacao?: AvaliacaoGemini;
-  rank?: number;
-}
-
-export interface DestacadoLab {
-  nome: string;
-  rank: number;
-  analise: string;
-}
-
-export interface DepartamentosData {
-  destaque_lab: string[];
-  destaque_lab_analises?: DestacadoLab[];
-  departamentos: {
-    [departamento: string]: StartupClassificada[];
-  };
 }
 
 export interface StartupEnriquecida {
@@ -107,6 +70,64 @@ export type PropostaStatus =
   | "finalizado";
 
 export type PropostaTipo = "poc" | "parceria" | "contratacao" | "outro";
+
+export type GestorStatus = "pendente" | "aprovada" | "rejeitada";
+
+export const GESTOR_STATUS_LABELS: Record<GestorStatus, string> = {
+  pendente: "Aguardando Gestor",
+  aprovada: "Aprovada pelo Gestor",
+  rejeitada: "Recusada pelo Gestor",
+};
+
+export const GESTOR_STATUS_COLORS: Record<GestorStatus, string> = {
+  pendente:
+    "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400",
+  aprovada:
+    "border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-500/30 dark:bg-teal-500/10 dark:text-teal-400",
+  rejeitada:
+    "border-red-200 bg-red-50 text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-400",
+};
+
+/**
+ * Rotulo efetivo para o autor: enquanto o gestor nao decidiu (ou recusou),
+ * a etapa do gestor tem prioridade sobre o status do admin.
+ */
+export function statusExibicaoProposta(
+  status: PropostaStatus,
+  gestorStatus: GestorStatus | string | null | undefined,
+): { key: string; label: string; colors: string; etapaGestor: boolean } {
+  if (gestorStatus === "pendente") {
+    return {
+      key: "aguardando_gestor",
+      label: GESTOR_STATUS_LABELS.pendente,
+      colors: GESTOR_STATUS_COLORS.pendente,
+      etapaGestor: true,
+    };
+  }
+  if (gestorStatus === "rejeitada") {
+    return {
+      key: "rejeitada_gestor",
+      label: GESTOR_STATUS_LABELS.rejeitada,
+      colors: GESTOR_STATUS_COLORS.rejeitada,
+      etapaGestor: true,
+    };
+  }
+  if (gestorStatus === "aprovada" && status === "pendente") {
+    return {
+      key: "aguardando_admin",
+      label: "Aguardando Admin",
+      colors:
+        "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-500/30 dark:bg-sky-500/10 dark:text-sky-400",
+      etapaGestor: false,
+    };
+  }
+  return {
+    key: status,
+    label: PROPOSTA_STATUS_LABELS[status],
+    colors: PROPOSTA_STATUS_COLORS[status],
+    etapaGestor: false,
+  };
+}
 
 export const PROPOSTA_STATUS_LABELS: Record<PropostaStatus, string> = {
   pendente: "Pendente",
@@ -169,6 +190,9 @@ export interface PropostaRaw {
   status: PropostaStatus;
   admin_notas: string | null;
   admin_id: string | null;
+  gestor_id: string | null;
+  gestor_status: GestorStatus;
+  gestor_notas: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -177,7 +201,9 @@ export interface PropostaEnriquecida extends PropostaRaw {
   startup_nome: string;
   usuario_nome: string | null;
   usuario_email: string | null;
+  usuario_departamento?: string | null;
   departamento_nome: string | null;
+  gestor_nome: string | null;
 }
 
 export interface StartupStatusLogEntry {

@@ -1,9 +1,24 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { revalidatePath } from "next/cache";
-import { ArrowLeft, Shield, User } from "lucide-react";
-import { getProfiles, getCurrentProfile, updateUserRole } from "@/lib/queries";
+import { ArrowLeft, Shield, User, UserCog } from "lucide-react";
+import { getProfiles, getCurrentProfile } from "@/lib/queries";
 import { DepartmentSelector } from "@/components/department-selector";
+import { RoleSelector } from "@/components/role-selector";
+
+const ROLE_ICONS: Record<string, React.ReactNode> = {
+  admin: <Shield size={14} className="text-blue-500" />,
+  manager: <UserCog size={14} className="text-amber-500" />,
+  viewer: <User size={14} className="text-gray-400" />,
+};
+
+const ROLE_BADGES: Record<string, string> = {
+  admin:
+    "border-blue-200 bg-blue-100 text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400",
+  manager:
+    "border-amber-200 bg-amber-100 text-amber-700 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-400",
+  viewer:
+    "border-gray-200 bg-gray-100 text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400",
+};
 
 export default async function AdminUsuariosPage() {
   const profile = await getCurrentProfile();
@@ -51,11 +66,7 @@ export default async function AdminUsuariosPage() {
                 <tr key={p.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                   <td className="px-6 py-3 font-medium text-gray-700 dark:text-gray-300">
                     <div className="flex items-center gap-2">
-                      {p.role === "admin" ? (
-                        <Shield size={14} className="text-blue-500" />
-                      ) : (
-                        <User size={14} className="text-gray-400" />
-                      )}
+                      {ROLE_ICONS[p.role] ?? ROLE_ICONS.viewer}
                       {p.nome ?? "—"}
                     </div>
                   </td>
@@ -65,9 +76,7 @@ export default async function AdminUsuariosPage() {
                   <td className="px-6 py-3">
                     <span
                       className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${
-                        p.role === "admin"
-                          ? "border-blue-200 bg-blue-100 text-blue-600 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-400"
-                          : "border-gray-200 bg-gray-100 text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400"
+                        ROLE_BADGES[p.role] ?? ROLE_BADGES.viewer
                       }`}
                     >
                       {p.role}
@@ -83,10 +92,7 @@ export default async function AdminUsuariosPage() {
                     {new Date(p.created_at).toLocaleDateString("pt-BR")}
                   </td>
                   <td className="px-6 py-3">
-                    <ToggleRoleButton
-                      userId={p.id}
-                      currentRole={p.role}
-                    />
+                    <RoleSelector userId={p.id} currentRole={p.role} />
                   </td>
                 </tr>
               ))}
@@ -102,30 +108,6 @@ export default async function AdminUsuariosPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-function ToggleRoleButton({
-  userId,
-  currentRole,
-}: {
-  userId: string;
-  currentRole: "admin" | "viewer";
-}) {
-  const newRole = currentRole === "admin" ? "viewer" : "admin";
-
-  return (
-    <form
-      action={async () => {
-        "use server";
-        await updateUserRole(userId, newRole);
-        revalidatePath("/admin/usuarios");
-      }}
-    >
-      <button className="rounded-lg border border-gray-200 px-3 py-1 text-[11px] font-semibold text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-400 dark:hover:bg-gray-700">
-        Tornar {newRole === "admin" ? "Admin" : "Viewer"}
-      </button>
-    </form>
   );
 }
 

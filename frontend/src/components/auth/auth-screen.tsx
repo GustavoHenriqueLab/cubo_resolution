@@ -414,7 +414,7 @@ export function AuthScreen() {
                   </span>
                 </h1>
                 <p className="text-sm text-slate-500 dark:text-gray-300">
-                  Faca login para continuar no FlowLab
+                  Entre com o mesmo login do FlowLab
                 </p>
               </div>
 

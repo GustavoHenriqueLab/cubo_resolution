@@ -13,7 +13,7 @@ export interface Database {
         Row: {
           id: string;
           nome: string | null;
-          role: "admin" | "viewer";
+          role: "admin" | "manager" | "viewer";
           departamento_slug: string | null;
           created_at: string;
           updated_at: string;
@@ -21,7 +21,7 @@ export interface Database {
         Insert: {
           id: string;
           nome?: string | null;
-          role?: "admin" | "viewer";
+          role?: "admin" | "manager" | "viewer";
           departamento_slug?: string | null;
           created_at?: string;
           updated_at?: string;
@@ -29,7 +29,7 @@ export interface Database {
         Update: {
           id?: string;
           nome?: string | null;
-          role?: "admin" | "viewer";
+          role?: "admin" | "manager" | "viewer";
           departamento_slug?: string | null;
           created_at?: string;
           updated_at?: string;

@@ -46,23 +46,20 @@ export function PropostaTimeline({ propostaId, status }: PropostaTimelineProps) 
     visitedStatuses.add(entry.status_novo);
   }
 
-  const getNote = (s: PropostaStatus) => {
-    if (s === "pendente") return null;
-    const entry = log.find((e) => e.status_novo === s);
-    return entry?.notas || null;
+  // Pega a entrada mais recente do log para o status (a etapa do gestor
+  // registra notas no proprio "pendente").
+  const getEntry = (s: PropostaStatus) => {
+    for (let i = log.length - 1; i >= 0; i--) {
+      if (log[i].status_novo === s) return log[i];
+    }
+    return undefined;
   };
 
-  const getAdminNome = (s: PropostaStatus) => {
-    if (s === "pendente") return null;
-    const entry = log.find((e) => e.status_novo === s);
-    return entry?.admin_nome || null;
-  };
+  const getNote = (s: PropostaStatus) => getEntry(s)?.notas || null;
 
-  const getCreatedAt = (s: PropostaStatus) => {
-    if (s === "pendente") return null;
-    const entry = log.find((e) => e.status_novo === s);
-    return entry?.created_at || null;
-  };
+  const getAdminNome = (s: PropostaStatus) => getEntry(s)?.admin_nome || null;
+
+  const getCreatedAt = (s: PropostaStatus) => getEntry(s)?.created_at || null;
 
   const selectedNote = selectedStatus ? getNote(selectedStatus as PropostaStatus) : null;
   const selectedAdmin = selectedStatus ? getAdminNome(selectedStatus as PropostaStatus) : null;

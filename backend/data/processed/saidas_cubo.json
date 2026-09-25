@@ -1,0 +1,352 @@
+{
+  "detectado_em": "2026-09-25T17:07:03.970462+00:00",
+  "total_no_cubo": 518,
+  "total_no_banco": 516,
+  "candidatas": 49,
+  "confirmadas": 23,
+  "saidas": [
+    {
+      "nome": "704Apps do Brasil",
+      "status": "em_contato",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/182af5eb-3b93-40ae-945e-91b78a3f2180",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/182af5eb-3b93-40ae-945e-91b78a3f2180"
+    },
+    {
+      "nome": "Adea Grow Tecnologia e Intermediacao S.a.",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/57220b09-bda8-4d25-91fe-7342a63e9c89",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/57220b09-bda8-4d25-91fe-7342a63e9c89"
+    },
+    {
+      "nome": "ALLUGG LOCAÇÕES LTDA",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0edecc50-51ce-4fc8-96be-fd1bb73bf2a4",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/0edecc50-51ce-4fc8-96be-fd1bb73bf2a4"
+    },
+    {
+      "nome": "AmFi Finance",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/11aee4dc-6b1a-431f-91a9-356c074aa193",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/11aee4dc-6b1a-431f-91a9-356c074aa193"
+    },
+    {
+      "nome": "Arquiteto de Bolso (upik)",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f076359e-2553-4936-9761-6308717f2af6",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/f076359e-2553-4936-9761-6308717f2af6"
+    },
+    {
+      "nome": "Atlas Governance Tecnologia",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/67532fe0-3b14-4c75-ac35-a2a6c93a5e27",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/67532fe0-3b14-4c75-ac35-a2a6c93a5e27"
+    },
+    {
+      "nome": "N/I",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/search?resultSet=startup&page=7",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/search?resultSet=startup&page=7"
+    },
+    {
+      "nome": "Blox",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ec419586-ae7a-4fdd-908d-1b4adc4a14f1",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/ec419586-ae7a-4fdd-908d-1b4adc4a14f1"
+    },
+    {
+      "nome": "Ciudata",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f47df00c-df47-4505-876d-996dd8409f80",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/f47df00c-df47-4505-876d-996dd8409f80"
+    },
+    {
+      "nome": "Clínica Experts",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/45c48fb2-e120-44c9-aa9c-8c9f3dc5d7b9",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/45c48fb2-e120-44c9-aa9c-8c9f3dc5d7b9"
+    },
+    {
+      "nome": "Dexco",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/adf5a25a-5e8f-4542-9eb3-25a3db3cca93",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/adf5a25a-5e8f-4542-9eb3-25a3db3cca93"
+    },
+    {
+      "nome": "Deco.cx",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/5964cab0-2f8c-485a-af8d-d627344a23fe",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/5964cab0-2f8c-485a-af8d-d627344a23fe"
+    },
+    {
+      "nome": "Excuela",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/7296562c-60b1-453d-9963-123311938282",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/7296562c-60b1-453d-9963-123311938282"
+    },
+    {
+      "nome": "FORELEGAL TECNOLOGIA LTDA",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/390fc1c5-4dab-48e2-85f0-ea8ab7d8aa18",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/390fc1c5-4dab-48e2-85f0-ea8ab7d8aa18"
+    },
+    {
+      "nome": "Geeco - Materiais & Engenharia",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f2e9bd9c-acce-496a-b38e-b6dfd4d6e1af",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/f2e9bd9c-acce-496a-b38e-b6dfd4d6e1af"
+    },
+    {
+      "nome": "Hywork",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/22801f66-b763-4d36-9d78-3641ac26a8d1",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/22801f66-b763-4d36-9d78-3641ac26a8d1"
+    },
+    {
+      "nome": "Inbuilt Realidade Aumentada",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/5d736d12-6e0a-4ed0-8882-bba7feb7b121",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/5d736d12-6e0a-4ed0-8882-bba7feb7b121"
+    },
+    {
+      "nome": "Kompa Saúde",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ff55e29c-9602-4d94-9875-cf691b3de998",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/ff55e29c-9602-4d94-9875-cf691b3de998"
+    },
+    {
+      "nome": "LinkLei",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/7134df95-8573-47ff-b34b-072a391ed039",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/7134df95-8573-47ff-b34b-072a391ed039"
+    },
+    {
+      "nome": "L J Maquinas Automaticas Ltda (\"SmartMach\")",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/7a69b1fa-be5b-4b75-9143-7ccf9e1689b6",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/7a69b1fa-be5b-4b75-9143-7ccf9e1689b6"
+    },
+    {
+      "nome": "LogShare Tecnologia",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0b584f45-dc06-4721-bcff-4d7231b71ebc",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/0b584f45-dc06-4721-bcff-4d7231b71ebc"
+    },
+    {
+      "nome": "Marvik",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/9c720ae8-ee7f-4b89-a460-0f260c70c7f2",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/9c720ae8-ee7f-4b89-a460-0f260c70c7f2"
+    },
+    {
+      "nome": "MODULAR RENTAL COMPANY",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/3bc734b9-26ca-4675-8133-41749c18aece",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/3bc734b9-26ca-4675-8133-41749c18aece"
+    },
+    {
+      "nome": "Nodica AI",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/fa507508-550a-44a0-bf24-3de5424bec5d",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/fa507508-550a-44a0-bf24-3de5424bec5d"
+    },
+    {
+      "nome": "Norns (Siclo Pay)",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/c3d157d6-c78a-461b-966a-300515c18936",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/c3d157d6-c78a-461b-966a-300515c18936"
+    },
+    {
+      "nome": "OrderEAT",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f46f822d-6588-448c-b23f-f5baed7f42a7",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/f46f822d-6588-448c-b23f-f5baed7f42a7"
+    },
+    {
+      "nome": "Oystr",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d621744c-ecad-45f1-bc47-3be0467e4de5",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/d621744c-ecad-45f1-bc47-3be0467e4de5"
+    },
+    {
+      "nome": "Planium",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e64f81e9-70f2-4613-830b-ae8ce911bd6a",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/e64f81e9-70f2-4613-830b-ae8ce911bd6a"
+    },
+    {
+      "nome": "POK (Proof of Knowledge)",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/25aedb5f-bdbb-496a-8ec4-003878ee21ec",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/25aedb5f-bdbb-496a-8ec4-003878ee21ec"
+    },
+    {
+      "nome": "Robotictech Serviço de Tecnologia ltda",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/9d1ade15-afca-419c-9f01-49826c279348",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/9d1ade15-afca-419c-9f01-49826c279348"
+    },
+    {
+      "nome": "Soulmkt",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/116b665b-d67d-4399-9f0d-06ffd637e7c5",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/116b665b-d67d-4399-9f0d-06ffd637e7c5"
+    },
+    {
+      "nome": "Tamborine Tecnologia",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/636f7d21-c345-44a0-9c13-e87d66a81867",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/636f7d21-c345-44a0-9c13-e87d66a81867"
+    },
+    {
+      "nome": "Tecspal Technologies",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/6e305e8c-a12e-4aae-854e-1cd7c72ed3e9",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/6e305e8c-a12e-4aae-854e-1cd7c72ed3e9"
+    },
+    {
+      "nome": "Tilt",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0b64c28d-9cd6-4fe2-a4d9-3b5e3d3e1dc0",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/0b64c28d-9cd6-4fe2-a4d9-3b5e3d3e1dc0"
+    },
+    {
+      "nome": "Uncover Desenvolvimento de Software",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/4148cbe2-0005-4e32-bb06-cb3327c4e706",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/4148cbe2-0005-4e32-bb06-cb3327c4e706"
+    },
+    {
+      "nome": "Veeries Inteligência em Agronegócio",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/c8f6863d-5021-4796-85b5-fab9e702b92e",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/c8f6863d-5021-4796-85b5-fab9e702b92e"
+    },
+    {
+      "nome": "Vankka Carbon",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/b8b04000-b545-49f2-bed5-4d3c80e2f981",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/b8b04000-b545-49f2-bed5-4d3c80e2f981"
+    },
+    {
+      "nome": "Zavia Bio",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/2fc276ee-ebaa-4feb-a377-46c501b19591",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/2fc276ee-ebaa-4feb-a377-46c501b19591"
+    },
+    {
+      "nome": "Zenith Saúde Mental",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/12ea811b-18ee-401b-879c-0433a0475750",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/12ea811b-18ee-401b-879c-0433a0475750"
+    },
+    {
+      "nome": "EXA",
+      "status": "a_contatar",
+      "url_perfil": "",
+      "resultado": "sem_url",
+      "url_final": ""
+    },
+    {
+      "nome": "Dharma-AI S.A.",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/f2fd4c3c-abcd-4d96-b0a9-6097f8f5b0c9",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/f2fd4c3c-abcd-4d96-b0a9-6097f8f5b0c9"
+    },
+    {
+      "nome": "Pix Force",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/cf1a3b10-59a0-4dbf-ac49-f4c620ea84b9",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/cf1a3b10-59a0-4dbf-ac49-f4c620ea84b9"
+    },
+    {
+      "nome": "Reborn",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/e9f7b4aa-faaf-4c45-a050-f3fec79ec184",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/e9f7b4aa-faaf-4c45-a050-f3fec79ec184"
+    },
+    {
+      "nome": "Salesrun",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/44337139-e7f3-4292-b686-654d913188af",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/44337139-e7f3-4292-b686-654d913188af"
+    },
+    {
+      "nome": "Supplylabs",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/cad6c3bc-1f61-4f47-b15e-517234378df6",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/cad6c3bc-1f61-4f47-b15e-517234378df6"
+    },
+    {
+      "nome": "Precision Data Engineering and Data Science",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/0a78539e-d5d4-40f9-bebe-1e1438ab5221",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/0a78539e-d5d4-40f9-bebe-1e1438ab5221"
+    },
+    {
+      "nome": "Jetsales Brasil",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/ad4bdd84-2951-4904-aea0-4ed71b9be80f",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/ad4bdd84-2951-4904-aea0-4ed71b9be80f"
+    },
+    {
+      "nome": "Learn To Fly Desenvolvimento Humano Ltda",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/8b6fb085-f18a-4726-b817-91ef7dd1c1de",
+      "resultado": "confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/8b6fb085-f18a-4726-b817-91ef7dd1c1de"
+    },
+    {
+      "nome": "Viddy",
+      "status": "a_contatar",
+      "url_perfil": "https://app.cubo.itau/dashboard/company/startup/d1699415-8cdb-48ce-af09-8a8a8178dc69",
+      "resultado": "nao_confirmada",
+      "url_final": "https://app.cubo.itau/dashboard/company/startup/d1699415-8cdb-48ce-af09-8a8a8178dc69"
+    }
+  ]
+}

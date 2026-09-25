@@ -2,9 +2,10 @@ import { CheckCircle, AlertCircle, XCircle } from "lucide-react";
 
 interface Props {
   confianca: "alta" | "media" | "baixa";
+  title?: string;
 }
 
-export function ConfiancaBadge({ confianca }: Props) {
+export function ConfiancaBadge({ confianca, title }: Props) {
   const config = ({
     alta: {
       style: "bg-blue-500/10 text-blue-600 border-blue-500/20 dark:text-blue-400",
@@ -31,6 +32,7 @@ export function ConfiancaBadge({ confianca }: Props) {
 
   return (
     <span
+      title={title}
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold tracking-wide ${config.style}`}
     >
       <Icon size={10} className="shrink-0" />

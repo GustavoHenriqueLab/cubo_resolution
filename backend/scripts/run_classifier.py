@@ -89,6 +89,26 @@ def _carregar_progresso(supabase) -> tuple[set[str], list[str], str | None]:
     return nomes_processados, destaques_lab, execution_id
 
 
+def _normalizar_confianca(valor: str) -> str:
+    """Normaliza confianca para os valores permitidos (alta, media)."""
+    v = (valor or "").strip().lower()
+    if v in ("alta", "media"):
+        return v
+    if v == "média":
+        return "media"
+    return "media"
+
+
+def _normalizar_aderencia(valor: str) -> str:
+    """Normaliza aderencia_lab para os valores permitidos (alta, media, baixa)."""
+    v = (valor or "").strip().lower()
+    if v in ("alta", "media", "baixa"):
+        return v
+    if v == "média":
+        return "media"
+    return "media"
+
+
 def _salvar_classificacao(supabase, nome: str, depto_nome: str, dados: dict, startup_id: str, batch_id: str | None = None) -> None:
     """Insere ou atualiza uma classificacao no Supabase."""
     slug = SLUG_MAP.get(depto_nome, "")
@@ -99,8 +119,8 @@ def _salvar_classificacao(supabase, nome: str, depto_nome: str, dados: dict, sta
         supabase.table("startup_departamentos").upsert({
             "startup_id": startup_id,
             "departamento_slug": slug,
-            "confianca": dados.get("confianca", "media"),
-            "aderencia_lab": dados.get("aderencia_lab", "media"),
+            "confianca": _normalizar_confianca(dados.get("confianca", "media")),
+            "aderencia_lab": _normalizar_aderencia(dados.get("aderencia_lab", "media")),
             "analise": dados.get("analise", ""),
             "avaliacao": dados.get("avaliacao", {}),
         }, on_conflict="startup_id,departamento_slug").execute()

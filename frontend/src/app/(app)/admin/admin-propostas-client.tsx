@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, User, Building2, Calendar, AlertTriangle } from "lucide-react";
+import { Check, ChevronDown, User, Building2, Calendar, AlertTriangle, UserCog, ShieldCheck } from "lucide-react";
 import { PROPOSTA_STATUS_LABELS, PROPOSTA_STATUS_COLORS, PROPOSTA_STATUS_FILTER_COLORS, PROPOSTA_TIPO_LABELS } from "@/lib/types";
 import type { PropostaAdminRow } from "@/lib/queries";
 import type { PropostaStatus } from "@/lib/types";
@@ -178,6 +178,17 @@ export function AdminPropostasClient({ propostas }: Props) {
                         </span>
                       )}
                     </span>
+                    {p.gestor_id ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">
+                        <UserCog size={11} />
+                        Gestor: {p.gestor_nome ?? "—"}
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2 py-0.5 text-[11px] font-medium text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
+                        <ShieldCheck size={11} />
+                        Direta ao Admin
+                      </span>
+                    )}
                     <span className="inline-flex items-center gap-1 text-[11px] text-gray-400 dark:text-gray-500">
                       <Building2 size={11} />
                       {PROPOSTA_TIPO_LABELS[p.tipo_integracao as keyof typeof PROPOSTA_TIPO_LABELS] || p.tipo_integracao}
@@ -213,15 +224,44 @@ export function AdminPropostasClient({ propostas }: Props) {
                         )}
                       </p>
                     </div>
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
-                        Departamento destino
-                      </p>
-                      <p className="text-sm text-gray-700 dark:text-gray-300">
-                        {p.departamento_nome || p.departamento_slug || "Geral (LAB)"}
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
+                      Departamento destino
+                    </p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">
+                      {p.departamento_nome || p.departamento_slug || "Geral (LAB)"}
+                    </p>
                   </div>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">
+                      Encaminhada por
+                    </p>
+                    <p className="inline-flex items-center gap-1.5 text-sm text-gray-700 dark:text-gray-300">
+                      {p.gestor_id ? (
+                        <>
+                          <UserCog size={13} className="text-amber-500" />
+                          Gestor {p.gestor_nome ?? "—"}
+                        </>
+                      ) : (
+                        <>
+                          <ShieldCheck size={13} className="text-blue-500" />
+                          Direta ao Admin
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                {p.gestor_notas && (
+                  <div className="rounded-xl bg-amber-50 px-4 py-3 dark:bg-amber-500/10">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-1">
+                      Parecer do gestor
+                    </p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                      {p.gestor_notas}
+                    </p>
+                  </div>
+                )}
 
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1">

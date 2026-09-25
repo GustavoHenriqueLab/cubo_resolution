@@ -11,9 +11,7 @@ interface Props {
 }
 
 export function DepartamentoClient({ departamento, startups }: Props) {
-  const [filtro, setFiltro] = useState<"alta" | "media" | "baixa" | null>(null);
-
-  const baixaCount = startups.filter((s) => s.confianca === "baixa").length;
+  const [filtro, setFiltro] = useState<"alta" | "media" | null>(null);
 
   const exibidas = useMemo(() => {
     if (!filtro) return startups;
@@ -48,18 +46,6 @@ export function DepartamentoClient({ departamento, startups }: Props) {
           <span>{departamento.mediaConfianca}</span>
         </button>
 
-        <button
-          onClick={() => setFiltro(filtro === "baixa" ? null : "baixa")}
-          className={`flex items-center gap-2 rounded-xl border px-3.5 py-2 text-sm font-semibold shadow-sm transition-all ${
-            filtro === "baixa"
-              ? "border-gray-400 bg-gray-50 text-gray-700 shadow-blue-glow dark:border-gray-400 dark:bg-gray-500/10 dark:text-gray-300"
-              : "border-gray-100 bg-white text-gray-700 hover:border-gray-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600"
-          }`}
-        >
-          <ConfiancaBadge confianca="baixa" />
-          <span>{baixaCount}</span>
-        </button>
-
         <div className="rounded-xl border border-gray-100 bg-white px-3.5 py-2 text-sm font-semibold text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
           Total: {exibidas.length} de {departamento.totalStartups} startups
         </div>
@@ -68,7 +54,13 @@ export function DepartamentoClient({ departamento, startups }: Props) {
       {/* Grid unica — rank corrido */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {exibidas.map((s, i) => (
-          <StartupCard key={s.id} startup={s} index={i} />
+          <StartupCard
+            key={s.id}
+            startup={s}
+            index={i}
+            departamentoSlug={departamento.slug}
+            confiancaDepartamento={s.confianca}
+          />
         ))}
       </div>
     </>

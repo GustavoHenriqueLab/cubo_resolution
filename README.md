@@ -176,7 +176,7 @@ No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espel
 ### Setup (uma vez)
 
 1. Criar um projeto no [Supabase](https://supabase.com/) e rodar as migrations no SQL Editor, nesta ordem:
-   `schema.sql` → `add_status_favoritos.sql` → `add_propostas.sql` → `migracao_status_parcerias.sql` → `add_user_departamento.sql` → `fix_rls*.sql` → `backfill_profiles.sql` (só se existirem contas antigas sem profile).
+   `schema.sql` → `add_status_favoritos.sql` → `add_propostas.sql` → `migracao_status_parcerias.sql` → `add_user_departamento.sql` → `fix_rls*.sql` → `add_startup_users.sql` (se a tabela `startup_users` não existir) → `add_manager_role.sql` (papel `manager`) → `add_gestor_flow.sql` (fluxo de propostas com gestor) → `backfill_profiles.sql` (só se existirem contas antigas sem profile).
 2. Configurar o `.env.local` do frontend:
    ```
    NEXT_PUBLIC_SUPABASE_URL=...
@@ -194,6 +194,7 @@ No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espel
 - A senha é validada no Supabase do FlowLab; a sessão é espelhada no Supabase do cubo (service role, server-side).
 - No primeiro login, se o e-mail ainda não existir no banco do cubo, a conta-espelho é criada automaticamente como `viewer`. A promoção a admin é feita em `/admin/usuarios`.
 - O login garante o registro em `profiles` (upsert) mesmo se o trigger `handle_new_user` falhar.
+- Papéis: `admin` (gerencia tudo), `manager` (gestor — permissões a definir; por enquanto sem poderes de admin) e `viewer` (leitura + propostas). O admin troca o papel de qualquer usuário em `/admin/usuarios`.
 - Opcional: `backend/scripts/importar_usuarios_flowlab.py` pré-cria as contas em lote (requer acesso admin ao FlowLab).
 
 ### Fluxo — Usuário normal (viewer)
@@ -202,17 +203,24 @@ No primeiro login, se o e-mail ainda nao existir no banco do cubo, a conta-espel
 2. **Explorar**: `/departamentos/[slug]` (lista ranqueada com filtro Alta/Média/Baixa) e `/startups` (busca global por nome, segmento, tecnologia, departamento, confiança + toggle **Destaques LAB** e **Favoritos**).
 3. **Abrir o drawer da startup** (clicar no card): ver descrição, metadados, análise Gemini (9 critérios), status e histórico.
 4. **Favoritar**: clicar na estrela do card/drawer (persiste e reflete no filtro Favoritos).
-5. **Propor Integração**: no drawer, botão destacado "Propor Integracao" → escolher tipo (Parceria / Contratacao / Outro), departamento, benefícios e justificativa.
-6. **Acompanhar**: `/propostas` mostra o status e a timeline (pendente → em tratativas → em poc → aprovada/rejeitada/cancelada → finalizado).
+5. **Propor Integração**: no drawer, botão destacado "Propor Integracao" → escolher **o gestor que vai receber** (obrigatório), tipo (Parceria / Contratacao / Outro), departamento, benefícios e justificativa.
+6. **Acompanhar**: `/propostas` mostra o status e a timeline — primeiro "Aguardando Gestor"; com a aprovação do gestor vira **"Aguardando Admin"** e, quando o admin age, segue o fluxo (em tratativas → em poc → aprovada/rejeitada/cancelada → finalizado).
 7. **Parcerias**: `/parcerias` lista as parcerias firmadas (criadas quando uma proposta é finalizada).
+
+### Fluxo — Gestor (manager)
+
+1. Recebe as propostas que foram enviadas para ele em `/propostas` → aba **Recebidas**.
+2. Pode **editar** a proposta (tipo, departamento, benefícios, justificativa), **recusar** (com motivo, visível ao autor) ou **aprovar** (encaminha ao admin).
+3. Na aba **Respondidas** (aprovadas e recusadas), acompanha o andamento no admin pela timeline.
+4. Ao criar uma proposta, o gestor escolhe no formulário: **"Direto para o Admin"** (sem passar por gestor) ou "Para um gestor".
 
 ### Fluxo — Admin
 
 1. **Login admin** → item **Admin** no sidebar.
 2. **`/admin`** — dashboard com stats (startups, classificados, destaques, usuários), **Pipelines** (disparar scraper / classifier / ranker / destaques) e histórico de execuções.
 3. **`/admin/startups`** — mudar o status de uma startup e atribuir usuários a ela.
-4. **`/admin/usuarios`** — tornar admin/viewer e definir o departamento de cada usuário.
-5. **`/admin/propostas`** — revisar as propostas enviadas e mover o status (pendente → em tratativas → em poc → aprovada/rejeitada/cancelada → **finalizado**). Ao **finalizar**, uma parceria é criada automaticamente e a startup vira **Parceiro**.
+4. **`/admin/usuarios`** — definir o papel (admin/manager/viewer) e o departamento de cada usuário.
+5. **`/admin`** — a fila mostra apenas as propostas **aprovadas por um gestor** (ou enviadas direto ao admin), com a origem e o parecer do gestor. Mover o status (pendente → em tratativas → em poc → aprovada/rejeitada/cancelada → **finalizado**). Ao **finalizar**, uma parceria é criada automaticamente e a startup vira **Parceiro**.
 6. **`/admin/parcerias`** — gerenciar as parcerias registradas.
 
 ### Reset de dados

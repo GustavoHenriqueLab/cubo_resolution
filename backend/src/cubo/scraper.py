@@ -305,6 +305,81 @@ def _ler_total_startups(driver: Chrome) -> int:
     return 0
 
 
+def coletar_nomes_cubo(driver: Chrome, timeout: int = 15) -> tuple[int, set[str]]:
+    """Percorre a busca do Cubo e coleta os nomes (aria-label) de todos os cards.
+
+    Nao abre perfis: serve para comparar com o banco e detectar startups que
+    sairam do portal.
+
+    Returns:
+        Tupla ``(total_informado_no_header, nomes_coletados)``.
+    """
+    total_cubo = 0
+    nomes: set[str] = set()
+    paginas_sem_novidade = 0
+    total_paginas_max = 100
+
+    driver.get(f"{URL_SEARCH}&page=1")
+    time.sleep(4)
+    total_cubo = _ler_total_startups(driver)
+    if total_cubo:
+        logger.info("Total de startups no Cubo: %d", total_cubo)
+    else:
+        logger.warning("Nao foi possivel ler o total de startups do Cubo.")
+
+    for pagina in range(1, total_paginas_max + 1):
+        if pagina > 1:
+            driver.get(f"{URL_SEARCH}&page={pagina}")
+            time.sleep(4)
+
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(1)
+        driver.execute_script("window.scrollTo(0, 0);")
+        time.sleep(1)
+
+        cards = driver.find_elements(
+            By.CSS_SELECTOR, "div[role='button'][aria-label]"
+        )
+        if not cards:
+            logger.info("Pagina %d sem cards — fim da paginacao.", pagina)
+            break
+
+        nomes_antes = len(nomes)
+        for card in cards:
+            try:
+                label = (card.get_attribute("aria-label") or "").strip()
+            except Exception:
+                continue
+            if label and label != "N/I":
+                nomes.add(label)
+
+        novos = len(nomes) - nomes_antes
+        logger.info(
+            "  Pagina %d: %d cards (%d nomes novos, %d no total)",
+            pagina,
+            len(cards),
+            novos,
+            len(nomes),
+        )
+
+        if total_cubo and len(nomes) >= total_cubo:
+            logger.info("Total do header alcancado (%d). Parando.", total_cubo)
+            break
+
+        # Protecao contra paginacao quebrada (paginas repetidas)
+        if novos == 0:
+            paginas_sem_novidade += 1
+            if paginas_sem_novidade >= 2:
+                logger.warning(
+                    "Duas paginas seguidas sem nomes novos — encerrando varredura."
+                )
+                break
+        else:
+            paginas_sem_novidade = 0
+
+    return total_cubo, nomes
+
+
 def coletar_e_extrair_startups(
     driver: Chrome,
     timeout: int = 15,
@@ -327,6 +402,7 @@ def coletar_e_extrair_startups(
     ja_salvos = set(nomes_salvos) if nomes_salvos else set()
     total_paginas_max = 100  # limite de seguranca, o loop para antes se necessario
     todos_extraidos: set[str] = set()
+    rotulos_vistos: set[str] = set()
 
     # Le o total de startups do header do Cubo (apenas na pagina 1)
     total_cubo = 0
@@ -341,12 +417,12 @@ def coletar_e_extrair_startups(
 
     pagina = 1
     while pagina <= total_paginas_max:
-        # Se ja sabemos o total do Cubo e ja coletamos tudo, para
-        if total_cubo and (len(ja_salvos) + len(todos_extraidos)) >= total_cubo:
+        # Para somente quando ja vimos todos os cards do Cubo (rotulos unicos).
+        # Nao usar len(ja_salvos): nomes do banco podem nao existir mais no portal.
+        if total_cubo and len(rotulos_vistos) >= total_cubo:
             logger.info(
-                "Total alcancado: %d salvas + %d novas = %d (Cubo: %d). Parando.",
-                len(ja_salvos), len(todos_extraidos),
-                len(ja_salvos) + len(todos_extraidos), total_cubo,
+                "Total do header alcancado: %d rotulos vistos (Cubo: %d). Parando.",
+                len(rotulos_vistos), total_cubo,
             )
             break
 
@@ -381,6 +457,8 @@ def coletar_e_extrair_startups(
                 nomes_na_pagina.add(label)
             except Exception:
                 pass
+
+        rotulos_vistos.update(nomes_na_pagina)
 
         novos_na_pagina = nomes_na_pagina - ja_salvos - todos_extraidos
         if not novos_na_pagina and nomes_na_pagina:

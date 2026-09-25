@@ -1,7 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { FileText, Plus, X, Loader2, Check } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  FileText,
+  Plus,
+  X,
+  Loader2,
+  Check,
+  ShieldCheck,
+  UserCog,
+  AlertCircle,
+} from "lucide-react";
+import { useUser } from "@/components/user-provider";
 
 interface Props {
   startupId: string;
@@ -9,7 +19,16 @@ interface Props {
   departamentosDisponiveis: { slug: string; nome: string }[];
 }
 
+interface Gestor {
+  id: string;
+  nome: string;
+}
+
 export function ProposalForm({ startupId, startupNome, departamentosDisponiveis }: Props) {
+  const { profile } = useUser();
+  const role = profile?.role ?? "viewer";
+  const podeEscolherDestino = role === "manager" || role === "admin";
+
   const [open, setOpen] = useState(false);
   const [departamento, setDepartamento] = useState("");
   const [tipo, setTipo] = useState("");
@@ -18,6 +37,21 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const [enviadoPara, setEnviadoPara] = useState("");
+
+  const [gestores, setGestores] = useState<Gestor[]>([]);
+  const [gestoresCarregados, setGestoresCarregados] = useState(false);
+  const [gestorId, setGestorId] = useState("");
+  const [destino, setDestino] = useState<"admin" | "gestor">("admin");
+
+  useEffect(() => {
+    if (!open || gestoresCarregados) return;
+    setGestoresCarregados(true);
+    fetch("/api/gestores")
+      .then((r) => r.json())
+      .then((d: { gestores?: Gestor[] }) => setGestores(d.gestores ?? []))
+      .catch(() => setGestores([]));
+  }, [open, gestoresCarregados]);
 
   const addBeneficio = () => setBeneficios([...beneficios, ""]);
   const removeBeneficio = (i: number) => {
@@ -29,6 +63,8 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
     updated[i] = val;
     setBeneficios(updated);
   };
+
+  const precisaGestor = !podeEscolherDestino || destino === "gestor";
 
   const handleSubmit = async () => {
     setError("");
@@ -45,9 +81,14 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
       setError("Selecione o tipo de integracao.");
       return;
     }
+    if (precisaGestor && !gestorId) {
+      setError("Selecione o gestor que vai receber a proposta.");
+      return;
+    }
 
     setLoading(true);
     try {
+      const gestorSelecionado = precisaGestor ? gestorId : null;
       const res = await fetch("/api/propostas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -57,6 +98,7 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
           tipoIntegracao: tipo,
           justificativa,
           beneficios: filtrados,
+          gestorId: gestorSelecionado,
         }),
       });
 
@@ -66,6 +108,8 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
         return;
       }
 
+      const nomeGestor = gestores.find((g) => g.id === gestorSelecionado)?.nome;
+      setEnviadoPara(nomeGestor ? `o gestor ${nomeGestor}` : "o Admin");
       setDone(true);
       setTimeout(() => {
         setOpen(false);
@@ -98,10 +142,10 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
             <Check size={20} />
           </div>
           <p className="text-sm font-semibold text-green-700 dark:text-green-400">
-            Proposta enviada!
+            Proposta enviada para {enviadoPara}!
           </p>
           <p className="text-xs text-green-600 dark:text-green-500">
-            O admin sera notificado.
+            Acompanhe o andamento em &quot;Minhas Propostas&quot;.
           </p>
         </div>
       ) : (
@@ -117,6 +161,91 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
               <X size={16} />
             </button>
           </div>
+
+          {/* Destino */}
+          {podeEscolherDestino ? (
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+                Destino da proposta
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setDestino("admin")}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all ${
+                    destino === "admin"
+                      ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-500/10 dark:text-blue-400"
+                      : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                  }`}
+                >
+                  <ShieldCheck size={14} />
+                  Direto para o Admin
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDestino("gestor")}
+                  className={`flex items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all ${
+                    destino === "gestor"
+                      ? "border-blue-500 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-500/10 dark:text-blue-400"
+                      : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                  }`}
+                >
+                  <UserCog size={14} />
+                  Para um gestor
+                </button>
+              </div>
+              {destino === "admin" && (
+                <p className="mt-1.5 text-[11px] leading-relaxed text-blue-600 dark:text-blue-400">
+                  Esta proposta vai <strong>direto para o admin</strong>, sem passar por gestor.
+                </p>
+              )}
+            </div>
+          ) : (
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+                Enviar para o gestor
+              </label>
+              <select
+                value={gestorId}
+                onChange={(e) => setGestorId(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
+              >
+                <option value="">Selecione o gestor...</option>
+                {gestores.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.nome}
+                  </option>
+                ))}
+              </select>
+              {gestoresCarregados && gestores.length === 0 && (
+                <p className="mt-1.5 flex items-center gap-1 text-[11px] text-amber-600 dark:text-amber-400">
+                  <AlertCircle size={12} />
+                  Nenhum gestor cadastrado ainda. Contate o administrador.
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Gestor quando o autor e gestor/admin e escolheu "Para um gestor" */}
+          {podeEscolherDestino && destino === "gestor" && (
+            <div>
+              <label className="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">
+                Gestor de destino
+              </label>
+              <select
+                value={gestorId}
+                onChange={(e) => setGestorId(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 outline-none focus:border-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200"
+              >
+                <option value="">Selecione o gestor...</option>
+                {gestores.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.nome}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
 
           {/* Departamento */}
           <div>
@@ -222,7 +351,7 @@ export function ProposalForm({ startupId, startupNome, departamentosDisponiveis 
 
           <button
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={loading || (gestoresCarregados && precisaGestor && gestores.length === 0)}
             className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:opacity-60"
           >
             {loading && <Loader2 size={16} className="animate-spin" />}

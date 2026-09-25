@@ -17,6 +17,20 @@ function useDebounce<T>(value: T, delay: number): T {
   return debounced;
 }
 
+function melhorDepartamentoDaStartup(
+  startup: StartupEnriquecida,
+  slugs: string[],
+): string | undefined {
+  let melhor: string | undefined;
+  for (const slug of slugs) {
+    const conf = startup.confiancaPorDepartamento[slug];
+    if (!conf) continue;
+    if (conf === "alta") return slug;
+    if (!melhor) melhor = slug;
+  }
+  return melhor;
+}
+
 interface Props {
   todas: StartupEnriquecida[];
   segmentosDisponiveis: string[];
@@ -89,10 +103,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
         if (departamentosDeferred.length > 0) {
           if (!departamentosDeferred.some((slug) => confiancaDeferred.includes(s.confiancaPorDepartamento[slug] ?? ""))) return false;
         } else {
-          if (
-            !Object.values(s.confiancaPorDepartamento).some((c) => confiancaDeferred.includes(c)) &&
-            !confiancaDeferred.includes(s.confianca)
-          ) return false;
+          if (!confiancaDeferred.includes(s.aderencia_lab ?? "")) return false;
         }
       }
 
@@ -195,6 +206,7 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
           tecnologiasAtivas={tecnologiasFiltro}
           departamentosAtivos={departamentosFiltro}
           confiancaAtiva={confiancaFiltro}
+          confiancaPlaceholder={departamentosDeferred.length > 0 ? "Confiança" : "Aderência LAB"}
           statusAtivo={statusFiltro}
           onSegmentosChange={setSegmentosFiltro}
           onTecnologiasChange={setTecnologiasFiltro}
@@ -232,15 +244,22 @@ export function StartupsClient({ todas, segmentosDisponiveis, tecnologiasDisponi
       {/* Results */}
       {exibidas.length > 0 ? (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {exibidas.map((s, i) => (
-            <StartupCard
-              key={s.id}
-              startup={s}
-              index={i}
-              initialFavorited={favoritosSet.has(s.id)}
-              onToggleFavorite={handleToggleFavorite}
-            />
-          ))}
+          {exibidas.map((s, i) => {
+            const departamentoSlug = melhorDepartamentoDaStartup(s, departamentosDeferred);
+            return (
+              <StartupCard
+                key={s.id}
+                startup={s}
+                index={i}
+                initialFavorited={favoritosSet.has(s.id)}
+                onToggleFavorite={handleToggleFavorite}
+                departamentoSlug={departamentoSlug}
+                confiancaDepartamento={
+                  departamentoSlug ? s.confiancaPorDepartamento[departamentoSlug] : undefined
+                }
+              />
+            );
+          })}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-gray-200 bg-white/50 py-16 text-center backdrop-blur-sm dark:border-gray-700 dark:bg-gray-800/50">

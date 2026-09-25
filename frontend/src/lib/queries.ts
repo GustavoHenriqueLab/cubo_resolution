@@ -16,6 +16,30 @@ function normalizeStatus(raw: unknown): StartupStatus {
   return "a_contatar";
 }
 
+const ORDEM_ADERENCIA: Record<string, number> = { alta: 3, media: 2, baixa: 1 };
+
+function melhorConfianca(
+  rels: { confianca: string }[],
+): "alta" | "media" | "baixa" {
+  if (rels.some((r) => r.confianca === "alta")) return "alta";
+  if (rels.some((r) => r.confianca === "media")) return "media";
+  return "baixa";
+}
+
+function melhorAderenciaLab(
+  rels: { aderencia_lab: string | null }[],
+): "alta" | "media" | "baixa" | undefined {
+  let melhor: "alta" | "media" | "baixa" | undefined;
+  for (const r of rels) {
+    const nivel = r.aderencia_lab as "alta" | "media" | "baixa" | null;
+    if (!nivel || !(nivel in ORDEM_ADERENCIA)) continue;
+    if (!melhor || ORDEM_ADERENCIA[nivel] > ORDEM_ADERENCIA[melhor]) {
+      melhor = nivel;
+    }
+  }
+  return melhor;
+}
+
 type StartupRow = Database["public"]["Tables"]["startups"]["Row"];
 type StartupClassifRow =
   Database["public"]["Tables"]["startup_departamentos"]["Row"];
@@ -256,8 +280,6 @@ export async function getTodasStartups() {
     }
 
     const ehDestaque = destaqueRank.has(id);
-    const temDescricao =
-      s.descricao && (s.descricao as string).trim().length > 0;
 
     const melhorRel = rels
       .filter((r) => r.analise || r.avaliacao)
@@ -266,94 +288,13 @@ export async function getTodasStartups() {
     return {
       id: s.id as string,
       nome: s.nome as string,
-      confianca: (
-        temDescricao ? "media" : "baixa"
-      ) as "alta" | "media" | "baixa",
-      aderencia_lab: (melhorRel?.aderencia_lab as "alta" | "media" | "baixa" | undefined) ?? undefined,
+      confianca: melhorConfianca(rels),
+      aderencia_lab: melhorAderenciaLab(rels),
       analise: (melhorRel?.analise ?? undefined) as string | undefined,
       avaliacao: (melhorRel?.avaliacao ?? undefined) as Record<string, string> | undefined,
       rank: ehDestaque
         ? (destaqueRank.get(id)?.rank ?? undefined)
         : undefined,
-      descricao: (s.descricao as string) ?? "",
-      segmento: (s.segmento as string) ?? "",
-      fundadores: (s.fundadores as string) ?? "",
-      site: (s.site as string) ?? "",
-      url_perfil: (s.url_perfil as string) ?? "",
-      modelos_negocio: (s.modelos_negocio ?? []) as string[],
-      tecnologias: (s.tecnologias ?? []) as string[],
-      departamentos: deptos,
-      confiancaPorDepartamento: confRecord,
-      status: normalizeStatus(s.status),
-      data_adicionado: s.data_adicionado ?? undefined,
-    };
-  });
-}
-
-export async function getDestaqueLab(): Promise<string[]> {
-  const supabase = await createClient();
-
-  const { data: destaques } = await supabase
-    .from("destaques_lab")
-    .select("startup_id, startup:startups(nome)")
-    .order("rank");
-
-  return ((destaques ?? []) as AnyRow[]).map(
-    (d) => (d.startup as AnyRow)?.nome ?? "",
-  );
-}
-
-export async function getStartupsDestaqueLab() {
-  const supabase = await createClient();
-
-  const { data: destaques } = await supabase
-    .from("destaques_lab")
-    .select("startup_id, rank, analise, startup:startups(*)")
-    .order("rank");
-
-  if (!destaques) return [];
-
-  const { data: rels } = await supabase
-    .from("startup_departamentos")
-    .select("startup_id, departamento_slug, confianca");
-
-  const relsMap = new Map<string, { slug: string; confianca: string }[]>();
-  for (const r of (rels ?? []) as AnyRow[]) {
-    const sid = r.startup_id as string;
-    if (!relsMap.has(sid)) relsMap.set(sid, []);
-    relsMap.get(sid)!.push({
-      slug: r.departamento_slug as string,
-      confianca: r.confianca as string,
-    });
-  }
-
-  const { data: deptosData } = await supabase
-    .from("departamentos")
-    .select("slug, nome");
-
-  const slugParaNome = new Map<string, string>();
-  for (const d of (deptosData ?? []) as AnyRow[]) {
-    slugParaNome.set(d.slug as string, d.nome as string);
-  }
-
-  return (destaques as AnyRow[]).map((d) => {
-    const s = (d.startup as AnyRow) ?? {};
-    const sid = d.startup_id as string;
-    const rels = relsMap.get(sid) ?? [];
-    const deptos = rels.map((r) => slugParaNome.get(r.slug) ?? r.slug);
-    const confRecord: Record<string, "alta" | "media"> = {};
-    let confianca: "alta" | "media" = "media";
-    for (const r of rels) {
-      confRecord[r.slug] = r.confianca as "alta" | "media";
-      if (r.confianca === "alta") confianca = "alta";
-    }
-
-    return {
-      id: sid,
-      nome: s.nome ?? "",
-      confianca,
-      rank: d.rank as number,
-      analise: (d.analise as string) ?? undefined,
       descricao: (s.descricao as string) ?? "",
       segmento: (s.segmento as string) ?? "",
       fundadores: (s.fundadores as string) ?? "",
@@ -436,7 +377,10 @@ export async function getProfiles(): Promise<ProfileRow[]> {
   return (data as unknown as ProfileRow[]) ?? [];
 }
 
-export async function updateUserRole(userId: string, role: "admin" | "viewer") {
+export async function updateUserRole(
+  userId: string,
+  role: "admin" | "manager" | "viewer",
+) {
   const supabase = await createClient();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error } = await (supabase as any).from("profiles").update({ role }).eq("id", userId);
@@ -516,7 +460,7 @@ export async function getFavoritedStartups() {
       .select("startup_id, startup:startups(id, nome, descricao, segmento, fundadores, site, url_perfil, modelos_negocio, tecnologias, status, data_adicionado)")
       .eq("user_id", user.id)
       .order("created_at", { ascending: false }),
-    supabase.from("startup_departamentos").select("startup_id, departamento_slug, confianca, rank"),
+    supabase.from("startup_departamentos").select("startup_id, departamento_slug, confianca, aderencia_lab, rank"),
     supabase.from("destaques_lab").select("startup_id, rank, analise").order("rank"),
     supabase.from("departamentos").select("slug, nome"),
   ]);
@@ -530,7 +474,7 @@ export async function getFavoritedStartups() {
 
   const relsPorStartup = new Map<
     string,
-    { departamento_slug: string; confianca: string; rank: number | null }[]
+    { departamento_slug: string; confianca: string; aderencia_lab: string | null; rank: number | null }[]
   >();
   for (const r of (rels ?? []) as AnyRow[]) {
     const sid = r.startup_id as string;
@@ -538,6 +482,7 @@ export async function getFavoritedStartups() {
     relsPorStartup.get(sid)!.push({
       departamento_slug: r.departamento_slug as string,
       confianca: r.confianca as string,
+      aderencia_lab: r.aderencia_lab as string | null,
       rank: r.rank as number | null,
     });
   }
@@ -567,13 +512,12 @@ export async function getFavoritedStartups() {
     }
 
     const ehDestaque = destaqueRank.has(id);
-    const temDescricao = s.descricao && (s.descricao as string).trim().length > 0;
 
     return {
       id: id,
       nome: s.nome as string,
-      confianca: (temDescricao ? "media" : "baixa") as "alta" | "media" | "baixa",
-      aderencia_lab: undefined as "alta" | "media" | "baixa" | undefined,
+      confianca: melhorConfianca(rels),
+      aderencia_lab: melhorAderenciaLab(rels),
       analise: undefined as string | undefined,
       avaliacao: undefined as Record<string, string> | undefined,
       rank: ehDestaque ? (destaqueRank.get(id)?.rank ?? undefined) : undefined,
@@ -797,6 +741,7 @@ export async function submitProposta(data: {
   tipoIntegracao: string;
   justificativa: string;
   beneficios: string[];
+  gestorId: string | null;
 }): Promise<string> {
   const supabase = await createClient();
 
@@ -812,6 +757,8 @@ export async function submitProposta(data: {
     justificativa: data.justificativa,
     beneficios: data.beneficios,
     status: "pendente",
+    gestor_id: data.gestorId,
+    gestor_status: data.gestorId ? "pendente" : "aprovada",
   } as any).select("id").single();
 
   if (error) throw new Error(error.message);
@@ -832,53 +779,117 @@ export interface PropostaAdminRow {
   beneficios: string[];
   status: string;
   admin_notas: string | null;
+  gestor_id: string | null;
+  gestor_nome: string | null;
+  gestor_status: string;
+  gestor_notas: string | null;
   created_at: string;
   updated_at: string;
 }
 
+type PerfilResumo = { nome: string | null; departamento_slug: string | null };
+
+async function carregarPerfis(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  ids: string[],
+): Promise<Map<string, PerfilResumo>> {
+  if (ids.length === 0) return new Map();
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("id, nome, departamento_slug")
+    .in("id", ids);
+
+  return new Map(
+    (data ?? []).map((p: AnyRow) => [
+      p.id as string,
+      {
+        nome: (p.nome as string | null) ?? null,
+        departamento_slug: (p.departamento_slug as string | null) ?? null,
+      },
+    ]),
+  );
+}
+
+async function carregarGestores(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+): Promise<Map<string, string>> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data } = await (supabase as any).rpc("listar_gestores");
+
+  return new Map(
+    ((data ?? []) as { id: string; nome: string }[]).map((g) => [g.id, g.nome]),
+  );
+}
+
+async function montarPropostaRows(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  data: AnyRow[],
+  perfis: Map<string, PerfilResumo>,
+  gestores: Map<string, string>,
+): Promise<PropostaAdminRow[]> {
+  const startupIds = [...new Set(data.map((p) => p.startup_id as string))];
+  const { data: startups } = startupIds.length > 0
+    ? await supabase.from("startups").select("id, nome").in("id", startupIds)
+    : { data: [] as { id: string; nome: string }[] };
+
+  const startupMap = new Map(
+    (startups ?? []).map((s: AnyRow) => [s.id as string, s.nome as string]),
+  );
+  const resolveDepto = (slug: string | null) => (slug ? DEPARTAMENTOS[slug] ?? slug : null);
+
+  return data.map((p) => {
+    const perfil = perfis.get(p.usuario_id as string) ?? {
+      nome: null,
+      departamento_slug: null,
+    };
+    const gestorId = (p.gestor_id as string | null) ?? null;
+
+    return {
+      id: p.id as string,
+      startup_id: p.startup_id as string,
+      startup_nome: startupMap.get(p.startup_id as string) ?? "—",
+      departamento_slug: (p.departamento_slug as string | null) ?? null,
+      departamento_nome: resolveDepto((p.departamento_slug as string | null) ?? null),
+      usuario_id: p.usuario_id as string,
+      usuario_nome: perfil.nome ?? "—",
+      usuario_departamento: resolveDepto(perfil.departamento_slug),
+      tipo_integracao: p.tipo_integracao as string,
+      justificativa: p.justificativa as string,
+      beneficios: (p.beneficios as string[]) ?? [],
+      status: p.status as string,
+      admin_notas: (p.admin_notas as string | null) ?? null,
+      gestor_id: gestorId,
+      gestor_nome: gestorId ? gestores.get(gestorId) ?? null : null,
+      gestor_status: (p.gestor_status as string) ?? "aprovada",
+      gestor_notas: (p.gestor_notas as string | null) ?? null,
+      created_at: p.created_at as string,
+      updated_at: p.updated_at as string,
+    };
+  });
+}
+
+/** Fila do admin: propostas aprovadas pelo gestor (ou enviadas direto ao admin). */
 export async function getPropostasAdmin(): Promise<PropostaAdminRow[]> {
   const supabase = await createClient();
 
   const { data } = await (supabase as any)
     .from("propostas")
     .select("*")
+    .eq("gestor_status", "aprovada")
     .order("created_at", { ascending: false });
 
   if (!data) return [];
 
-  // Enrich with startup name and user info
-  const startupIds = [...new Set((data as AnyRow[]).map((p) => p.startup_id as string))];
-  const userIds = [...new Set((data as AnyRow[]).map((p) => p.usuario_id as string))];
+  const rows = data as AnyRow[];
+  const autorIds = [...new Set(rows.map((p) => p.usuario_id as string))];
 
-  const [{ data: startups }, { data: profiles }] = await Promise.all([
-    supabase.from("startups").select("id, nome").in("id", startupIds),
-    supabase.from("profiles").select("id, nome, departamento_slug").in("id", userIds),
+  const [perfis, gestores] = await Promise.all([
+    carregarPerfis(supabase, autorIds),
+    carregarGestores(supabase),
   ]);
 
-  const startupMap = new Map((startups ?? []).map((s: any) => [s.id, s.nome]));
-  const profileMap = new Map((profiles ?? []).map((p: any) => [p.id, p]));
-  const resolveDepto = (slug: string | null) => (slug ? DEPARTAMENTOS[slug] ?? slug : null);
-
-  return (data as AnyRow[]).map((p) => {
-    const profile = profileMap.get(p.usuario_id as string) ?? {};
-    return {
-      id: p.id as string,
-      startup_id: p.startup_id as string,
-      startup_nome: startupMap.get(p.startup_id as string) ?? "—",
-      departamento_slug: p.departamento_slug as string | null,
-      departamento_nome: resolveDepto(p.departamento_slug as string | null) ?? "Geral (LAB)",
-      usuario_id: p.usuario_id as string,
-      usuario_nome: profile.nome ?? "—",
-      usuario_departamento: resolveDepto(profile.departamento_slug ?? null),
-      tipo_integracao: p.tipo_integracao as string,
-      justificativa: p.justificativa as string,
-      beneficios: (p.beneficios as string[]) ?? [],
-      status: p.status as string,
-      admin_notas: p.admin_notas as string | null,
-      created_at: p.created_at as string,
-      updated_at: p.updated_at as string,
-    };
-  });
+  return montarPropostaRows(supabase, rows, perfis, gestores);
 }
 
 export async function updatePropostaStatus(
@@ -917,35 +928,49 @@ export async function getPropostasUsuario(): Promise<PropostaAdminRow[]> {
 
   if (!data) return [];
 
-  const startupIds = [...new Set((data as AnyRow[]).map((p: AnyRow) => p.startup_id as string))];
-
-  const [{ data: startups }, { data: profile }] = await Promise.all([
-    supabase.from("startups").select("id, nome").in("id", startupIds),
+  const [{ data: profile }, gestores] = await Promise.all([
     supabase.from("profiles").select("nome, departamento_slug").eq("id", user.id).maybeSingle(),
+    carregarGestores(supabase),
   ]);
 
-  const startupMap = new Map((startups ?? []).map((s: any) => [s.id, s.nome]));
-  const resolveDepto = (slug: string | null) => (slug ? DEPARTAMENTOS[slug] ?? slug : null);
-  const usuarioNome = (profile as any)?.nome ?? "—";
-  const usuarioDepto = resolveDepto((profile as any)?.departamento_slug ?? null);
+  const perfil = (profile as AnyRow | null) ?? {};
+  const perfis = new Map<string, PerfilResumo>([
+    [
+      user.id,
+      {
+        nome: (perfil.nome as string | null) ?? null,
+        departamento_slug: (perfil.departamento_slug as string | null) ?? null,
+      },
+    ],
+  ]);
 
-  return (data as AnyRow[]).map((p) => ({
-    id: p.id as string,
-    startup_id: p.startup_id as string,
-    startup_nome: startupMap.get(p.startup_id as string) ?? "—",
-    departamento_slug: p.departamento_slug as string | null,
-    departamento_nome: resolveDepto(p.departamento_slug as string | null),
-    usuario_id: p.usuario_id as string,
-    usuario_nome: usuarioNome,
-    usuario_departamento: usuarioDepto,
-    tipo_integracao: p.tipo_integracao as string,
-    justificativa: p.justificativa as string,
-    beneficios: (p.beneficios as string[]) ?? [],
-    status: p.status as string,
-    admin_notas: p.admin_notas as string | null,
-    created_at: p.created_at as string,
-    updated_at: p.updated_at as string,
-  }));
+  return montarPropostaRows(supabase, data as AnyRow[], perfis, gestores);
+}
+
+/** Propostas destinadas a mim como gestor (recebidas e aprovadas por mim). */
+export async function getPropostasGestor(): Promise<PropostaAdminRow[]> {
+  const supabase = await createClient();
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return [];
+
+  const { data } = await (supabase as any)
+    .from("propostas")
+    .select("*")
+    .eq("gestor_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (!data) return [];
+
+  const rows = data as AnyRow[];
+  const autorIds = [...new Set(rows.map((p) => p.usuario_id as string))];
+
+  const [perfis, gestores] = await Promise.all([
+    carregarPerfis(supabase, autorIds),
+    carregarGestores(supabase),
+  ]);
+
+  return montarPropostaRows(supabase, rows, perfis, gestores);
 }
 
 // ============================================================

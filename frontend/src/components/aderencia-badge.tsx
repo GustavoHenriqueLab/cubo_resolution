@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 
 interface Props {
   nivel: "alta" | "media" | "baixa";
+  title?: string;
 }
 
 const STYLES: Record<string, string> = {
@@ -16,9 +17,10 @@ const LABELS: Record<string, string> = {
   baixa: "Baixa",
 };
 
-export function AderenciaBadge({ nivel }: Props) {
+export function AderenciaBadge({ nivel, title }: Props) {
   return (
     <span
+      title={title}
       className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-semibold ${STYLES[nivel] ?? STYLES.media}`}
     >
       <Star size={10} className="shrink-0" />

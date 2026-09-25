@@ -20,6 +20,7 @@ import {
 import { useStartupDrawer } from "@/components/startup-drawer-context";
 import { useUser } from "@/components/user-provider";
 import { ConfiancaBadge } from "@/components/confianca-badge";
+import { AderenciaBadge } from "@/components/aderencia-badge";
 import { StatusBadge } from "@/components/status-badge";
 import { StatusSelector } from "@/components/status-selector";
 import { FavoriteButton } from "@/components/favorite-button";
@@ -43,7 +44,7 @@ const CRITERIOS: { key: keyof AvaliacaoGemini; label: string; icon: typeof Targe
 ];
 
 export function StartupDrawer() {
-  const { startup, close } = useStartupDrawer();
+  const { startup, contextoDepartamento, close } = useStartupDrawer();
   const { isAdmin } = useUser();
   const [status, setStatus] = useState<StartupStatus | null>(null);
   const [favorited, setFavorited] = useState(false);
@@ -124,7 +125,22 @@ export function StartupDrawer() {
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               {status && <StatusBadge status={status} />}
-              <ConfiancaBadge confianca={startup.confianca} />
+              {contextoDepartamento ? (
+                <>
+                  <ConfiancaBadge
+                    confianca={contextoDepartamento.confianca}
+                    title={`Confiança da classificação em ${contextoDepartamento.nome}`}
+                  />
+                  <span className="text-[11px] font-medium text-slate-400 dark:text-gray-500">
+                    {contextoDepartamento.nome}
+                  </span>
+                </>
+              ) : startup.aderencia_lab ? (
+                <AderenciaBadge
+                  nivel={startup.aderencia_lab}
+                  title="Aderência da startup à LAB"
+                />
+              ) : null}
             </div>
           </div>
           <button
@@ -279,12 +295,21 @@ export function StartupDrawer() {
                     Relevancia para a LAB. 1 = mais relevante.
                   </div>
                 </div>
-                <div className="rounded-xl border border-blue-100 bg-white/60 px-3 py-2 dark:border-blue-500/20 dark:bg-blue-500/5">
-                  <div className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Confianca</div>
-                  <div className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
-                    Precisao do encaixe no departamento.
+                {contextoDepartamento ? (
+                  <div className="rounded-xl border border-blue-100 bg-white/60 px-3 py-2 dark:border-blue-500/20 dark:bg-blue-500/5">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Confianca</div>
+                    <div className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                      Encaixe no departamento {contextoDepartamento.nome} (alta/media).
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="rounded-xl border border-blue-100 bg-white/60 px-3 py-2 dark:border-blue-500/20 dark:bg-blue-500/5">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-blue-500">Aderencia LAB</div>
+                    <div className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+                      Aderencia ao contexto geral da LAB (alta/media/baixa).
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Analysis text */}

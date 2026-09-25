@@ -9,6 +9,7 @@ Orquestra o pipeline completo:
 
 from __future__ import annotations
 
+import argparse
 import json
 import logging
 import sys
@@ -115,7 +116,7 @@ def _pode_executar(supabase) -> tuple[bool, str]:
         return True, f"Erro ao verificar data: {e}. Permitindo execucao."
 
 
-def executar() -> ScrapingReport:
+def executar(forcar: bool = False) -> ScrapingReport:
     """Executa o pipeline completo de extracao e persistencia no Supabase."""
     config = load_config()
     report = ScrapingReport()
@@ -132,8 +133,10 @@ def executar() -> ScrapingReport:
     pode, msg = _pode_executar(supabase)
     logger.info("Verificacao de periodo: %s", msg)
     if not pode:
-        logger.warning("Execucao bloqueada: %s", msg)
-        return report
+        if not forcar:
+            logger.warning("Execucao bloqueada: %s", msg)
+            return report
+        logger.warning("Execucao forcada (--force): %s", msg)
 
     if not config.cubo_email or not config.cubo_password:
         logger.error("CUBO_EMAIL e CUBO_PASSWORD nao configurados no .env")
@@ -205,10 +208,19 @@ def executar() -> ScrapingReport:
         except Exception:
             pass
 
-    # Salva backup JSON local
+    # Salva backup JSON local (mescla com o backup anterior para nao perde-lo)
     try:
+        backup_existente: list[dict] = []
+        if ARQUIVO_SAIDA.exists():
+            with open(ARQUIVO_SAIDA, encoding="utf-8") as f:
+                backup_existente = json.load(f)
+
+        por_nome = {s["nome"]: s for s in backup_existente if s.get("nome")}
+        for s in startups_salvas:
+            por_nome[s["nome"]] = s
+
         with open(ARQUIVO_SAIDA, "w", encoding="utf-8") as f:
-            json.dump(startups_salvas, f, ensure_ascii=False, indent=2)
+            json.dump(list(por_nome.values()), f, ensure_ascii=False, indent=2)
     except Exception:
         pass
 
@@ -235,6 +247,14 @@ def executar() -> ScrapingReport:
 
 def main() -> None:
     """Funcao de entrada do script."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Ignora a trava de 30 dias desde a ultima extracao.",
+    )
+    args = parser.parse_args()
+
     _configurar_logging()
 
     logger.info("=" * 60)
@@ -242,7 +262,7 @@ def main() -> None:
     logger.info("=" * 60)
 
     try:
-        report = executar()
+        report = executar(forcar=args.force)
     except KeyboardInterrupt:
         logger.warning("Interrompido pelo usuario.")
         sys.exit(0)
